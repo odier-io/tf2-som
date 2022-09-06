@@ -7,6 +7,6 @@ dist
 build
 *.egg-info
 
-*.hd5
+*.h5
 *.fits
 
