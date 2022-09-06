@@ -17,6 +17,8 @@
 TF_SOM
 ======
 
+This is a Tensorflow 2 implementation of the Self Organizing Maps (SOM)
+
 Developers
 ==========
 
