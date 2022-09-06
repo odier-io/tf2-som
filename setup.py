@@ -20,7 +20,7 @@ if __name__ == '__main__':
             version = metadata['version'],
             author = ', '.join(metadata['author_names']),
             author_email = ', '.join(metadata['author_emails']),
-            description = 'Tensorflow implementation of the Self Organizing Maps (SOM)',
+            description = 'Tensorflow 2 implementation of the Self Organizing Maps (SOM)',
             url = 'https://www.github.com/ami-team/tf_som/',
             license = 'CeCILL-C',
             packages = ['tf_som'],

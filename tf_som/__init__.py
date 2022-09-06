@@ -454,16 +454,16 @@ class SOM(object):
 
             with fits.open(filename) as hdus:
 
-                self._m, self._n, self._dim = hdus[1].metadata.shape
+                self._m, self._n, self._dim = hdus[1].data.shape
 
                 self._learning_rate = hdus[0].header['lrnrate']
                 self._radius = hdus[0].header['radius']
                 self._sigma = hdus[0].header['sigma']
                 self._epochs = hdus[2].header['epochs']
 
-                self._weights = hdus[1].metadata.reshape((self._m * self._n, self._dim)).astype(self._dtype)
-                self._quantization_errors = hdus[2].metadata['quantization_errors'].astype(self._dtype)
-                self._topographic_errors = hdus[2].metadata['topographic_errors'].astype(self._dtype)
+                self._weights = hdus[1].data.reshape((self._m * self._n, self._dim)).astype(self._dtype)
+                self._quantization_errors = hdus[2].data['quantization_errors'].astype(self._dtype)
+                self._topographic_errors = hdus[2].data['topographic_errors'].astype(self._dtype)
 
         ################################################################################################################
         # HDF5 FORMAT                                                                                                  #
