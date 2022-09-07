@@ -4,19 +4,13 @@
 <span>&nbsp;</span>
 [![][AltRepo img]][AltRepo]
 
-<hr style="margin: 1rem 0;" />
+<br style="margin: 1rem 0;" />
 
-<a href="http://lpsc.in2p3.fr/" target="_blank" style="margin-right: 2rem;">
-	<img src="https://ami.web.cern.ch/images/logo_lpsc.png" alt="LPSC" height="72" />
-</a>
+<a href="http://lpsc.in2p3.fr/"              target="_blank" style="margin-right: 2rem;"><img src="https://ami.web.cern.ch/images/logo_lpsc.png" alt="LPSC" height="72" /></a>
 &nbsp;&nbsp;&nbsp;
-<a href="http://www.in2p3.fr/" target="_blank" style="margin-right: 2rem;">
-	<img src="https://ami.web.cern.ch/images/logo_in2p3.png" alt="IN2P3" height="72" />
-</a>
+<a href="http://www.in2p3.fr/"               target="_blank" style="margin-right: 2rem;"><img src="https://ami.web.cern.ch/images/logo_in2p3.png" alt="IN2P3" height="72" /></a>
 &nbsp;&nbsp;&nbsp;
-<a href="http://www.univ-grenoble-alpes.fr/" target="_blank" style="margin-right: 0rem;">
-	<img src="https://ami.web.cern.ch/images/logo_uga.png" alt="UGA" height="72" />
-</a>
+<a href="http://www.univ-grenoble-alpes.fr/" target="_blank" style="margin-right: 0rem;"><img src="https://ami.web.cern.ch/images/logo_uga.png" alt="UGA" height="72" /></a>
 
 TF2_SOM
 =======
