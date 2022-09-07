@@ -2,14 +2,16 @@
 [![][MainRepo img]][MainRepo]
 [![][AltRepo img]][AltRepo]
 
+<hr />
+
 <a href="http://lpsc.in2p3.fr/" target="_blank">
 	<img src="https://ami.web.cern.ch/images/logo_lpsc.png" alt="LPSC" height="72" />
 </a>
-&nbsp;&nbsp;&nbsp;&nbsp;
+<span style="margin-left: 2rem;"></span>
 <a href="http://www.in2p3.fr/" target="_blank">
 	<img src="https://ami.web.cern.ch/images/logo_in2p3.png" alt="IN2P3" height="72" />
 </a>
-&nbsp;&nbsp;&nbsp;&nbsp;
+<span style="margin-left: 2rem;"></span>
 <a href="http://www.univ-grenoble-alpes.fr/" target="_blank">
 	<img src="https://ami.web.cern.ch/images/logo_uga.png" alt="UGA" height="72" />
 </a>
