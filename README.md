@@ -32,8 +32,8 @@ Developers
 [License]:http://www.cecill.info/licences/Licence_CeCILL-C_V1-en.txt
 [License img]:https://img.shields.io/badge/license-CeCILL--C-blue.svg
 
-[MainRepo]:https://gitlab.in2p3.fr/jodier/tf_som
+[MainRepo]:https://gitlab.in2p3.fr/jodier/tf2_som
 [MainRepo img]:https://img.shields.io/badge/Main%20Repo-gitlab.in2p3.fr-success
 
-[AltRepo]:https://github.com/odier-xyz/tf_som
+[AltRepo]:https://github.com/odier-xyz/tf2_som
 [AltRepo img]:https://img.shields.io/badge/Alt%20Repo-github.com-success
