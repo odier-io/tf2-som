@@ -34,7 +34,8 @@ if __name__ == '__main__':
                 setup_requires=['h5py', 'tqdm', 'numpy', 'tensorflow>=2'],
                 install_requires = ['h5py', 'tqdm', 'numpy', 'tensorflow>=2'],
                 extras_require = {
-                    'astro': ['astropy'],
+                    'pandas': ['pandas'],
+                    'astropy': ['astropy'],
                 },
                 platforms = 'any',
             )
