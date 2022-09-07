@@ -1,0 +1,4 @@
+h5py
+tqdm
+numpy
+tensorflow>=2
