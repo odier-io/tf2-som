@@ -4,7 +4,7 @@
 <span>&nbsp;</span>
 [![][AltRepo img]][AltRepo]
 
-<br />
+<hr style="margin: 1rem 0;" />
 
 <a href="http://lpsc.in2p3.fr/" target="_blank" style="margin-right: 2rem;">
 	<img src="https://ami.web.cern.ch/images/logo_lpsc.png" alt="LPSC" height="72" />
