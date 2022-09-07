@@ -1,7 +1,7 @@
 [![][License img]][License]
-<span style="margin-left: 0.5rem;"></span>
+<span style="margin-left: 0.5rem;">&nbsp;</span>
 [![][MainRepo img]][MainRepo]
-<span style="margin-left: 0.5rem;"></span>
+<span style="margin-left: 0.5rem;">&nbsp;</span>
 [![][AltRepo img]][AltRepo]
 
 <hr />
@@ -9,11 +9,11 @@
 <a href="http://lpsc.in2p3.fr/" target="_blank">
 	<img src="https://ami.web.cern.ch/images/logo_lpsc.png" alt="LPSC" height="72" />
 </a>
-<span style="margin-left: 2rem;"></span>
+<span style="margin-left: 2rem;">&nbsp;</span>
 <a href="http://www.in2p3.fr/" target="_blank">
 	<img src="https://ami.web.cern.ch/images/logo_in2p3.png" alt="IN2P3" height="72" />
 </a>
-<span style="margin-left: 2rem;"></span>
+<span style="margin-left: 2rem;">&nbsp;</span>
 <a href="http://www.univ-grenoble-alpes.fr/" target="_blank">
 	<img src="https://ami.web.cern.ch/images/logo_uga.png" alt="UGA" height="72" />
 </a>
