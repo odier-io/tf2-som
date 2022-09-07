@@ -1,5 +1,7 @@
 [![][License img]][License]
+<span style="margin-left: 0.5rem;"></span>
 [![][MainRepo img]][MainRepo]
+<span style="margin-left: 0.5rem;"></span>
 [![][AltRepo img]][AltRepo]
 
 <hr />

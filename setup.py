@@ -31,7 +31,7 @@ if __name__ == '__main__':
                 license = 'CeCILL-C',
                 packages = ['tf_som'],
                 package_data = {'': ['*.md', '*.txt'], 'demo': ['colors.csv', 'demo.ipynb']},
-                install_requires = ['h5py', 'tqdm', 'numpy', 'tensorflow'],
+                install_requires = ['h5py', 'tqdm', 'numpy', 'tensorflow>=2'],
                 platforms = 'any',
             )
 
