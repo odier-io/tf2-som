@@ -14,7 +14,7 @@
 	<img src="https://ami.web.cern.ch/images/logo_in2p3.png" alt="IN2P3" height="72" />
 </a>
 &nbsp;&nbsp;&nbsp;
-<a href="http://www.univ-grenoble-alpes.fr/" target="_blank" style="margin-right: 2rem;">
+<a href="http://www.univ-grenoble-alpes.fr/" target="_blank" style="margin-right: 0rem;">
 	<img src="https://ami.web.cern.ch/images/logo_uga.png" alt="UGA" height="72" />
 </a>
 
