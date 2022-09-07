@@ -30,6 +30,8 @@ if __name__ == '__main__':
                 url = 'https://github.com/odier-xyz/tf2_som/',
                 license = 'CeCILL-C',
                 packages = ['tf_som'],
+                data_files = [('tf_som', ['tf_som/metadata.json'])],
+                include_package_data = True,
                 package_data = {'': ['*.md', '*.txt'], 'demo': ['colors.csv', 'demo.ipynb']},
                 install_requires = ['h5py', 'tqdm', 'numpy', 'tensorflow>=2'],
                 extras_require = {

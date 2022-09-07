@@ -39,9 +39,11 @@ with open(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'metadata.js
 
     metadata = json.load(f)
 
-    version = metadata['version']
-    author_names = metadata['author_names']
-    author_emails = metadata['author_emails']
+    __credits__ = metadata['credits']
+
+    __version__ = metadata['version']
+
+    __author__ = ', '.join(['{} ({})'.format(x[0], x[1]) for x in zip(metadata['author_names'], metadata['author_emails'])])
 
 ########################################################################################################################
 
