@@ -18,10 +18,10 @@
 	<img src="https://ami.web.cern.ch/images/logo_uga.png" alt="UGA" height="72" />
 </a>
 
-TF_SOM
-======
+TF2_SOM
+=======
 
-This is a Tensorflow 2 implementation of the Self Organizing Maps (SOM)
+This is a Tensorflow 2 implementation of the Self Organizing Maps (SOM).
 
 Developers
 ==========
