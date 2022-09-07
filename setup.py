@@ -27,7 +27,7 @@ if __name__ == '__main__':
                 long_description = readme,
                 long_description_content_type = 'text/markdown',
                 keywords = ['som', 'self organizing map', 'machine learning'],
-                url = 'https://github.com/odier-xyz/tf_som/',
+                url = 'https://github.com/odier-xyz/tf2_som/',
                 license = 'CeCILL-C',
                 packages = ['tf_som'],
                 package_data = {'': ['*.md', '*.txt'], 'demo': ['colors.csv', 'demo.ipynb']},
