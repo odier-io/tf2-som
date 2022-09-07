@@ -8,7 +8,7 @@
 #         Nora ACHBAK (nora.achbak@lpsc.in2p3.fr)
 #
 # Repositories: https://gitlab.in2p3.fr/jodier/tf_som/
-#               https://www.github.com/odier.xyz/tf_som/
+#               https://github.com/odier-xyz/tf_som/
 #
 # This software is a computer program whose purpose is to provide an
 # implementation of the Self Organizing Maps (SOM).
