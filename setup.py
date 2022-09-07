@@ -31,13 +31,11 @@ if __name__ == '__main__':
                 license = 'CeCILL-C',
                 packages = ['tf_som'],
                 package_data = {'': ['*.md', '*.txt'], 'demo': ['colors.csv', 'demo.ipynb']},
-                setup_requires=['h5py', 'tqdm', 'numpy', 'tensorflow>=2'],
                 install_requires = ['h5py', 'tqdm', 'numpy', 'tensorflow>=2'],
                 extras_require = {
                     'pandas': ['pandas'],
                     'astropy': ['astropy'],
-                },
-                platforms = 'any',
+                }
             )
 
 ########################################################################################################################
