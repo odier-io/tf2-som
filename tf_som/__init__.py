@@ -117,29 +117,17 @@ class SOM(object):
         reduction task is that it should contain 5 * sqrt(N) neurons
         where N is the number of samples in the dataset to analyze.
 
-        Parameters
-        ----------
-        m:
-            Number of rows of neurons.
-
-        n:
-            Number of columns of neurons.
-
-        dim:
-            Dimensionality of the input data
-
-        radius:
-            Starting value of the neighborhood radius, defaults to max(m, n) / 2.0
-
-        sigma:
-            Coefficient of the standard deviation of the neighborhood function
-
-        epochs:
-            Number of epochs to train for
-
-        decay_function:
-            Function that reduces learning_rate and sigma at each iteration
-            the default function is: 1.0 / (1.0 + 2.0 * epoch / epochs)
+        Parameters:
+        m (int): Number of neuron rows.
+        n (int): Number of neuron columns.
+        dim (int): Dimensionality of the input data.
+        seed (int): Seed of the random generators (default: None).
+        dtype (type): Neural network data type (default: np.float32).
+        learning_rate (float): Starting value of the learning rate (default: 0.3).
+        radius (float): Starting value of the neighborhood radius (default: max(m, n) / 2.0).
+        sigma (float): Fixed standard deviation coefficient of the neighborhood function (default: 1.0).
+        epochs (int): Number of epochs to train for (default: 100).
+        decay_function (function): Function that reduces learning_rate and sigma at each iteration (default: 1.0 / (1.0 + 2.0 * epoch / epochs)).
         """
 
         ################################################################################################################
@@ -209,7 +197,7 @@ class SOM(object):
 
     ####################################################################################################################
 
-    def find_bmus(self, weights, input_vectors, n = 1):
+    def _find_bmus(self, weights, input_vectors, n = 1):
 
         ################################################################################################################
         # COMPUTE DISTANCE SQUARES                                                                                     #
@@ -257,7 +245,7 @@ class SOM(object):
         # BEST MATCHING UNITS                                                                                          #
         ################################################################################################################
 
-        bmus = self.find_bmus(weights, input_vectors, n = 2)
+        bmus = self._find_bmus(weights, input_vectors, n = 2)
 
         ################################################################################################################
         # LEARNING OPERATOR                                                                                            #
@@ -346,7 +334,14 @@ class SOM(object):
 
     ####################################################################################################################
 
-    def train(self, input_vectors, with_tqdm = True):
+    def train(self, input_vectors, progress_bar = True):
+
+        """Trains the trained neural network.
+
+        Parameters:
+        input_vectors (np.array): Training data.
+        progress_bar (bool): Specifying whether a progress bar have to be shown (default: True).
+        """
 
         ################################################################################################################
         # SET RANDOM SEED                                                                                              #
@@ -381,7 +376,7 @@ class SOM(object):
         # TRAIN THE SELF ORGANIZING MAP                                                                                #
         ################################################################################################################
 
-        for epoch in tqdm.tqdm(range(self._epochs), disable = not with_tqdm):
+        for epoch in tqdm.tqdm(range(self._epochs), disable = not progress_bar):
 
             self._train(weights, input_vectors, epoch)
 
@@ -392,6 +387,13 @@ class SOM(object):
     ####################################################################################################################
 
     def save(self, filename, file_format = 'fits'):
+
+        """Saves the trained neural network to a file.
+
+        Parameters:
+        filename (str): Filename.
+        file_format (str): File format (supported formats: (fits, hdf5), default: fits).
+        """
 
         ################################################################################################################
         # FITS FORMAT                                                                                                  #
@@ -445,6 +447,13 @@ class SOM(object):
     ####################################################################################################################
 
     def load(self, filename, file_format = 'fits'):
+
+        """Loads the trained neural network from a file.
+
+        Parameters:
+        filename (str): Filename.
+        file_format (str): File format (supported formats: (fits, hdf5), default: fits).
+        """
 
         ################################################################################################################
         # FITS FORMAT                                                                                                  #
@@ -502,11 +511,15 @@ class SOM(object):
 
     def get_weights(self):
 
+        """Returns the neural network weights (shape = [m * n, dim])."""
+
         return self._weights.reshape((self._m * self._n, self._dim))
 
     ####################################################################################################################
 
     def get_centroids(self):
+
+        """Returns of the neural network weights (shape = [m, n, dim])."""
 
         return self._weights.reshape((self._m, self._n, self._dim))
 
@@ -514,17 +527,45 @@ class SOM(object):
 
     def get_quantization_errors(self):
 
+        """Returns the quantization errors (one value per epoch)."""
+
         return self._quantization_errors
 
     ####################################################################################################################
 
     def get_topographic_errors(self):
 
+        """Returns the topographic errors (one value per epoch)."""
+
         return self._topographic_errors
 
     ####################################################################################################################
 
+    def winners(self, input_vectors):
+
+        """Returns a vector of best matching unit (aka winners) locations and indices for the input.
+
+        Parameters:
+        input_vectors (np.array): Input data.
+        """
+
+        ################################################################################################################
+
+        weights = tf.constant(self._weights, dtype = self._dtype)
+
+        ################################################################################################################
+
+        return self._find_bmus(weights, input_vectors, 1)[0]
+
+    ####################################################################################################################
+
     def input_map(self, input_vectors):
+
+        """Returns a vector containing the coordinates (i,j) of the winner for each input.
+
+        Parameters:
+        input_vectors (np.array): Input data.
+        """
 
         ################################################################################################################
 
@@ -538,7 +579,7 @@ class SOM(object):
 
         idx = 0
 
-        for bmu_location in self.find_bmus(weights, input_vectors, n = 1)[0].locations:
+        for bmu_location in self._find_bmus(weights, input_vectors, n = 1)[0].locations:
 
             _, result[idx] = bmu_location
 
@@ -552,6 +593,12 @@ class SOM(object):
 
     def activation_map(self, input_vectors):
 
+        """Returns a matrix containing the number of times the neuron (i,j) have been winner for the input.
+
+        Parameters:
+        input_vectors (np.array): Input data.
+        """
+
         ################################################################################################################
 
         weights = tf.constant(self._weights, dtype = self._dtype)
@@ -562,7 +609,7 @@ class SOM(object):
 
         ################################################################################################################
 
-        for bmu_index in self.find_bmus(weights, input_vectors, n = 1)[0].indices:
+        for bmu_index in self._find_bmus(weights, input_vectors, n = 1)[0].indices:
 
             result[bmu_index] += 1
 
@@ -573,6 +620,8 @@ class SOM(object):
     ####################################################################################################################
 
     def distance_map(self):
+
+        """Returns the distance map of the neural network weights."""
 
         ################################################################################################################
 
