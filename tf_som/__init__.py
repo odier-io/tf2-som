@@ -55,7 +55,13 @@ with open(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'metadata.js
 
 def setup_tensorflow_for_cpus(num_threads: int = None) -> None:
 
-    """Setups Tensorflow 2 for CPU parallelization."""
+    """Setups Tensorflow 2 for CPU parallelization.
+
+    Arguments
+    ---------
+    num_threads : int
+        Number of threads (default: multiprocessing.cpu_count())
+    """
 
     ####################################################################################################################
 
@@ -85,10 +91,10 @@ def normalize(df, dtype: type = np.float32) -> None:
 
     Arguments
     ---------
-        df: pd.DataFrame
-            Pandas Data Frame.
-        dtype: type
-            Neural network data type (default: np.float32).
+    df : pd.DataFrame
+        Pandas Data Frame.
+    dtype : type
+        Neural network data type (default: np.float32).
     """
 
     result = df.copy()
@@ -139,29 +145,28 @@ class SOM(object):
         reduction task is that it should contain 5 * sqrt(N) neurons
         where N is the number of samples in the dataset to analyze.
 
-        Arguments:
-        ----------
-            m: int
-                Number of neuron rows.
-            n: int
-                Number of neuron columns.
-            dim: int
-                Dimensionality of the input data.
-            seed: int
-                Seed of the random generators (default: None).
-            dtype: type
-                Neural network data type (default: np.float32).
-            learning_rate: float
-                Starting value of the learning rate (default: 0.3).
-            radius: float
-                Starting value of the neighborhood radius (default: max(m, n) / 2.0).
-            sigma: float
-                Fixed standard deviation coefficient of the neighborhood function (default: 1.0).
-            epochs: int
-                Number of epochs to train for (default: 100).
-            decay_function: function
-                Function that reduces learning_rate and sigma at each iteration
-                (default: 1.0 / (1.0 + 2.0 * epoch / epochs)).
+        Arguments
+        ---------
+        m : int
+            Number of neuron rows.
+        n : int
+            Number of neuron columns.
+        dim : int
+            Dimensionality of the input data.
+        seed : int
+            Seed of the random generators (default: None).
+        dtype : type
+            Neural network data type (default: np.float32).
+        learning_rate : float
+            Starting value of the learning rate (default: 0.3).
+        radius : float
+            Starting value of the neighborhood radius (default: max(m, n) / 2.0).
+        sigma : float
+            Fixed standard deviation coefficient of the neighborhood function (default: 1.0).
+        epochs : int
+            Number of epochs to train for (default: 100).
+        decay_function : function
+            Function that reduces learning_rate and sigma at each iteration (default: 1.0 / (1.0 + 2.0 * epoch / epochs)).
         """
 
         ################################################################################################################
@@ -374,10 +379,10 @@ class SOM(object):
 
         Parameters
         ----------
-            input_vectors: np.ndarray
-                Training data.
-            progress_bar: bool
-                Specifying whether a progress bar have to be shown (default: True).
+        input_vectors : np.ndarray
+            Training data.
+        progress_bar : bool
+            Specifying whether a progress bar have to be shown (default: True).
         """
 
         ################################################################################################################
@@ -429,10 +434,10 @@ class SOM(object):
 
         Parameters
         ----------
-            filename: str
-                Filename.
-            file_format: str
-                File format (supported formats: (fits, hdf5), default: fits).
+        filename : str
+            Filename.
+        file_format : str
+            File format (supported formats: (fits, hdf5), default: fits).
         """
 
         ################################################################################################################
@@ -492,10 +497,10 @@ class SOM(object):
 
         Parameters
         ----------
-            filename: str
-                Filename.
-            file_format: str
-                File format (supported formats: (fits, hdf5), default: fits).
+        filename : str
+            Filename.
+        file_format : str
+            File format (supported formats: (fits, hdf5), default: fits).
         """
 
         ################################################################################################################
@@ -629,8 +634,8 @@ class SOM(object):
 
         Parameters
         ----------
-            input_vectors: np.ndarray
-                Input data.
+        input_vectors : np.ndarray
+            Input data.
         """
 
         ################################################################################################################
@@ -649,8 +654,8 @@ class SOM(object):
 
         Parameters
         ----------
-            input_vectors: np.ndarray
-                Input data.
+        input_vectors : np.ndarray
+            Input data.
         """
 
         ################################################################################################################
@@ -683,8 +688,8 @@ class SOM(object):
 
         Parameters
         ----------
-            input_vectors: np.ndarray
-                Input data.
+        input_vectors : np.ndarray
+            Input data.
         """
 
         ################################################################################################################
