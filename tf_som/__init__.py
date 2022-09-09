@@ -23,7 +23,7 @@
 # knowledge of the CeCILL-C license and that you accept its terms.
 ########################################################################################################################
 
-"""This module provides a Tensorflow 2 implementation of the Self Organizing Maps (SOM)."""
+""".. include:: ../README.md"""
 
 ########################################################################################################################
 
@@ -87,12 +87,12 @@ def setup_tensorflow_for_cpus(num_threads: int = None) -> None:
 
 def normalize(df, dtype: type = np.float32) -> None:
 
-    """Normalizes a Pandas Data Frame (DF).
+    """Normalizes a Pandas data frame.
 
     Arguments
     ---------
     df : pd.DataFrame
-        Pandas Data Frame.
+        Pandas data frame.
     dtype : type
         Neural network data type (default: np.float32).
     """
@@ -625,7 +625,7 @@ class SOM(object):
 
     def winners(self, input_vectors: np.ndarray) -> BMUs:
 
-        """Returns a vector of best matching unit (aka winners) locations and indices for the input.
+        """Returns a vector of best matching unit locations and indices for the input.
 
         Parameters
         ----------
@@ -645,7 +645,7 @@ class SOM(object):
 
     def input_map(self, input_vectors: np.ndarray) -> np.ndarray:
 
-        """Returns a vector containing the coordinates (i,j) of the winner for each input.
+        """Returns a vector containing the coordinates (i,j) of the winner neuron for each input.
 
         Parameters
         ----------
