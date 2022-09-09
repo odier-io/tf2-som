@@ -77,7 +77,7 @@ def setup_tensorflow_for_cpus(num_threads: int = None) -> None:
 
 def normalize(df, dtype: type = np.float32) -> None:
 
-    """Normalize a Pandas Data Frame (DF) for using it with TF2_SOM.
+    """Normalizes a Pandas Data Frame (DF) for using it with TF2_SOM.
 
     Arguments
     ---------
