@@ -87,7 +87,7 @@ def setup_tensorflow_for_cpus(num_threads: int = None) -> None:
 
 def normalize(df, dtype: type = np.float32) -> None:
 
-    """Normalizes a Pandas Data Frame (DF) for using it with TF2_SOM.
+    """Normalizes a Pandas Data Frame (DF).
 
     Arguments
     ---------
@@ -114,6 +114,20 @@ def _asymptotic_decay(epoch: int, epochs: int) -> float:
 
     return 1.0 / (1.0 + 2.0 * epoch / epochs)
 
+####################################################################################################################
+
+class BMUs(object):
+
+    """Best Matching Units"""
+
+    def __init__(self, indices: np.ndarray, locations: np.ndarray):
+
+        #: Array of indices
+        self.indices: np.ndarray = indices
+
+        #: Array of locations
+        self.locations: np.ndarray = locations
+
 ########################################################################################################################
 
 class SOM(object):
@@ -122,28 +136,16 @@ class SOM(object):
 
     ####################################################################################################################
 
-    class BMUs(object):
-
-        """Best Matching Units"""
-
-        def __init__(self, indices: np.ndarray, locations: np.ndarray):
-
-            self.indices: np.ndarray = indices
-
-            self.locations: np.ndarray = locations
-
-    ####################################################################################################################
-
     def __init__(self,
                  m: int, n: int, dim: int,
                  seed: float = None, dtype: type = np.float32,
-                 learning_rate: float = None, radius: float = None, sigma: float = None, epochs: int = 100, decay_function = _asymptotic_decay):
+                 learning_rate: float = None, sigma: float = None, epochs: int = 100, decay_function = _asymptotic_decay):
 
         """Initializes a Self Organizing Maps.
 
-        A rule of thumb to set the size of the grid for a dimensionality
-        reduction task is that it should contain 5 * sqrt(N) neurons
-        where N is the number of samples in the dataset to analyze.
+        A rule of thumb to set the size of the grid for a dimensionality reduction
+        task is that it should contain \\( 5\\sqrt{N} \\) neurons where N is the
+        number of samples in the dataset to analyze.
 
         Arguments
         ---------
@@ -159,14 +161,12 @@ class SOM(object):
             Neural network data type (default: np.float32).
         learning_rate : float
             Starting value of the learning rate (default: 0.3).
-        radius : float
-            Starting value of the neighborhood radius (default: max(m, n) / 2.0).
         sigma : float
-            Fixed standard deviation coefficient of the neighborhood function (default: 1.0).
+            Starting value of the neighborhood radius (default: max(m, n) / 2.0).
         epochs : int
             Number of epochs to train for (default: 100).
         decay_function : function
-            Function that reduces learning_rate and sigma at each iteration (default: 1.0 / (1.0 + 2.0 * epoch / epochs)).
+            Function that reduces learning_rate and sigma at each iteration (default: \\( 1 / \\left(1 + 2\\frac{epoch}{epochs}\\right) \\)).
         """
 
         ################################################################################################################
@@ -185,8 +185,7 @@ class SOM(object):
         ################################################################################################################
 
         self._learning_rate = 0.3 if learning_rate is None else dtype(learning_rate)
-        self._radius = max(m, n) / 2.0 if radius is None else dtype(radius)
-        self._sigma = 1.0 if sigma is None else dtype(sigma)
+        self._sigma = max(m, n) / 2.0 if sigma is None else dtype(sigma)
 
         ################################################################################################################
 
@@ -227,7 +226,7 @@ class SOM(object):
     ####################################################################################################################
 
     @staticmethod
-    def _argsort_n(x: np.ndarray, n: np.ndarray) -> np.ndarray:
+    def _argsort_n(x: np.ndarray, n: int) -> np.ndarray:
 
         if n > 1:
             return tf.nn.top_k(tf.negative(x), k = n).indices
@@ -262,7 +261,7 @@ class SOM(object):
 
             bmu_locations = tf.gather(self._topography, bmu_indices)
 
-            result.append(SOM.BMUs(bmu_indices, bmu_locations))
+            result.append(BMUs(bmu_indices, bmu_locations))
 
         ################################################################################################################
 
@@ -293,7 +292,7 @@ class SOM(object):
         decay_function = self._decay_function(epoch, self._epochs)
 
         current_learning_rate = tf.cast(self._learning_rate * decay_function, dtype = self._dtype)
-        current_radius        = tf.cast(self._radius        * decay_function, dtype = self._dtype)
+        current_radius        = tf.cast(self._sigma         * decay_function, dtype = self._dtype)
 
         ################################################################################################################
 
@@ -311,7 +310,7 @@ class SOM(object):
 
         neighbourhood_func = tf.exp(tf.divide(
             tf.negative(tf.cast(bmu_distance_squares, self._dtype)),
-            tf.multiply(self._two, tf.square(tf.multiply(current_radius, self._sigma)))
+            tf.multiply(self._two, tf.square(current_radius))
         ))
 
         ################################################################################################################
@@ -375,7 +374,7 @@ class SOM(object):
 
     def train(self, input_vectors: np.ndarray, progress_bar: bool = True) -> None:
 
-        """Trains the trained neural network.
+        """Trains the trained neural network. A batch formulation of updating weights is used: $$ \\mathrm{bmu}(x)=\\underset{i}{\\mathrm{arg\\,min}}\\lVert x-w_i(e)\\rVert $$ $$ n_j=\\sum_{x\\in\\mathcal{D}}\\left\\{\\begin{array}{ll}1&\\mathrm{bmu}(x)=j\\\\0&\\mathrm{otherwise}\\end{array}\\right. $$ $$ \\Theta_{ji}(e)=\\alpha(e)\\cdot\\exp\\left(-\\frac{\\lVert j-i\\rVert}{2\\sigma^2(e)}\\right) $$ $$ \\boxed{w_i(e+1)=\\frac{\\sum_{j=1}^{n}n_j\\Theta_{ji}(e+1)x_j}{\\sum_{j=1}^{n}n_j\\Theta_{ji}(e+1)}} $$ where, at epoch \\( e \\), \\( \\alpha(e)=\\alpha_0\\mathrm{decay\\,function}(e) \\) is the learning rate and \\( \\sigma(e)=\\sigma_0\\mathrm{decay\\,function}(e) \\) the neighborhood coefficient.
 
         Parameters
         ----------
@@ -458,7 +457,6 @@ class SOM(object):
             ]))
 
             hdu0.header['lrnrate'] = self._learning_rate
-            hdu0.header['radius'] = self._radius
             hdu0.header['sigma'] = self._sigma
             hdu2.header['epochs'] = self._epochs
 
@@ -475,7 +473,6 @@ class SOM(object):
             with h5py.File(filename, 'w') as f:
 
                 f.attrs['lrnrate'] = self._learning_rate
-                f.attrs['radius'] = self._radius
                 f.attrs['sigma'] = self._sigma
                 f.attrs['epochs'] = self._epochs
 
@@ -516,7 +513,6 @@ class SOM(object):
                 self._m, self._n, self._dim = hdus[1].data.shape
 
                 self._learning_rate = hdus[0].header['lrnrate']
-                self._radius = hdus[0].header['radius']
                 self._sigma = hdus[0].header['sigma']
                 self._epochs = hdus[2].header['epochs']
 
@@ -537,7 +533,6 @@ class SOM(object):
                 self._m, self._n, self._dim = f['weights'].shape
 
                 self._learning_rate = f.attrs['lrnrate']
-                self._radius = f.attrs['radius']
                 self._sigma = f.attrs['sigma']
                 self._epochs = f.attrs['epochs']
 
@@ -554,6 +549,45 @@ class SOM(object):
         ################################################################################################################
 
         self._rebuild_topography()
+
+    ####################################################################################################################
+
+    def distance_map(self) -> np.ndarray:
+
+        """Returns the distance map of the neural network weights."""
+
+        ################################################################################################################
+
+        centroids = self.get_centroids()
+
+        ################################################################################################################
+
+        result = np.full(shape = (centroids.shape[0], centroids.shape[1], 8), fill_value = np.nan, dtype = self._dtype)
+
+        ii = 2 * [[0, -1, -1, -1, 0, +1, +1, +1]]
+        jj = 2 * [[-1, -1, 0, +1, +1, +1, 0, -1]]
+
+        for x in range(centroids.shape[0]):
+
+            for y in range(centroids.shape[1]):
+
+                w_2 = centroids[x, y]
+
+                e = y % 2 == 0
+
+                for k, (i, j) in enumerate(zip(ii[e], jj[e])):
+
+                    if 0 <= x + i < centroids.shape[0]\
+                       and                            \
+                       0 <= y + j < centroids.shape[1]:
+
+                        diff_w_2_w_1 = w_2 - centroids[x + i, y + j]
+
+                        result[x, y, k] = np.sqrt(np.dot(diff_w_2_w_1, diff_w_2_w_1.T))
+
+        result = np.nansum(result, axis = 2)
+
+        return result / result.max()
 
     ####################################################################################################################
 
@@ -586,45 +620,6 @@ class SOM(object):
         """Returns the topographic errors (one value per epoch)."""
 
         return self._topographic_errors
-
-    ####################################################################################################################
-
-    def distance_map(self) -> np.ndarray:
-
-        """Returns the distance map of the neural network weights."""
-
-        ################################################################################################################
-
-        centroids = self.get_centroids()
-
-        ################################################################################################################
-
-        result = np.full(shape = (centroids.shape[0], centroids.shape[1], 8), fill_value = np.nan, dtype = self._dtype)
-
-        ii = 2 * [[0, -1, -1, -1, 0, +1, +1, +1]]
-        jj = 2 * [[-1, -1, 0, +1, +1, +1, 0, -1]]
-
-        for x in range(centroids.shape[0]):
-
-            for y in range(centroids.shape[1]):
-
-                w_2 = centroids[x, y]
-
-                e = y % 2 == 0
-
-                for k, (i, j) in enumerate(zip(ii[e], jj[e])):
-
-                    if 0 <= x + i < centroids.shape[0] \
-                            and \
-                            0 <= y + j < centroids.shape[1]:
-
-                        diff_w_2_w_1 = w_2 - centroids[x + i, y + j]
-
-                        result[x, y, k] = np.sqrt(np.dot(diff_w_2_w_1, diff_w_2_w_1.T))
-
-        result = np.nansum(result, axis = 2)
-
-        return result / result.max()
 
     ####################################################################################################################
 
