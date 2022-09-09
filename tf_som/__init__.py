@@ -25,6 +25,8 @@
 
 import os
 import json
+import typing
+
 import tqdm
 
 ########################################################################################################################
@@ -47,7 +49,9 @@ with open(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'metadata.js
 
 ########################################################################################################################
 
-def setup_tensorflow_for_cpus(num_threads = None):
+def setup_tensorflow_for_cpus(num_threads: int = None) -> None:
+
+    """Setups Tensorflow 2 for CPU parallelization."""
 
     ####################################################################################################################
 
@@ -71,7 +75,17 @@ def setup_tensorflow_for_cpus(num_threads = None):
 
 ########################################################################################################################
 
-def normalize(df, dtype = np.float32):
+def normalize(df, dtype: type = np.float32) -> None:
+
+    """Normalize a Pandas Data Frame (DF) for using it with TF2_SOM.
+
+    Arguments
+    ---------
+        df: pd.DataFrame
+            Pandas Data Frame.
+        dtype: type
+            Neural network data type (default: np.float32).
+    """
 
     result = df.copy()
 
@@ -86,7 +100,7 @@ def normalize(df, dtype = np.float32):
 
 ########################################################################################################################
 
-def asymptotic_decay(epoch, epochs):
+def _asymptotic_decay(epoch: int, epochs: int) -> float:
 
     return 1.0 / (1.0 + 2.0 * epoch / epochs)
 
@@ -94,22 +108,26 @@ def asymptotic_decay(epoch, epochs):
 
 class SOM(object):
 
+    """Tensorflow 2 implementation of the Self Organizing Maps (SOM)."""
+
     ####################################################################################################################
 
-    class BMU(object):
+    class BMUs(object):
 
-        def __init__(self, indices, locations):
+        """Best Matching Units"""
 
-            self.indices = indices
+        def __init__(self, indices: np.ndarray, locations: np.ndarray):
 
-            self.locations = locations
+            self.indices: np.ndarray = indices
+
+            self.locations: np.ndarray = locations
 
     ####################################################################################################################
 
     def __init__(self,
-                 m, n, dim,
-                 seed = None, dtype = np.float32,
-                 learning_rate = None, radius = None, sigma = None, epochs = 100, decay_function = asymptotic_decay):
+                 m: int, n: int, dim: int,
+                 seed: float = None, dtype: type = np.float32,
+                 learning_rate: float = None, radius: float = None, sigma: float = None, epochs: int = 100, decay_function = _asymptotic_decay):
 
         """Initializes a Self Organizing Maps.
 
@@ -117,17 +135,29 @@ class SOM(object):
         reduction task is that it should contain 5 * sqrt(N) neurons
         where N is the number of samples in the dataset to analyze.
 
-        Parameters:
-        m (int): Number of neuron rows.
-        n (int): Number of neuron columns.
-        dim (int): Dimensionality of the input data.
-        seed (int): Seed of the random generators (default: None).
-        dtype (type): Neural network data type (default: np.float32).
-        learning_rate (float): Starting value of the learning rate (default: 0.3).
-        radius (float): Starting value of the neighborhood radius (default: max(m, n) / 2.0).
-        sigma (float): Fixed standard deviation coefficient of the neighborhood function (default: 1.0).
-        epochs (int): Number of epochs to train for (default: 100).
-        decay_function (function): Function that reduces learning_rate and sigma at each iteration (default: 1.0 / (1.0 + 2.0 * epoch / epochs)).
+        Arguments:
+        ----------
+            m: int
+                Number of neuron rows.
+            n: int
+                Number of neuron columns.
+            dim: int
+                Dimensionality of the input data.
+            seed: int
+                Seed of the random generators (default: None).
+            dtype: type
+                Neural network data type (default: np.float32).
+            learning_rate: float
+                Starting value of the learning rate (default: 0.3).
+            radius: float
+                Starting value of the neighborhood radius (default: max(m, n) / 2.0).
+            sigma: float
+                Fixed standard deviation coefficient of the neighborhood function (default: 1.0).
+            epochs: int
+                Number of epochs to train for (default: 100).
+            decay_function: function
+                Function that reduces learning_rate and sigma at each iteration
+                (default: 1.0 / (1.0 + 2.0 * epoch / epochs)).
         """
 
         ################################################################################################################
@@ -177,18 +207,18 @@ class SOM(object):
     ####################################################################################################################
 
     @staticmethod
-    def _neuron_locations(m, n):
+    def _neuron_locations(m: int, n: int) -> typing.Iterator[typing.List[int]]:
 
         for i in range(m):
 
             for j in range(n):
 
-                yield np.array([i, j])
+                yield [i, j]
 
     ####################################################################################################################
 
     @staticmethod
-    def _argsort_n(x, n):
+    def _argsort_n(x: np.ndarray, n: np.ndarray) -> np.ndarray:
 
         if n > 1:
             return tf.nn.top_k(tf.negative(x), k = n).indices
@@ -197,7 +227,7 @@ class SOM(object):
 
     ####################################################################################################################
 
-    def _find_bmus(self, weights, input_vectors, n = 1):
+    def _find_bmus(self, weights: np.ndarray, input_vectors: np.ndarray, n: int = 1) -> typing.List[BMUs]:
 
         ################################################################################################################
         # COMPUTE DISTANCE SQUARES                                                                                     #
@@ -223,7 +253,7 @@ class SOM(object):
 
             bmu_locations = tf.gather(self._topography, bmu_indices)
 
-            result.append(SOM.BMU(bmu_indices, bmu_locations))
+            result.append(SOM.BMUs(bmu_indices, bmu_locations))
 
         ################################################################################################################
 
@@ -231,7 +261,7 @@ class SOM(object):
 
     ####################################################################################################################
 
-    def _train(self, weights, input_vectors, epoch):
+    def _train(self, weights: np.ndarray, input_vectors: np.ndarray, epoch: int) -> None:
 
         ################################################################################################################
         # SHUFFLE INPUT VECTORS                                                                                        #
@@ -334,13 +364,16 @@ class SOM(object):
 
     ####################################################################################################################
 
-    def train(self, input_vectors, progress_bar = True):
+    def train(self, input_vectors: np.ndarray, progress_bar: bool = True) -> None:
 
         """Trains the trained neural network.
 
-        Parameters:
-        input_vectors (np.array): Training data.
-        progress_bar (bool): Specifying whether a progress bar have to be shown (default: True).
+        Parameters
+        ----------
+            input_vectors: np.ndarray
+                Training data.
+            progress_bar: bool
+                Specifying whether a progress bar have to be shown (default: True).
         """
 
         ################################################################################################################
@@ -386,13 +419,16 @@ class SOM(object):
 
     ####################################################################################################################
 
-    def save(self, filename, file_format = 'fits'):
+    def save(self, filename: str, file_format: str = 'fits') -> None:
 
         """Saves the trained neural network to a file.
 
-        Parameters:
-        filename (str): Filename.
-        file_format (str): File format (supported formats: (fits, hdf5), default: fits).
+        Parameters
+        ----------
+            filename: str
+                Filename.
+            file_format: str
+                File format (supported formats: (fits, hdf5), default: fits).
         """
 
         ################################################################################################################
@@ -446,13 +482,16 @@ class SOM(object):
 
     ####################################################################################################################
 
-    def load(self, filename, file_format = 'fits'):
+    def load(self, filename: str, file_format: str = 'fits') -> None:
 
         """Loads the trained neural network from a file.
 
-        Parameters:
-        filename (str): Filename.
-        file_format (str): File format (supported formats: (fits, hdf5), default: fits).
+        Parameters
+        ----------
+            filename: str
+                Filename.
+            file_format: str
+                File format (supported formats: (fits, hdf5), default: fits).
         """
 
         ################################################################################################################
@@ -509,7 +548,7 @@ class SOM(object):
 
     ####################################################################################################################
 
-    def get_weights(self):
+    def get_weights(self) -> np.ndarray:
 
         """Returns the neural network weights (shape = [m * n, dim])."""
 
@@ -517,7 +556,7 @@ class SOM(object):
 
     ####################################################################################################################
 
-    def get_centroids(self):
+    def get_centroids(self) -> np.ndarray:
 
         """Returns of the neural network weights (shape = [m, n, dim])."""
 
@@ -525,7 +564,7 @@ class SOM(object):
 
     ####################################################################################################################
 
-    def get_quantization_errors(self):
+    def get_quantization_errors(self) -> np.ndarray:
 
         """Returns the quantization errors (one value per epoch)."""
 
@@ -533,7 +572,7 @@ class SOM(object):
 
     ####################################################################################################################
 
-    def get_topographic_errors(self):
+    def get_topographic_errors(self) -> np.ndarray:
 
         """Returns the topographic errors (one value per epoch)."""
 
@@ -541,12 +580,53 @@ class SOM(object):
 
     ####################################################################################################################
 
-    def winners(self, input_vectors):
+    def distance_map(self) -> np.ndarray:
+
+        """Returns the distance map of the neural network weights."""
+
+        ################################################################################################################
+
+        centroids = self.get_centroids()
+
+        ################################################################################################################
+
+        result = np.full(shape = (centroids.shape[0], centroids.shape[1], 8), fill_value = np.nan, dtype = self._dtype)
+
+        ii = 2 * [[0, -1, -1, -1, 0, +1, +1, +1]]
+        jj = 2 * [[-1, -1, 0, +1, +1, +1, 0, -1]]
+
+        for x in range(centroids.shape[0]):
+
+            for y in range(centroids.shape[1]):
+
+                w_2 = centroids[x, y]
+
+                e = y % 2 == 0
+
+                for k, (i, j) in enumerate(zip(ii[e], jj[e])):
+
+                    if 0 <= x + i < centroids.shape[0] \
+                            and \
+                            0 <= y + j < centroids.shape[1]:
+
+                        diff_w_2_w_1 = w_2 - centroids[x + i, y + j]
+
+                        result[x, y, k] = np.sqrt(np.dot(diff_w_2_w_1, diff_w_2_w_1.T))
+
+        result = np.nansum(result, axis = 2)
+
+        return result / result.max()
+
+    ####################################################################################################################
+
+    def winners(self, input_vectors: np.ndarray) -> BMUs:
 
         """Returns a vector of best matching unit (aka winners) locations and indices for the input.
 
-        Parameters:
-        input_vectors (np.array): Input data.
+        Parameters
+        ----------
+            input_vectors: np.ndarray
+                Input data.
         """
 
         ################################################################################################################
@@ -559,12 +639,14 @@ class SOM(object):
 
     ####################################################################################################################
 
-    def input_map(self, input_vectors):
+    def input_map(self, input_vectors: np.ndarray) -> np.ndarray:
 
         """Returns a vector containing the coordinates (i,j) of the winner for each input.
 
-        Parameters:
-        input_vectors (np.array): Input data.
+        Parameters
+        ----------
+            input_vectors: np.ndarray
+                Input data.
         """
 
         ################################################################################################################
@@ -591,12 +673,14 @@ class SOM(object):
 
     ####################################################################################################################
 
-    def activation_map(self, input_vectors):
+    def activation_map(self, input_vectors: np.ndarray) -> np.ndarray:
 
         """Returns a matrix containing the number of times the neuron (i,j) have been winner for the input.
 
-        Parameters:
-        input_vectors (np.array): Input data.
+        Parameters
+        ----------
+            input_vectors: np.ndarray
+                Input data.
         """
 
         ################################################################################################################
@@ -616,44 +700,5 @@ class SOM(object):
         ################################################################################################################
 
         return result.reshape(self._m, self._n)
-
-    ####################################################################################################################
-
-    def distance_map(self):
-
-        """Returns the distance map of the neural network weights."""
-
-        ################################################################################################################
-
-        centroids = self.get_centroids()
-
-        ################################################################################################################
-
-        result = np.full(shape = (centroids.shape[0], centroids.shape[1], 8), fill_value = np.nan, dtype = self._dtype)
-
-        ii = 2 * [[0, -1, -1, -1, 0, +1, +1, +1]]
-        jj = 2 * [[-1, -1, 0, +1, +1, +1, 0, -1]]
-
-        for x in range(centroids.shape[0]):
-
-            for y in range(centroids.shape[1]):
-
-                w_2 = centroids[x, y]
-
-                e = y % 2 == 0
-
-                for k, (i, j) in enumerate(zip(ii[e], jj[e])):
-
-                    if 0 <= x + i < centroids.shape[0]\
-                       and                            \
-                       0 <= y + j < centroids.shape[1]:
-
-                        diff_w_2_w_1 = w_2 - centroids[x + i, y + j]
-
-                        result[x, y, k] = np.sqrt(np.dot(diff_w_2_w_1, diff_w_2_w_1.T))
-
-        result = np.nansum(result, axis = 2)
-
-        return result / result.max()
 
 ########################################################################################################################
