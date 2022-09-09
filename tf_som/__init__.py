@@ -23,6 +23,10 @@
 # knowledge of the CeCILL-C license and that you accept its terms.
 ########################################################################################################################
 
+"""This module provides a Tensorflow 2 implementation of the Self Organizing Maps (SOM)."""
+
+########################################################################################################################
+
 import os
 import json
 import typing
