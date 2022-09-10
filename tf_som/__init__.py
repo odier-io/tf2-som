@@ -23,7 +23,28 @@
 # knowledge of the CeCILL-C license and that you accept its terms.
 ########################################################################################################################
 
-""".. include:: ../README.md"""
+""".. include:: ../docs/header.md
+
+## Package **tf2-som**
+
+**tf2-som** is a Tensorflow 2 implementation of the Self Organizing Maps (SOM).
+
+### Installing **tf2-som**
+
+```
+pip3 install tf2-som
+```
+
+### Importing **tf2-som**
+
+```
+import tf_som
+```
+
+### Authors
+- Jérôme ODIER (jerome.odier@lpsc.in2p3.fr)
+- Nora ACHBAK (nora.achbak@lpsc.in2p3.fr)
+"""
 
 ########################################################################################################################
 
