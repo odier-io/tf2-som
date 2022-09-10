@@ -17,7 +17,7 @@ TF2-SOM
 
 This is a fast Tensorflow 2 implementation of the Self Organizing Maps (SOM).
 
-<img src="https://github.com/odier-xyz/tf2-som/raw/master/docs/som.png" alt="som" height="250" />
+<img src="https://odier-xyz.github.io/tf2-som/som.png" alt="som" height="250" />
 
 Documentation
 =============
