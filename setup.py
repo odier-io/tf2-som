@@ -37,6 +37,7 @@ if __name__ == '__main__':
                 extras_require = {
                     'pandas': ['pandas'],
                     'astropy': ['astropy'],
+                    'matplotlib': ['matplotlib'],
                 }
             )
 
