@@ -636,7 +636,7 @@ class SOM(object):
 
     def get_quantization_errors(self) -> np.ndarray:
 
-        """Returns the quantization errors (one value per epoch)."""
+        """Returns the quantization errors (one value per epoch). $$ c=\\mathrm{bmu}=\\underset{i}{\\mathrm{arg\\,min}}\\lVert x-w_i\\rVert $$ $$ \\boxed{e_Q=\\sum_{i}\\lVert x_i-w_c\\rVert^2} $$"""
 
         return self._quantization_errors
 
@@ -644,7 +644,7 @@ class SOM(object):
 
     def get_topographic_errors(self) -> np.ndarray:
 
-        """Returns the topographic errors (one value per epoch)."""
+        """Returns the topographic errors (one value per epoch). $$ c_n=\\mathrm{n^\\mathrm{th}\\,bmu}=\\underset{i}{\\mathrm{arg\\,min}_n}\\lVert x-w_i\\rVert $$ $$ t(x)=\\left\\{\\begin{array}{ll}1&\\lVert c_1-c_2\\rVert<\\sqrt{2}\\\\0&\\mathrm{otherwise}\\end{array}\\right. $$ $$ \\boxed{e_t=\\frac{1}{\\mathcal{D}}\\sum_{x\\in\\mathcal{D}}t(x)} $$"""
 
         return self._topographic_errors
 
