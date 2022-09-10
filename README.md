@@ -17,6 +17,8 @@ TF2-SOM
 
 This is a Tensorflow 2 implementation of the Self Organizing Maps (SOM).
 
+<img src="docs/som.png" alt="som" height="250" />
+
 Documentation
 =============
 
