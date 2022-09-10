@@ -29,6 +29,8 @@
 
 **tf2-som** is a Tensorflow 2 implementation of the Self Organizing Maps (SOM).
 
+<img src="som.png" alt="som" height="250" />
+
 ### Installing **tf2-som**
 ```sh
 pip3 install tf2-som
