@@ -636,7 +636,7 @@ class SOM(object):
 
     def get_quantization_errors(self) -> np.ndarray:
 
-        """Returns the quantization errors (one value per epoch). $$ c=\\mathrm{bmu}=\\underset{i}{\\mathrm{arg\\,min}}\\lVert x-w_i\\rVert $$ $$ \\boxed{e_Q=\\sum_{i}\\lVert x_i-w_c\\rVert^2} $$"""
+        """Returns the quantization errors (one value per epoch). $$ c_1=\\mathrm{1^\\mathrm{st}\\,bmu}=\\underset{i}{\\mathrm{arg\\,min}_1}\\lVert x-w_i\\rVert $$ $$ \\boxed{e_Q=\\sum_{i}\\lVert x_i-w_{c_1}\\rVert^2} $$"""
 
         return self._quantization_errors
 
@@ -674,7 +674,7 @@ class SOM(object):
 
     def input_map(self, input_vectors: np.ndarray) -> np.ndarray:
 
-        """Returns a vector containing the coordinates (i,j) of the winner neuron for each input.
+        """Returns a vector containing the coordinates (i, j) of the winner neuron for each input.
 
         Parameters
         ----------
@@ -710,7 +710,7 @@ class SOM(object):
 
     def activation_map(self, input_vectors: np.ndarray) -> np.ndarray:
 
-        """Returns a matrix containing the number of times the neuron (i,j) have been winner for the input.
+        """Returns a matrix containing the number of times the neuron (i, j) have been winner for the input.
 
         Parameters
         ----------

@@ -694,7 +694,7 @@ class SOM(object):
 
     def get_quantization_errors(self) -&gt; np.ndarray:
 
-        &#34;&#34;&#34;Returns the quantization errors (one value per epoch). $$ c=\\mathrm{bmu}=\\underset{i}{\\mathrm{arg\\,min}}\\lVert x-w_i\\rVert $$ $$ \\boxed{e_Q=\\sum_{i}\\lVert x_i-w_c\\rVert^2} $$&#34;&#34;&#34;
+        &#34;&#34;&#34;Returns the quantization errors (one value per epoch). $$ c_1=\\mathrm{1^\\mathrm{st}\\,bmu}=\\underset{i}{\\mathrm{arg\\,min}_1}\\lVert x-w_i\\rVert $$ $$ \\boxed{e_Q=\\sum_{i}\\lVert x_i-w_{c_1}\\rVert^2} $$&#34;&#34;&#34;
 
         return self._quantization_errors
 
@@ -732,7 +732,7 @@ class SOM(object):
 
     def input_map(self, input_vectors: np.ndarray) -&gt; np.ndarray:
 
-        &#34;&#34;&#34;Returns a vector containing the coordinates (i,j) of the winner neuron for each input.
+        &#34;&#34;&#34;Returns a vector containing the coordinates (i, j) of the winner neuron for each input.
 
         Parameters
         ----------
@@ -768,7 +768,7 @@ class SOM(object):
 
     def activation_map(self, input_vectors: np.ndarray) -&gt; np.ndarray:
 
-        &#34;&#34;&#34;Returns a matrix containing the number of times the neuron (i,j) have been winner for the input.
+        &#34;&#34;&#34;Returns a matrix containing the number of times the neuron (i, j) have been winner for the input.
 
         Parameters
         ----------
@@ -1447,7 +1447,7 @@ number of samples in the dataset to analyze.</p>
 
     def get_quantization_errors(self) -&gt; np.ndarray:
 
-        &#34;&#34;&#34;Returns the quantization errors (one value per epoch). $$ c=\\mathrm{bmu}=\\underset{i}{\\mathrm{arg\\,min}}\\lVert x-w_i\\rVert $$ $$ \\boxed{e_Q=\\sum_{i}\\lVert x_i-w_c\\rVert^2} $$&#34;&#34;&#34;
+        &#34;&#34;&#34;Returns the quantization errors (one value per epoch). $$ c_1=\\mathrm{1^\\mathrm{st}\\,bmu}=\\underset{i}{\\mathrm{arg\\,min}_1}\\lVert x-w_i\\rVert $$ $$ \\boxed{e_Q=\\sum_{i}\\lVert x_i-w_{c_1}\\rVert^2} $$&#34;&#34;&#34;
 
         return self._quantization_errors
 
@@ -1485,7 +1485,7 @@ number of samples in the dataset to analyze.</p>
 
     def input_map(self, input_vectors: np.ndarray) -&gt; np.ndarray:
 
-        &#34;&#34;&#34;Returns a vector containing the coordinates (i,j) of the winner neuron for each input.
+        &#34;&#34;&#34;Returns a vector containing the coordinates (i, j) of the winner neuron for each input.
 
         Parameters
         ----------
@@ -1521,7 +1521,7 @@ number of samples in the dataset to analyze.</p>
 
     def activation_map(self, input_vectors: np.ndarray) -&gt; np.ndarray:
 
-        &#34;&#34;&#34;Returns a matrix containing the number of times the neuron (i,j) have been winner for the input.
+        &#34;&#34;&#34;Returns a matrix containing the number of times the neuron (i, j) have been winner for the input.
 
         Parameters
         ----------
@@ -1861,14 +1861,14 @@ number of samples in the dataset to analyze.</p>
 <span>def <span class="ident">get_quantization_errors</span></span>(<span>self) ‑> numpy.ndarray</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Returns the quantization errors (one value per epoch). <span><span class="MathJax_Preview"> c=\mathrm{bmu}=\underset{i}{\mathrm{arg\,min}}\lVert x-w_i\rVert </span><script type="math/tex; mode=display"> c=\mathrm{bmu}=\underset{i}{\mathrm{arg\,min}}\lVert x-w_i\rVert </script></span> <span><span class="MathJax_Preview"> \boxed{e_Q=\sum_{i}\lVert x_i-w_c\rVert^2} </span><script type="math/tex; mode=display"> \boxed{e_Q=\sum_{i}\lVert x_i-w_c\rVert^2} </script></span></p></div>
+<div class="desc"><p>Returns the quantization errors (one value per epoch). <span><span class="MathJax_Preview"> c_1=\mathrm{1^\mathrm{st}\,bmu}=\underset{i}{\mathrm{arg\,min}_1}\lVert x-w_i\rVert </span><script type="math/tex; mode=display"> c_1=\mathrm{1^\mathrm{st}\,bmu}=\underset{i}{\mathrm{arg\,min}_1}\lVert x-w_i\rVert </script></span> <span><span class="MathJax_Preview"> \boxed{e_Q=\sum_{i}\lVert x_i-w_{c_1}\rVert^2} </span><script type="math/tex; mode=display"> \boxed{e_Q=\sum_{i}\lVert x_i-w_{c_1}\rVert^2} </script></span></p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def get_quantization_errors(self) -&gt; np.ndarray:
 
-    &#34;&#34;&#34;Returns the quantization errors (one value per epoch). $$ c=\\mathrm{bmu}=\\underset{i}{\\mathrm{arg\\,min}}\\lVert x-w_i\\rVert $$ $$ \\boxed{e_Q=\\sum_{i}\\lVert x_i-w_c\\rVert^2} $$&#34;&#34;&#34;
+    &#34;&#34;&#34;Returns the quantization errors (one value per epoch). $$ c_1=\\mathrm{1^\\mathrm{st}\\,bmu}=\\underset{i}{\\mathrm{arg\\,min}_1}\\lVert x-w_i\\rVert $$ $$ \\boxed{e_Q=\\sum_{i}\\lVert x_i-w_{c_1}\\rVert^2} $$&#34;&#34;&#34;
 
     return self._quantization_errors</code></pre>
 </details>
@@ -1928,7 +1928,7 @@ number of samples in the dataset to analyze.</p>
 <span>def <span class="ident">input_map</span></span>(<span>self, input_vectors: numpy.ndarray) ‑> numpy.ndarray</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Returns a vector containing the coordinates (i,j) of the winner neuron for each input.</p>
+<div class="desc"><p>Returns a vector containing the coordinates (i, j) of the winner neuron for each input.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt><strong><code>input_vectors</code></strong> :&ensp;<code>np.ndarray</code></dt>
@@ -1940,7 +1940,7 @@ number of samples in the dataset to analyze.</p>
 </summary>
 <pre><code class="python">def input_map(self, input_vectors: np.ndarray) -&gt; np.ndarray:
 
-    &#34;&#34;&#34;Returns a vector containing the coordinates (i,j) of the winner neuron for each input.
+    &#34;&#34;&#34;Returns a vector containing the coordinates (i, j) of the winner neuron for each input.
 
     Parameters
     ----------
@@ -1977,7 +1977,7 @@ number of samples in the dataset to analyze.</p>
 <span>def <span class="ident">activation_map</span></span>(<span>self, input_vectors: numpy.ndarray) ‑> numpy.ndarray</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Returns a matrix containing the number of times the neuron (i,j) have been winner for the input.</p>
+<div class="desc"><p>Returns a matrix containing the number of times the neuron (i, j) have been winner for the input.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt><strong><code>input_vectors</code></strong> :&ensp;<code>np.ndarray</code></dt>
@@ -1989,7 +1989,7 @@ number of samples in the dataset to analyze.</p>
 </summary>
 <pre><code class="python">def activation_map(self, input_vectors: np.ndarray) -&gt; np.ndarray:
 
-    &#34;&#34;&#34;Returns a matrix containing the number of times the neuron (i,j) have been winner for the input.
+    &#34;&#34;&#34;Returns a matrix containing the number of times the neuron (i, j) have been winner for the input.
 
     Parameters
     ----------
