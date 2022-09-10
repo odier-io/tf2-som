@@ -45,8 +45,8 @@ import tf_som
 [🔗 Click there](https://github.com/odier-xyz/tf2-som/blob/master/demo/demo.ipynb)
 
 ### Authors
-- Jérôme ODIER ([CNRS/LPSC](http://lpsc.in2p3.fr/))
-- Nora ACHBAK ([CNRS/LPSC](http://lpsc.in2p3.fr/))
+- Jérôme ODIER ([CNRS/LPSC](https://lpsc.in2p3.fr/))
+- Nora ACHBAK ([CNRS/LPSC](https://lpsc.in2p3.fr/))
 """
 
 ########################################################################################################################
@@ -250,7 +250,7 @@ class SOM(object):
     ####################################################################################################################
 
     @staticmethod
-    def _argsort_n(x: np.ndarray, n: int) -> np.ndarray:
+    def _argsort_n(x: tf.Tensor, n: int) -> np.ndarray:
 
         if n > 1:
             return tf.nn.top_k(tf.negative(x), k = n).indices
@@ -259,7 +259,7 @@ class SOM(object):
 
     ####################################################################################################################
 
-    def _find_bmus(self, weights: np.ndarray, input_vectors: np.ndarray, n: int = 1) -> typing.List[BMUs]:
+    def _find_bmus(self, weights: typing.Union[tf.Variable, tf.Tensor], input_vectors: tf.Tensor, n: int = 1) -> typing.List[BMUs]:
 
         ################################################################################################################
         # COMPUTE DISTANCE SQUARES                                                                                     #
@@ -293,7 +293,7 @@ class SOM(object):
 
     ####################################################################################################################
 
-    def _train(self, weights: np.ndarray, input_vectors: np.ndarray, epoch: int) -> None:
+    def _train(self, weights: tf.Variable, input_vectors: tf.Tensor, epoch: int) -> None:
 
         ################################################################################################################
         # SHUFFLE INPUT VECTORS                                                                                        #
@@ -437,6 +437,8 @@ class SOM(object):
 
         weights = tf.Variable(weights_np, dtype = self._dtype)
 
+        input_vectors = tf.constant(input_vectors, dtype = self._dtype)
+
         ################################################################################################################
         # TRAIN THE SELF ORGANIZING MAP                                                                                #
         ################################################################################################################
@@ -451,6 +453,7 @@ class SOM(object):
 
     ####################################################################################################################
 
+    # noinspection PyTypeChecker
     def save(self, filename: str, file_format: str = 'fits') -> None:
 
         """Saves the trained neural network to a file.
@@ -494,15 +497,15 @@ class SOM(object):
 
             import h5py
 
-            with h5py.File(filename, 'w') as f:
+            with h5py.File(filename, 'w') as file:
 
-                f.attrs['lrnrate'] = self._learning_rate
-                f.attrs['sigma'] = self._sigma
-                f.attrs['epochs'] = self._epochs
+                file.attrs['lrnrate'] = self._learning_rate
+                file.attrs['sigma'] = self._sigma
+                file.attrs['epochs'] = self._epochs
 
-                f.create_dataset('weights', data = self.get_centroids())
-                f.create_dataset('quantization_errors', data = self._quantization_errors)
-                f.create_dataset('topographic_errors', data = self._topographic_errors)
+                file.create_dataset('weights', data = self.get_centroids())
+                file.create_dataset('quantization_errors', data = self._quantization_errors)
+                file.create_dataset('topographic_errors', data = self._topographic_errors)
 
         ################################################################################################################
 
@@ -552,17 +555,17 @@ class SOM(object):
 
             import h5py
 
-            with h5py.File(filename, 'r') as f:
+            with h5py.File(filename, 'r') as file:
 
-                self._m, self._n, self._dim = f['weights'].shape
+                self._m, self._n, self._dim = file['weights'].shape
 
-                self._learning_rate = f.attrs['lrnrate']
-                self._sigma = f.attrs['sigma']
-                self._epochs = f.attrs['epochs']
+                self._learning_rate = file.attrs['lrnrate']
+                self._sigma = file.attrs['sigma']
+                self._epochs = file.attrs['epochs']
 
-                self._weights = np.array(f['weights']).reshape((self._m * self._n, self._dim)).astype(self._dtype)
-                self._quantization_errors = np.array(f['quantization_errors']).astype(self._dtype)
-                self._topographic_errors = np.array(f['topographic_errors']).astype(self._dtype)
+                self._weights = np.array(file['weights']).reshape((self._m * self._n, self._dim)).astype(self._dtype)
+                self._quantization_errors = np.array(file['quantization_errors']).astype(self._dtype)
+                self._topographic_errors = np.array(file['topographic_errors']).astype(self._dtype)
 
         ################################################################################################################
 
@@ -661,6 +664,8 @@ class SOM(object):
 
         weights = tf.constant(self._weights, dtype = self._dtype)
 
+        input_vectors = tf.constant(input_vectors, dtype = self._dtype)
+
         ################################################################################################################
 
         return self._find_bmus(weights, input_vectors, 1)[0]
@@ -680,6 +685,8 @@ class SOM(object):
         ################################################################################################################
 
         weights = tf.constant(self._weights, dtype = self._dtype)
+
+        input_vectors = tf.constant(input_vectors, dtype = self._dtype)
 
         ################################################################################################################
 
@@ -714,6 +721,8 @@ class SOM(object):
         ################################################################################################################
 
         weights = tf.constant(self._weights, dtype = self._dtype)
+
+        input_vectors = tf.constant(input_vectors, dtype = self._dtype)
 
         ################################################################################################################
 
