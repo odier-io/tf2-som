@@ -42,7 +42,7 @@ import tf_som
 ```
 
 ### Demo
-[🔗 Click there](https://github.com/odier-xyz/tf2-som/blob/master/demo/demo.ipynb)
+[🔗 Click there](https://github.com/odier-io/tf2-som/blob/master/demo/demo.ipynb)
 
 ### Authors
 - [Jérôme ODIER](https://annuaire.in2p3.fr/4121-4467/jerome-odier) ([CNRS/LPSC](https://lpsc.in2p3.fr/))

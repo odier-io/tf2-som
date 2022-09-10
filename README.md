@@ -22,12 +22,12 @@ This is a fast Tensorflow 2 implementation of the Self Organizing Maps (SOM).
 Documentation
 =============
 
-https://odier-xyz.github.io/tf2-som/
+https://odier-io.github.io/tf2-som/
 
 Demo
 ====
 
-[🔗 Click there](https://github.com/odier-xyz/tf2-som/blob/master/demo/demo.ipynb)
+[🔗 Click there](https://github.com/odier-io/tf2-som/blob/master/demo/demo.ipynb)
 
 Authors
 =======
