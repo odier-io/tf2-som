@@ -30,16 +30,17 @@
 **tf2-som** is a Tensorflow 2 implementation of the Self Organizing Maps (SOM).
 
 ### Installing **tf2-som**
-
-```
+```sh
 pip3 install tf2-som
 ```
 
 ### Importing **tf2-som**
-
-```
+```python
 import tf_som
 ```
+
+### Demo
+[🔗 Click there](https://github.com/odier-xyz/tf2-som/blob/master/demo/demo.ipynb)
 
 ### Authors
 - Jérôme ODIER (jerome.odier@lpsc.in2p3.fr)

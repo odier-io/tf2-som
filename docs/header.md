@@ -5,9 +5,9 @@
 [![][AltRepo img]][AltRepo]
 
 <a href="http://lpsc.in2p3.fr/"              target="_blank"><img src="https://ami.web.cern.ch/images/logo_lpsc.png" alt="LPSC" height="72" /></a>
-<span style="margin-right: 2.5rem;"></span>
+<span style="margin-right: 3.0rem;"></span>
 <a href="http://www.in2p3.fr/"               target="_blank"><img src="https://ami.web.cern.ch/images/logo_in2p3.png" alt="IN2P3" height="72" /></a>
-<span style="margin-right: 2.5rem;"></span>
+<span style="margin-right: 3.0rem;"></span>
 <a href="http://www.univ-grenoble-alpes.fr/" target="_blank" style="margin-right: 0rem;"><img src="https://ami.web.cern.ch/images/logo_uga.png" alt="UGA" height="72" /></a>
 
 [License]:http://www.cecill.info/licences/Licence_CeCILL-C_V1-en.txt

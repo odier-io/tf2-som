@@ -12,13 +12,23 @@
 &nbsp;&nbsp;&nbsp;
 <a href="http://www.univ-grenoble-alpes.fr/" target="_blank" style="margin-right: 0rem;"><img src="https://ami.web.cern.ch/images/logo_uga.png" alt="UGA" height="72" /></a>
 
-TF2_SOM
+TF2-SOM
 =======
 
 This is a Tensorflow 2 implementation of the Self Organizing Maps (SOM).
 
-Developers
-==========
+Documentation
+=============
+
+https://odier-xyz.github.io/tf2-som/
+
+Demo
+====
+
+[🔗 Click there](https://github.com/odier-xyz/tf2-som/blob/master/demo/demo.ipynb)
+
+Authors
+=======
 
 * [Jérôme ODIER](https://annuaire.in2p3.fr/4121-4467/jerome-odier) ([CNRS/LPSC](http://lpsc.in2p3.fr/))
 * [Nora ACHBAK](https://annuaire.in2p3.fr/7591-10426/nora-achbak) ([CNRS/LPSC](http://lpsc.in2p3.fr/))
