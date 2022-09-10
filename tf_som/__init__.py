@@ -45,8 +45,8 @@ import tf_som
 [🔗 Click there](https://github.com/odier-xyz/tf2-som/blob/master/demo/demo.ipynb)
 
 ### Authors
-- Jérôme ODIER (jerome.odier@lpsc.in2p3.fr)
-- Nora ACHBAK (nora.achbak@lpsc.in2p3.fr)
+- Jérôme ODIER ([CNRS/LPSC](http://lpsc.in2p3.fr/))
+- Nora ACHBAK ([CNRS/LPSC](http://lpsc.in2p3.fr/))
 """
 
 ########################################################################################################################
@@ -186,11 +186,11 @@ class SOM(object):
         learning_rate : float
             Starting value of the learning rate (default: 0.3).
         sigma : float
-            Starting value of the neighborhood radius (default: max(m, n) / 2.0).
+            Starting value of the neighborhood radius (default: \\( \\mathrm{max}(m,n)/2 \\)).
         epochs : int
             Number of epochs to train for (default: 100).
         decay_function : function
-            Function that reduces learning_rate and sigma at each iteration (default: \\( 1 / \\left(1 + 2\\frac{epoch}{epochs}\\right) \\)).
+            Function that reduces learning_rate and sigma at each iteration (default: \\( 1/\\left(1+2\\frac{epoch}{epochs}\\right) \\)).
         """
 
         ################################################################################################################
@@ -398,7 +398,7 @@ class SOM(object):
 
     def train(self, input_vectors: np.ndarray, progress_bar: bool = True) -> None:
 
-        """Trains the trained neural network. A batch formulation of updating weights is used: $$ \\mathrm{bmu}(x)=\\underset{i}{\\mathrm{arg\\,min}}\\lVert x-w_i(e)\\rVert $$ $$ n_j=\\sum_{x\\in\\mathcal{D}}\\left\\{\\begin{array}{ll}1&\\mathrm{bmu}(x)=j\\\\0&\\mathrm{otherwise}\\end{array}\\right. $$ $$ \\Theta_{ji}(e)=\\alpha(e)\\cdot\\exp\\left(-\\frac{\\lVert j-i\\rVert}{2\\sigma^2(e)}\\right) $$ $$ \\boxed{w_i(e+1)=\\frac{\\sum_{j=1}^{n}n_j\\Theta_{ji}(e+1)x_j}{\\sum_{j=1}^{n}n_j\\Theta_{ji}(e+1)}} $$ where, at epoch \\( e \\), \\( \\alpha(e)=\\alpha_0\\mathrm{decay\\,function}(e) \\) is the learning rate and \\( \\sigma(e)=\\sigma_0\\mathrm{decay\\,function}(e) \\) the neighborhood coefficient.
+        """Trains the neural network. A batch formulation of updating weights is used: $$ \\mathrm{bmu}(x)=\\underset{i}{\\mathrm{arg\\,min}}\\lVert x-w_i(e)\\rVert $$ $$ n_j=\\sum_{x\\in\\mathcal{D}}\\left\\{\\begin{array}{ll}1&\\mathrm{bmu}(x)=j\\\\0&\\mathrm{otherwise}\\end{array}\\right. $$ $$ \\Theta_{ji}(e)=\\alpha(e)\\cdot\\exp\\left(-\\frac{\\lVert j-i\\rVert}{2\\sigma^2(e)}\\right) $$ $$ \\boxed{w_i(e+1)=\\frac{\\sum_{j=1}^{n}n_j\\Theta_{ji}(e+1)x_j}{\\sum_{j=1}^{n}n_j\\Theta_{ji}(e+1)}} $$ where, at epoch \\( e \\), \\( \\alpha(e)=\\alpha_0\\mathrm{decay\\,function}(e) \\) is the learning rate and \\( \\sigma(e)=\\sigma_0\\mathrm{decay\\,function}(e) \\) the neighborhood coefficient.
 
         Parameters
         ----------

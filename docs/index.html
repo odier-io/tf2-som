@@ -49,8 +49,8 @@ target="_blank"><img src="https://ami.web.cern.ch/images/logo_in2p3.png" alt="IN
 <p><a href="https://github.com/odier-xyz/tf2-som/blob/master/demo/demo.ipynb">🔗 Click there</a></p>
 <h3 id="authors">Authors</h3>
 <ul>
-<li>Jérôme ODIER (jerome.odier@lpsc.in2p3.fr)</li>
-<li>Nora ACHBAK (nora.achbak@lpsc.in2p3.fr)</li>
+<li>Jérôme ODIER (<a href="http://lpsc.in2p3.fr/">CNRS/LPSC</a>)</li>
+<li>Nora ACHBAK (<a href="http://lpsc.in2p3.fr/">CNRS/LPSC</a>)</li>
 </ul>
 <details class="source">
 <summary>
@@ -103,8 +103,8 @@ import tf_som
 [🔗 Click there](https://github.com/odier-xyz/tf2-som/blob/master/demo/demo.ipynb)
 
 ### Authors
-- Jérôme ODIER (jerome.odier@lpsc.in2p3.fr)
-- Nora ACHBAK (nora.achbak@lpsc.in2p3.fr)
+- Jérôme ODIER ([CNRS/LPSC](http://lpsc.in2p3.fr/))
+- Nora ACHBAK ([CNRS/LPSC](http://lpsc.in2p3.fr/))
 &#34;&#34;&#34;
 
 ########################################################################################################################
@@ -244,11 +244,11 @@ class SOM(object):
         learning_rate : float
             Starting value of the learning rate (default: 0.3).
         sigma : float
-            Starting value of the neighborhood radius (default: max(m, n) / 2.0).
+            Starting value of the neighborhood radius (default: \\( \\mathrm{max}(m,n)/2 \\)).
         epochs : int
             Number of epochs to train for (default: 100).
         decay_function : function
-            Function that reduces learning_rate and sigma at each iteration (default: \\( 1 / \\left(1 + 2\\frac{epoch}{epochs}\\right) \\)).
+            Function that reduces learning_rate and sigma at each iteration (default: \\( 1/\\left(1+2\\frac{epoch}{epochs}\\right) \\)).
         &#34;&#34;&#34;
 
         ################################################################################################################
@@ -456,7 +456,7 @@ class SOM(object):
 
     def train(self, input_vectors: np.ndarray, progress_bar: bool = True) -&gt; None:
 
-        &#34;&#34;&#34;Trains the trained neural network. A batch formulation of updating weights is used: $$ \\mathrm{bmu}(x)=\\underset{i}{\\mathrm{arg\\,min}}\\lVert x-w_i(e)\\rVert $$ $$ n_j=\\sum_{x\\in\\mathcal{D}}\\left\\{\\begin{array}{ll}1&amp;\\mathrm{bmu}(x)=j\\\\0&amp;\\mathrm{otherwise}\\end{array}\\right. $$ $$ \\Theta_{ji}(e)=\\alpha(e)\\cdot\\exp\\left(-\\frac{\\lVert j-i\\rVert}{2\\sigma^2(e)}\\right) $$ $$ \\boxed{w_i(e+1)=\\frac{\\sum_{j=1}^{n}n_j\\Theta_{ji}(e+1)x_j}{\\sum_{j=1}^{n}n_j\\Theta_{ji}(e+1)}} $$ where, at epoch \\( e \\), \\( \\alpha(e)=\\alpha_0\\mathrm{decay\\,function}(e) \\) is the learning rate and \\( \\sigma(e)=\\sigma_0\\mathrm{decay\\,function}(e) \\) the neighborhood coefficient.
+        &#34;&#34;&#34;Trains the neural network. A batch formulation of updating weights is used: $$ \\mathrm{bmu}(x)=\\underset{i}{\\mathrm{arg\\,min}}\\lVert x-w_i(e)\\rVert $$ $$ n_j=\\sum_{x\\in\\mathcal{D}}\\left\\{\\begin{array}{ll}1&amp;\\mathrm{bmu}(x)=j\\\\0&amp;\\mathrm{otherwise}\\end{array}\\right. $$ $$ \\Theta_{ji}(e)=\\alpha(e)\\cdot\\exp\\left(-\\frac{\\lVert j-i\\rVert}{2\\sigma^2(e)}\\right) $$ $$ \\boxed{w_i(e+1)=\\frac{\\sum_{j=1}^{n}n_j\\Theta_{ji}(e+1)x_j}{\\sum_{j=1}^{n}n_j\\Theta_{ji}(e+1)}} $$ where, at epoch \\( e \\), \\( \\alpha(e)=\\alpha_0\\mathrm{decay\\,function}(e) \\) is the learning rate and \\( \\sigma(e)=\\sigma_0\\mathrm{decay\\,function}(e) \\) the neighborhood coefficient.
 
         Parameters
         ----------
@@ -946,11 +946,11 @@ number of samples in the dataset to analyze.</p>
 <dt><strong><code>learning_rate</code></strong> :&ensp;<code>float</code></dt>
 <dd>Starting value of the learning rate (default: 0.3).</dd>
 <dt><strong><code>sigma</code></strong> :&ensp;<code>float</code></dt>
-<dd>Starting value of the neighborhood radius (default: max(m, n) / 2.0).</dd>
+<dd>Starting value of the neighborhood radius (default: <span><span class="MathJax_Preview"> \mathrm{max}(m,n)/2 </span><script type="math/tex"> \mathrm{max}(m,n)/2 </script></span>).</dd>
 <dt><strong><code>epochs</code></strong> :&ensp;<code>int</code></dt>
 <dd>Number of epochs to train for (default: 100).</dd>
 <dt><strong><code>decay_function</code></strong> :&ensp;<code>function</code></dt>
-<dd>Function that reduces learning_rate and sigma at each iteration (default: <span><span class="MathJax_Preview"> 1 / \left(1 + 2\frac{epoch}{epochs}\right) </span><script type="math/tex"> 1 / \left(1 + 2\frac{epoch}{epochs}\right) </script></span>).</dd>
+<dd>Function that reduces learning_rate and sigma at each iteration (default: <span><span class="MathJax_Preview"> 1/\left(1+2\frac{epoch}{epochs}\right) </span><script type="math/tex"> 1/\left(1+2\frac{epoch}{epochs}\right) </script></span>).</dd>
 </dl></div>
 <details class="source">
 <summary>
@@ -988,11 +988,11 @@ number of samples in the dataset to analyze.</p>
         learning_rate : float
             Starting value of the learning rate (default: 0.3).
         sigma : float
-            Starting value of the neighborhood radius (default: max(m, n) / 2.0).
+            Starting value of the neighborhood radius (default: \\( \\mathrm{max}(m,n)/2 \\)).
         epochs : int
             Number of epochs to train for (default: 100).
         decay_function : function
-            Function that reduces learning_rate and sigma at each iteration (default: \\( 1 / \\left(1 + 2\\frac{epoch}{epochs}\\right) \\)).
+            Function that reduces learning_rate and sigma at each iteration (default: \\( 1/\\left(1+2\\frac{epoch}{epochs}\\right) \\)).
         &#34;&#34;&#34;
 
         ################################################################################################################
@@ -1200,7 +1200,7 @@ number of samples in the dataset to analyze.</p>
 
     def train(self, input_vectors: np.ndarray, progress_bar: bool = True) -&gt; None:
 
-        &#34;&#34;&#34;Trains the trained neural network. A batch formulation of updating weights is used: $$ \\mathrm{bmu}(x)=\\underset{i}{\\mathrm{arg\\,min}}\\lVert x-w_i(e)\\rVert $$ $$ n_j=\\sum_{x\\in\\mathcal{D}}\\left\\{\\begin{array}{ll}1&amp;\\mathrm{bmu}(x)=j\\\\0&amp;\\mathrm{otherwise}\\end{array}\\right. $$ $$ \\Theta_{ji}(e)=\\alpha(e)\\cdot\\exp\\left(-\\frac{\\lVert j-i\\rVert}{2\\sigma^2(e)}\\right) $$ $$ \\boxed{w_i(e+1)=\\frac{\\sum_{j=1}^{n}n_j\\Theta_{ji}(e+1)x_j}{\\sum_{j=1}^{n}n_j\\Theta_{ji}(e+1)}} $$ where, at epoch \\( e \\), \\( \\alpha(e)=\\alpha_0\\mathrm{decay\\,function}(e) \\) is the learning rate and \\( \\sigma(e)=\\sigma_0\\mathrm{decay\\,function}(e) \\) the neighborhood coefficient.
+        &#34;&#34;&#34;Trains the neural network. A batch formulation of updating weights is used: $$ \\mathrm{bmu}(x)=\\underset{i}{\\mathrm{arg\\,min}}\\lVert x-w_i(e)\\rVert $$ $$ n_j=\\sum_{x\\in\\mathcal{D}}\\left\\{\\begin{array}{ll}1&amp;\\mathrm{bmu}(x)=j\\\\0&amp;\\mathrm{otherwise}\\end{array}\\right. $$ $$ \\Theta_{ji}(e)=\\alpha(e)\\cdot\\exp\\left(-\\frac{\\lVert j-i\\rVert}{2\\sigma^2(e)}\\right) $$ $$ \\boxed{w_i(e+1)=\\frac{\\sum_{j=1}^{n}n_j\\Theta_{ji}(e+1)x_j}{\\sum_{j=1}^{n}n_j\\Theta_{ji}(e+1)}} $$ where, at epoch \\( e \\), \\( \\alpha(e)=\\alpha_0\\mathrm{decay\\,function}(e) \\) is the learning rate and \\( \\sigma(e)=\\sigma_0\\mathrm{decay\\,function}(e) \\) the neighborhood coefficient.
 
         Parameters
         ----------
@@ -1537,7 +1537,7 @@ number of samples in the dataset to analyze.</p>
 <span>def <span class="ident">train</span></span>(<span>self, input_vectors: numpy.ndarray, progress_bar: bool = True) ‑> None</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Trains the trained neural network. A batch formulation of updating weights is used: <span><span class="MathJax_Preview"> \mathrm{bmu}(x)=\underset{i}{\mathrm{arg\,min}}\lVert x-w_i(e)\rVert </span><script type="math/tex; mode=display"> \mathrm{bmu}(x)=\underset{i}{\mathrm{arg\,min}}\lVert x-w_i(e)\rVert </script></span> <span><span class="MathJax_Preview"> n_j=\sum_{x\in\mathcal{D}}\left\{\begin{array}{ll}1&amp;\mathrm{bmu}(x)=j\\0&amp;\mathrm{otherwise}\end{array}\right. </span><script type="math/tex; mode=display"> n_j=\sum_{x\in\mathcal{D}}\left\{\begin{array}{ll}1&\mathrm{bmu}(x)=j\\0&\mathrm{otherwise}\end{array}\right. </script></span> <span><span class="MathJax_Preview"> \Theta_{ji}(e)=\alpha(e)\cdot\exp\left(-\frac{\lVert j-i\rVert}{2\sigma^2(e)}\right) </span><script type="math/tex; mode=display"> \Theta_{ji}(e)=\alpha(e)\cdot\exp\left(-\frac{\lVert j-i\rVert}{2\sigma^2(e)}\right) </script></span> <span><span class="MathJax_Preview"> \boxed{w_i(e+1)=\frac{\sum_{j=1}^{n}n_j\Theta_{ji}(e+1)x_j}{\sum_{j=1}^{n}n_j\Theta_{ji}(e+1)}} </span><script type="math/tex; mode=display"> \boxed{w_i(e+1)=\frac{\sum_{j=1}^{n}n_j\Theta_{ji}(e+1)x_j}{\sum_{j=1}^{n}n_j\Theta_{ji}(e+1)}} </script></span> where, at epoch <span><span class="MathJax_Preview"> e </span><script type="math/tex"> e </script></span>, <span><span class="MathJax_Preview"> \alpha(e)=\alpha_0\mathrm{decay\,function}(e) </span><script type="math/tex"> \alpha(e)=\alpha_0\mathrm{decay\,function}(e) </script></span> is the learning rate and <span><span class="MathJax_Preview"> \sigma(e)=\sigma_0\mathrm{decay\,function}(e) </span><script type="math/tex"> \sigma(e)=\sigma_0\mathrm{decay\,function}(e) </script></span> the neighborhood coefficient.</p>
+<div class="desc"><p>Trains the neural network. A batch formulation of updating weights is used: <span><span class="MathJax_Preview"> \mathrm{bmu}(x)=\underset{i}{\mathrm{arg\,min}}\lVert x-w_i(e)\rVert </span><script type="math/tex; mode=display"> \mathrm{bmu}(x)=\underset{i}{\mathrm{arg\,min}}\lVert x-w_i(e)\rVert </script></span> <span><span class="MathJax_Preview"> n_j=\sum_{x\in\mathcal{D}}\left\{\begin{array}{ll}1&amp;\mathrm{bmu}(x)=j\\0&amp;\mathrm{otherwise}\end{array}\right. </span><script type="math/tex; mode=display"> n_j=\sum_{x\in\mathcal{D}}\left\{\begin{array}{ll}1&\mathrm{bmu}(x)=j\\0&\mathrm{otherwise}\end{array}\right. </script></span> <span><span class="MathJax_Preview"> \Theta_{ji}(e)=\alpha(e)\cdot\exp\left(-\frac{\lVert j-i\rVert}{2\sigma^2(e)}\right) </span><script type="math/tex; mode=display"> \Theta_{ji}(e)=\alpha(e)\cdot\exp\left(-\frac{\lVert j-i\rVert}{2\sigma^2(e)}\right) </script></span> <span><span class="MathJax_Preview"> \boxed{w_i(e+1)=\frac{\sum_{j=1}^{n}n_j\Theta_{ji}(e+1)x_j}{\sum_{j=1}^{n}n_j\Theta_{ji}(e+1)}} </span><script type="math/tex; mode=display"> \boxed{w_i(e+1)=\frac{\sum_{j=1}^{n}n_j\Theta_{ji}(e+1)x_j}{\sum_{j=1}^{n}n_j\Theta_{ji}(e+1)}} </script></span> where, at epoch <span><span class="MathJax_Preview"> e </span><script type="math/tex"> e </script></span>, <span><span class="MathJax_Preview"> \alpha(e)=\alpha_0\mathrm{decay\,function}(e) </span><script type="math/tex"> \alpha(e)=\alpha_0\mathrm{decay\,function}(e) </script></span> is the learning rate and <span><span class="MathJax_Preview"> \sigma(e)=\sigma_0\mathrm{decay\,function}(e) </span><script type="math/tex"> \sigma(e)=\sigma_0\mathrm{decay\,function}(e) </script></span> the neighborhood coefficient.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt><strong><code>input_vectors</code></strong> :&ensp;<code>np.ndarray</code></dt>
@@ -1551,7 +1551,7 @@ number of samples in the dataset to analyze.</p>
 </summary>
 <pre><code class="python">def train(self, input_vectors: np.ndarray, progress_bar: bool = True) -&gt; None:
 
-    &#34;&#34;&#34;Trains the trained neural network. A batch formulation of updating weights is used: $$ \\mathrm{bmu}(x)=\\underset{i}{\\mathrm{arg\\,min}}\\lVert x-w_i(e)\\rVert $$ $$ n_j=\\sum_{x\\in\\mathcal{D}}\\left\\{\\begin{array}{ll}1&amp;\\mathrm{bmu}(x)=j\\\\0&amp;\\mathrm{otherwise}\\end{array}\\right. $$ $$ \\Theta_{ji}(e)=\\alpha(e)\\cdot\\exp\\left(-\\frac{\\lVert j-i\\rVert}{2\\sigma^2(e)}\\right) $$ $$ \\boxed{w_i(e+1)=\\frac{\\sum_{j=1}^{n}n_j\\Theta_{ji}(e+1)x_j}{\\sum_{j=1}^{n}n_j\\Theta_{ji}(e+1)}} $$ where, at epoch \\( e \\), \\( \\alpha(e)=\\alpha_0\\mathrm{decay\\,function}(e) \\) is the learning rate and \\( \\sigma(e)=\\sigma_0\\mathrm{decay\\,function}(e) \\) the neighborhood coefficient.
+    &#34;&#34;&#34;Trains the neural network. A batch formulation of updating weights is used: $$ \\mathrm{bmu}(x)=\\underset{i}{\\mathrm{arg\\,min}}\\lVert x-w_i(e)\\rVert $$ $$ n_j=\\sum_{x\\in\\mathcal{D}}\\left\\{\\begin{array}{ll}1&amp;\\mathrm{bmu}(x)=j\\\\0&amp;\\mathrm{otherwise}\\end{array}\\right. $$ $$ \\Theta_{ji}(e)=\\alpha(e)\\cdot\\exp\\left(-\\frac{\\lVert j-i\\rVert}{2\\sigma^2(e)}\\right) $$ $$ \\boxed{w_i(e+1)=\\frac{\\sum_{j=1}^{n}n_j\\Theta_{ji}(e+1)x_j}{\\sum_{j=1}^{n}n_j\\Theta_{ji}(e+1)}} $$ where, at epoch \\( e \\), \\( \\alpha(e)=\\alpha_0\\mathrm{decay\\,function}(e) \\) is the learning rate and \\( \\sigma(e)=\\sigma_0\\mathrm{decay\\,function}(e) \\) the neighborhood coefficient.
 
     Parameters
     ----------
