@@ -10,11 +10,14 @@ rm -fr ./docs/tf_som/
 
 ########################################################################################################################
 
-if ! command -v html-minifier-terser &> /dev/null
+if command -v html-minifier-terser &> /dev/null
 then
-  sudo npm install -g html-minifier-terser
-bi
+  html-minifier-terser --collapse-whitespace --remove-comments --minify-css true --minify-js true -o ./docs/index.min.html ./docs/index.html
 
-html-minifier-terser --collapse-whitespace --remove-comments --minify-css true --minify-js true -o ./docs/index.html
+  mv ./docs/index.min.html ./docs/index.html
+else
+  echo 'npm i -g html-minifier-terser'
+fi
+
 
 ########################################################################################################################
