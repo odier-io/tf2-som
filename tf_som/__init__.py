@@ -250,7 +250,7 @@ class SOM(object):
     ####################################################################################################################
 
     @staticmethod
-    def _argsort_n(x: tf.Tensor, n: int) -> np.ndarray:
+    def _argsort_n(x: tf.Tensor, n: int) -> tf.Tensor:
 
         if n > 1:
             return tf.nn.top_k(tf.negative(x), k = n).indices
@@ -259,7 +259,8 @@ class SOM(object):
 
     ####################################################################################################################
 
-    def _find_bmus(self, weights: typing.Union[tf.Variable, tf.Tensor], input_vectors: tf.Tensor, n: int = 1) -> typing.List[BMUs]:
+    @staticmethod
+    def __find_bmus(weights: typing.Union[tf.Variable, tf.Tensor], input_vectors: tf.Tensor, n: int = 1) -> tf.Tensor:
 
         ################################################################################################################
         # COMPUTE DISTANCE SQUARES                                                                                     #
@@ -276,18 +277,22 @@ class SOM(object):
         )
 
         ################################################################################################################
-        # COMPUTE INDICES AND LOCATIONS                                                                                #
+        # COMPUTE INDICES                                                                                              #
         ################################################################################################################
+
+        return tf.transpose(SOM._argsort_n(distance_squares, n))
+
+    ####################################################################################################################
+
+    def _find_bmus(self, weights: typing.Union[tf.Variable, tf.Tensor], input_vectors: tf.Tensor, n: int = 1) -> typing.List[BMUs]:
 
         result = []
 
-        for bmu_indices in tf.transpose(SOM._argsort_n(distance_squares, n)):
+        for bmu_indices in self.__find_bmus(weights, input_vectors, n):
 
             bmu_locations = tf.gather(self._topography, bmu_indices)
 
             result.append(BMUs(bmu_indices, bmu_locations))
-
-        ################################################################################################################
 
         return result
 
@@ -396,7 +401,7 @@ class SOM(object):
 
     ####################################################################################################################
 
-    def train(self, input_vectors: np.ndarray, progress_bar: bool = True) -> None:
+    def train(self, input_vectors: np.ndarray, chunk_size: int = None, progress_bar: bool = True) -> None:
 
         """Trains the neural network. A batch formulation of updating weights is used: $$ \\mathrm{bmu}(x)=\\underset{i}{\\mathrm{arg\\,min}}\\lVert x-w_i\\rVert $$ $$ n_j=\\sum_{x\\in\\mathcal{D}}\\left\\{\\begin{array}{ll}1&\\mathrm{bmu}(x)=j\\\\0&\\mathrm{otherwise}\\end{array}\\right. $$ $$ \\Theta_{ji}(e)=\\alpha(e)\\cdot\\exp\\left(-\\frac{\\lVert j-i\\rVert}{2\\sigma^2(e)}\\right) $$ $$ \\boxed{w_{i\\,\\mathrm{new}}=\\frac{\\sum_{j=1}^{n}n_j\\Theta_{ji}(e)x_j}{\\sum_{j=1}^{n}n_j\\Theta_{ji}(e)}} $$ where, at epoch \\( e \\), \\( \\alpha(e)=\\alpha_0\\mathrm{decay\\,function}(e) \\) is the learning rate and \\( \\sigma(e)=\\sigma_0\\mathrm{decay\\,function}(e) \\) is the neighborhood radius.
 
@@ -404,9 +409,17 @@ class SOM(object):
         ----------
         input_vectors : np.ndarray
             Training data.
+        chunk_size : int
+            Chunk size.
         progress_bar : bool
             Specifying whether a progress bar have to be shown (default: True).
         """
+
+        ################################################################################################################
+
+        if chunk_size is None:
+
+            chunk_size = input_vectors.shape[0]
 
         ################################################################################################################
         # SET RANDOM SEED                                                                                              #
@@ -445,7 +458,9 @@ class SOM(object):
 
         for epoch in tqdm.tqdm(range(self._epochs), disable = not progress_bar):
 
-            self._train(weights, input_vectors, epoch)
+            for chunk in tf.data.Dataset.from_tensor_slices(input_vectors).batch(chunk_size):
+
+                self._train(weights, chunk, epoch)
 
         ################################################################################################################
 
@@ -650,15 +665,27 @@ class SOM(object):
 
     ####################################################################################################################
 
-    def winners(self, input_vectors: np.ndarray) -> BMUs:
+    def winners(self, input_vectors: np.ndarray, chunk_size: int = None, locations: bool = False, progress_bar: bool = False) -> np.ndarray:
 
-        """Returns a vector of best matching unit locations and indices for the input.
+        """Returns a vector of best matching unit indices or locations for the given input.
 
         Parameters
         ----------
         input_vectors : np.ndarray
             Input data.
+        chunk_size : int
+            Chunk size.
+        locations : bool
+            Get locations instead of indices.
+        progress_bar : bool
+            Specifying whether a progress bar have to be shown (default: True).
         """
+
+        ################################################################################################################
+
+        if chunk_size is None:
+
+            chunk_size = input_vectors.shape[0]
 
         ################################################################################################################
 
@@ -668,55 +695,53 @@ class SOM(object):
 
         ################################################################################################################
 
-        return self._find_bmus(weights, input_vectors, 1)[0]
+        i = 0
+
+        if locations:
+
+            result = np.empty((input_vectors.shape[0], 2), dtype = np.int64)
+
+            for chunk in tqdm.tqdm(tf.data.Dataset.from_tensor_slices(input_vectors).batch(chunk_size), disable = not progress_bar):
+
+                result[(i + 0) * chunk_size: (i + 1) * chunk_size] = tf.gather(self._topography, self.__find_bmus(weights, chunk, 1)[0])
+
+                i += 1
+
+        else:
+
+            result = np.empty((input_vectors.shape[0], ), dtype = np.int64)
+
+            for chunk in tqdm.tqdm(tf.data.Dataset.from_tensor_slices(input_vectors).batch(chunk_size), disable = not progress_bar):
+
+                result[(i + 0) * chunk_size: (i + 1) * chunk_size] = self.__find_bmus(weights, chunk, 1)[0]
+
+                i += 1
+
+        ################################################################################################################
+
+        return result
 
     ####################################################################################################################
 
-    def input_map(self, input_vectors: np.ndarray) -> np.ndarray:
+    def activation_map(self, input_vectors: np.ndarray, chunk_size: int = None, progress_bar: bool = False) -> np.ndarray:
 
-        """Returns a vector containing the coordinates (i, j) of the winner neuron for each input.
+        """Returns a matrix containing the number of times the neuron (i, j) have been winner for the given input.
 
         Parameters
         ----------
         input_vectors : np.ndarray
             Input data.
+        chunk_size : int
+            Chunk size.
+        progress_bar : bool
+            Specifying whether a progress bar have to be shown (default: False).
         """
 
         ################################################################################################################
 
-        weights = tf.constant(self._weights, dtype = self._dtype)
+        if chunk_size is None:
 
-        input_vectors = tf.constant(input_vectors, dtype = self._dtype)
-
-        ################################################################################################################
-
-        result = np.empty((input_vectors.shape[0], 2), dtype = np.int64)
-
-        ################################################################################################################
-
-        idx = 0
-
-        for bmu_location in self._find_bmus(weights, input_vectors, n = 1)[0].locations:
-
-            _, result[idx] = bmu_location
-
-            idx = idx + 1
-
-        ################################################################################################################
-
-        return result.reshape(input_vectors.shape[0], 2)
-
-    ####################################################################################################################
-
-    def activation_map(self, input_vectors: np.ndarray) -> np.ndarray:
-
-        """Returns a matrix containing the number of times the neuron (i, j) have been winner for the input.
-
-        Parameters
-        ----------
-        input_vectors : np.ndarray
-            Input data.
-        """
+            chunk_size = input_vectors.shape[0]
 
         ################################################################################################################
 
@@ -730,9 +755,11 @@ class SOM(object):
 
         ################################################################################################################
 
-        for bmu_index in self._find_bmus(weights, input_vectors, n = 1)[0].indices:
+        for chunk in tqdm.tqdm(tf.data.Dataset.from_tensor_slices(input_vectors).batch(chunk_size), disable = not progress_bar):
 
-            result[bmu_index] += 1
+            for bmu_index in self.__find_bmus(weights, chunk, n = 1)[0]:
+
+                result[bmu_index] += 1
 
         ################################################################################################################
 
