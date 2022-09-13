@@ -416,7 +416,7 @@ class SOM(object):
         input_vectors : np.ndarray
             Training data.
         chunk_size : int
-            Chunk size.
+            Chunk size or None to disable batch.
         progress_bar : bool
             Specifying whether a progress bar have to be shown (default: True).
         &#34;&#34;&#34;
@@ -680,9 +680,9 @@ class SOM(object):
         input_vectors : np.ndarray
             Input data.
         chunk_size : int
-            Chunk size.
+            Chunk size or None to disable batch.
         locations : bool
-            Get locations instead of indices.
+            Get winner locations instead of indices.
         progress_bar : bool
             Specifying whether a progress bar have to be shown (default: True).
         &#34;&#34;&#34;
@@ -738,7 +738,7 @@ class SOM(object):
         input_vectors : np.ndarray
             Input data.
         chunk_size : int
-            Chunk size.
+            Chunk size or None to disable batch.
         progress_bar : bool
             Specifying whether a progress bar have to be shown (default: False).
         &#34;&#34;&#34;
@@ -1086,7 +1086,7 @@ class SOM(object):
         input_vectors : np.ndarray
             Training data.
         chunk_size : int
-            Chunk size.
+            Chunk size or None to disable batch.
         progress_bar : bool
             Specifying whether a progress bar have to be shown (default: True).
         &#34;&#34;&#34;
@@ -1350,9 +1350,9 @@ class SOM(object):
         input_vectors : np.ndarray
             Input data.
         chunk_size : int
-            Chunk size.
+            Chunk size or None to disable batch.
         locations : bool
-            Get locations instead of indices.
+            Get winner locations instead of indices.
         progress_bar : bool
             Specifying whether a progress bar have to be shown (default: True).
         &#34;&#34;&#34;
@@ -1408,7 +1408,7 @@ class SOM(object):
         input_vectors : np.ndarray
             Input data.
         chunk_size : int
-            Chunk size.
+            Chunk size or None to disable batch.
         progress_bar : bool
             Specifying whether a progress bar have to be shown (default: False).
         &#34;&#34;&#34;
@@ -1439,7 +1439,7 @@ class SOM(object):
 
         ################################################################################################################
 
-        return result.reshape(self._m, self._n)</code></pre></details><h3>Methods</h3><dl><dt id="tf_som.SOM.train"><code class="name flex"><span>def <span class="ident">train</span></span>(<span>self, input_vectors: numpy.ndarray, chunk_size: int = None, progress_bar: bool = True) ‑> None</span></code></dt><dd><div class="desc"><p>Trains the neural network. A batch formulation of updating weights is used: <span><span class="MathJax_Preview">\mathrm{bmu}(x)=\underset{i}{\mathrm{arg\,min}}\lVert x-w_i\rVert</span><script type="math/tex;mode=display">\mathrm{bmu}(x)=\underset{i}{\mathrm{arg\,min}}\lVert x-w_i\rVert</script></span><span><span class="MathJax_Preview">n_j=\sum_{x\in\mathcal{D}}\left\{\begin{array}{ll}1&amp;\mathrm{bmu}(x)=j\\0&amp;\mathrm{otherwise}\end{array}\right.</span><script type="math/tex;mode=display">n_j=\sum_{x\in\mathcal{D}}\left\{\begin{array}{ll}1&\mathrm{bmu}(x)=j\\0&\mathrm{otherwise}\end{array}\right.</script></span><span><span class="MathJax_Preview">\Theta_{ji}(e)=\alpha(e)\cdot\exp\left(-\frac{\lVert j-i\rVert}{2\sigma^2(e)}\right)</span><script type="math/tex;mode=display">\Theta_{ji}(e)=\alpha(e)\cdot\exp\left(-\frac{\lVert j-i\rVert}{2\sigma^2(e)}\right)</script></span><span><span class="MathJax_Preview">\boxed{w_{i\,\mathrm{new}}=\frac{\sum_{j=1}^{n}n_j\Theta_{ji}(e)x_j}{\sum_{j=1}^{n}n_j\Theta_{ji}(e)}}</span><script type="math/tex;mode=display">\boxed{w_{i\,\mathrm{new}}=\frac{\sum_{j=1}^{n}n_j\Theta_{ji}(e)x_j}{\sum_{j=1}^{n}n_j\Theta_{ji}(e)}}</script></span>where, at epoch <span><span class="MathJax_Preview">e</span><script type="math/tex">e</script></span>, <span><span class="MathJax_Preview">\alpha(e)=\alpha_0\mathrm{decay\,function}(e)</span><script type="math/tex">\alpha(e)=\alpha_0\mathrm{decay\,function}(e)</script></span>is the learning rate and <span><span class="MathJax_Preview">\sigma(e)=\sigma_0\mathrm{decay\,function}(e)</span><script type="math/tex">\sigma(e)=\sigma_0\mathrm{decay\,function}(e)</script></span>is the neighborhood radius.</p><h2 id="parameters">Parameters</h2><dl><dt><strong><code>input_vectors</code></strong> :&ensp;<code>np.ndarray</code></dt><dd>Training data.</dd><dt><strong><code>chunk_size</code></strong> :&ensp;<code>int</code></dt><dd>Chunk size.</dd><dt><strong><code>progress_bar</code></strong> :&ensp;<code>bool</code></dt><dd>Specifying whether a progress bar have to be shown (default: True).</dd></dl></div><details class="source"><summary><span>Expand source code</span></summary><pre><code class="python">def train(self, input_vectors: np.ndarray, chunk_size: int = None, progress_bar: bool = True) -&gt; None:
+        return result.reshape(self._m, self._n)</code></pre></details><h3>Methods</h3><dl><dt id="tf_som.SOM.train"><code class="name flex"><span>def <span class="ident">train</span></span>(<span>self, input_vectors: numpy.ndarray, chunk_size: int = None, progress_bar: bool = True) ‑> None</span></code></dt><dd><div class="desc"><p>Trains the neural network. A batch formulation of updating weights is used: <span><span class="MathJax_Preview">\mathrm{bmu}(x)=\underset{i}{\mathrm{arg\,min}}\lVert x-w_i\rVert</span><script type="math/tex;mode=display">\mathrm{bmu}(x)=\underset{i}{\mathrm{arg\,min}}\lVert x-w_i\rVert</script></span><span><span class="MathJax_Preview">n_j=\sum_{x\in\mathcal{D}}\left\{\begin{array}{ll}1&amp;\mathrm{bmu}(x)=j\\0&amp;\mathrm{otherwise}\end{array}\right.</span><script type="math/tex;mode=display">n_j=\sum_{x\in\mathcal{D}}\left\{\begin{array}{ll}1&\mathrm{bmu}(x)=j\\0&\mathrm{otherwise}\end{array}\right.</script></span><span><span class="MathJax_Preview">\Theta_{ji}(e)=\alpha(e)\cdot\exp\left(-\frac{\lVert j-i\rVert}{2\sigma^2(e)}\right)</span><script type="math/tex;mode=display">\Theta_{ji}(e)=\alpha(e)\cdot\exp\left(-\frac{\lVert j-i\rVert}{2\sigma^2(e)}\right)</script></span><span><span class="MathJax_Preview">\boxed{w_{i\,\mathrm{new}}=\frac{\sum_{j=1}^{n}n_j\Theta_{ji}(e)x_j}{\sum_{j=1}^{n}n_j\Theta_{ji}(e)}}</span><script type="math/tex;mode=display">\boxed{w_{i\,\mathrm{new}}=\frac{\sum_{j=1}^{n}n_j\Theta_{ji}(e)x_j}{\sum_{j=1}^{n}n_j\Theta_{ji}(e)}}</script></span>where, at epoch <span><span class="MathJax_Preview">e</span><script type="math/tex">e</script></span>, <span><span class="MathJax_Preview">\alpha(e)=\alpha_0\mathrm{decay\,function}(e)</span><script type="math/tex">\alpha(e)=\alpha_0\mathrm{decay\,function}(e)</script></span>is the learning rate and <span><span class="MathJax_Preview">\sigma(e)=\sigma_0\mathrm{decay\,function}(e)</span><script type="math/tex">\sigma(e)=\sigma_0\mathrm{decay\,function}(e)</script></span>is the neighborhood radius.</p><h2 id="parameters">Parameters</h2><dl><dt><strong><code>input_vectors</code></strong> :&ensp;<code>np.ndarray</code></dt><dd>Training data.</dd><dt><strong><code>chunk_size</code></strong> :&ensp;<code>int</code></dt><dd>Chunk size or None to disable batch.</dd><dt><strong><code>progress_bar</code></strong> :&ensp;<code>bool</code></dt><dd>Specifying whether a progress bar have to be shown (default: True).</dd></dl></div><details class="source"><summary><span>Expand source code</span></summary><pre><code class="python">def train(self, input_vectors: np.ndarray, chunk_size: int = None, progress_bar: bool = True) -&gt; None:
 
     &#34;&#34;&#34;Trains the neural network. A batch formulation of updating weights is used: $$ \\mathrm{bmu}(x)=\\underset{i}{\\mathrm{arg\\,min}}\\lVert x-w_i\\rVert $$ $$ n_j=\\sum_{x\\in\\mathcal{D}}\\left\\{\\begin{array}{ll}1&amp;\\mathrm{bmu}(x)=j\\\\0&amp;\\mathrm{otherwise}\\end{array}\\right. $$ $$ \\Theta_{ji}(e)=\\alpha(e)\\cdot\\exp\\left(-\\frac{\\lVert j-i\\rVert}{2\\sigma^2(e)}\\right) $$ $$ \\boxed{w_{i\\,\\mathrm{new}}=\\frac{\\sum_{j=1}^{n}n_j\\Theta_{ji}(e)x_j}{\\sum_{j=1}^{n}n_j\\Theta_{ji}(e)}} $$ where, at epoch \\( e \\), \\( \\alpha(e)=\\alpha_0\\mathrm{decay\\,function}(e) \\) is the learning rate and \\( \\sigma(e)=\\sigma_0\\mathrm{decay\\,function}(e) \\) is the neighborhood radius.
 
@@ -1448,7 +1448,7 @@ class SOM(object):
     input_vectors : np.ndarray
         Training data.
     chunk_size : int
-        Chunk size.
+        Chunk size or None to disable batch.
     progress_bar : bool
         Specifying whether a progress bar have to be shown (default: True).
     &#34;&#34;&#34;
@@ -1670,7 +1670,7 @@ class SOM(object):
 
     &#34;&#34;&#34;Returns the topographic errors (one value per epoch). $$ c_n=\\mathrm{n^\\mathrm{th}\\,bmu}=\\underset{i}{\\mathrm{arg\\,min}_n}\\lVert x-w_i\\rVert $$ $$ t(x)=\\left\\{\\begin{array}{ll}1&amp;\\lVert c_1-c_2\\rVert&gt;\\sqrt{2}\\\\0&amp;\\mathrm{otherwise}\\end{array}\\right. $$ $$ \\boxed{e_t=\\frac{1}{\\mathcal{D}}\\sum_{x\\in\\mathcal{D}}t(x)} $$&#34;&#34;&#34;
 
-    return self._topographic_errors</code></pre></details></dd><dt id="tf_som.SOM.winners"><code class="name flex"><span>def <span class="ident">winners</span></span>(<span>self, input_vectors: numpy.ndarray, chunk_size: int = None, locations: bool = False, progress_bar: bool = False) ‑> numpy.ndarray</span></code></dt><dd><div class="desc"><p>Returns a vector of best matching unit indices or locations for the given input.</p><h2 id="parameters">Parameters</h2><dl><dt><strong><code>input_vectors</code></strong> :&ensp;<code>np.ndarray</code></dt><dd>Input data.</dd><dt><strong><code>chunk_size</code></strong> :&ensp;<code>int</code></dt><dd>Chunk size.</dd><dt><strong><code>locations</code></strong> :&ensp;<code>bool</code></dt><dd>Get locations instead of indices.</dd><dt><strong><code>progress_bar</code></strong> :&ensp;<code>bool</code></dt><dd>Specifying whether a progress bar have to be shown (default: True).</dd></dl></div><details class="source"><summary><span>Expand source code</span></summary><pre><code class="python">def winners(self, input_vectors: np.ndarray, chunk_size: int = None, locations: bool = False, progress_bar: bool = False) -&gt; np.ndarray:
+    return self._topographic_errors</code></pre></details></dd><dt id="tf_som.SOM.winners"><code class="name flex"><span>def <span class="ident">winners</span></span>(<span>self, input_vectors: numpy.ndarray, chunk_size: int = None, locations: bool = False, progress_bar: bool = False) ‑> numpy.ndarray</span></code></dt><dd><div class="desc"><p>Returns a vector of best matching unit indices or locations for the given input.</p><h2 id="parameters">Parameters</h2><dl><dt><strong><code>input_vectors</code></strong> :&ensp;<code>np.ndarray</code></dt><dd>Input data.</dd><dt><strong><code>chunk_size</code></strong> :&ensp;<code>int</code></dt><dd>Chunk size or None to disable batch.</dd><dt><strong><code>locations</code></strong> :&ensp;<code>bool</code></dt><dd>Get winner locations instead of indices.</dd><dt><strong><code>progress_bar</code></strong> :&ensp;<code>bool</code></dt><dd>Specifying whether a progress bar have to be shown (default: True).</dd></dl></div><details class="source"><summary><span>Expand source code</span></summary><pre><code class="python">def winners(self, input_vectors: np.ndarray, chunk_size: int = None, locations: bool = False, progress_bar: bool = False) -&gt; np.ndarray:
 
     &#34;&#34;&#34;Returns a vector of best matching unit indices or locations for the given input.
 
@@ -1679,9 +1679,9 @@ class SOM(object):
     input_vectors : np.ndarray
         Input data.
     chunk_size : int
-        Chunk size.
+        Chunk size or None to disable batch.
     locations : bool
-        Get locations instead of indices.
+        Get winner locations instead of indices.
     progress_bar : bool
         Specifying whether a progress bar have to be shown (default: True).
     &#34;&#34;&#34;
@@ -1724,7 +1724,7 @@ class SOM(object):
 
     ################################################################################################################
 
-    return result</code></pre></details></dd><dt id="tf_som.SOM.activation_map"><code class="name flex"><span>def <span class="ident">activation_map</span></span>(<span>self, input_vectors: numpy.ndarray, chunk_size: int = None, progress_bar: bool = False) ‑> numpy.ndarray</span></code></dt><dd><div class="desc"><p>Returns a matrix containing the number of times the neuron (i, j) have been winner for the given input.</p><h2 id="parameters">Parameters</h2><dl><dt><strong><code>input_vectors</code></strong> :&ensp;<code>np.ndarray</code></dt><dd>Input data.</dd><dt><strong><code>chunk_size</code></strong> :&ensp;<code>int</code></dt><dd>Chunk size.</dd><dt><strong><code>progress_bar</code></strong> :&ensp;<code>bool</code></dt><dd>Specifying whether a progress bar have to be shown (default: False).</dd></dl></div><details class="source"><summary><span>Expand source code</span></summary><pre><code class="python">def activation_map(self, input_vectors: np.ndarray, chunk_size: int = None, progress_bar: bool = False) -&gt; np.ndarray:
+    return result</code></pre></details></dd><dt id="tf_som.SOM.activation_map"><code class="name flex"><span>def <span class="ident">activation_map</span></span>(<span>self, input_vectors: numpy.ndarray, chunk_size: int = None, progress_bar: bool = False) ‑> numpy.ndarray</span></code></dt><dd><div class="desc"><p>Returns a matrix containing the number of times the neuron (i, j) have been winner for the given input.</p><h2 id="parameters">Parameters</h2><dl><dt><strong><code>input_vectors</code></strong> :&ensp;<code>np.ndarray</code></dt><dd>Input data.</dd><dt><strong><code>chunk_size</code></strong> :&ensp;<code>int</code></dt><dd>Chunk size or None to disable batch.</dd><dt><strong><code>progress_bar</code></strong> :&ensp;<code>bool</code></dt><dd>Specifying whether a progress bar have to be shown (default: False).</dd></dl></div><details class="source"><summary><span>Expand source code</span></summary><pre><code class="python">def activation_map(self, input_vectors: np.ndarray, chunk_size: int = None, progress_bar: bool = False) -&gt; np.ndarray:
 
     &#34;&#34;&#34;Returns a matrix containing the number of times the neuron (i, j) have been winner for the given input.
 
@@ -1733,7 +1733,7 @@ class SOM(object):
     input_vectors : np.ndarray
         Input data.
     chunk_size : int
-        Chunk size.
+        Chunk size or None to disable batch.
     progress_bar : bool
         Specifying whether a progress bar have to be shown (default: False).
     &#34;&#34;&#34;
