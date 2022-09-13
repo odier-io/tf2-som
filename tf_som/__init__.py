@@ -410,7 +410,7 @@ class SOM(object):
         input_vectors : np.ndarray
             Training data.
         chunk_size : int
-            Chunk size.
+            Chunk size or None to disable batch.
         progress_bar : bool
             Specifying whether a progress bar have to be shown (default: True).
         """
@@ -674,9 +674,9 @@ class SOM(object):
         input_vectors : np.ndarray
             Input data.
         chunk_size : int
-            Chunk size.
+            Chunk size or None to disable batch.
         locations : bool
-            Get locations instead of indices.
+            Get winner locations instead of indices.
         progress_bar : bool
             Specifying whether a progress bar have to be shown (default: True).
         """
@@ -732,7 +732,7 @@ class SOM(object):
         input_vectors : np.ndarray
             Input data.
         chunk_size : int
-            Chunk size.
+            Chunk size or None to disable batch.
         progress_bar : bool
             Specifying whether a progress bar have to be shown (default: False).
         """
