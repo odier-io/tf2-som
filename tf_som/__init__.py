@@ -89,23 +89,35 @@ def setup_tensorflow_for_cpus(num_threads: int = None) -> None:
 
     ####################################################################################################################
 
-    if num_threads is None:
+    # noinspection PyBroadException
 
-        import multiprocessing
+    try:
 
-        num_threads = multiprocessing.cpu_count()
+        ################################################################################################################
 
-    ####################################################################################################################
+        if num_threads is None:
 
-    tf.config.threading.set_inter_op_parallelism_threads(
-        num_threads
-    )
+            import multiprocessing
 
-    tf.config.threading.set_intra_op_parallelism_threads(
-        num_threads
-    )
+            num_threads = multiprocessing.cpu_count()
 
-    tf.config.set_soft_device_placement(True)
+        ################################################################################################################
+
+        tf.config.threading.set_inter_op_parallelism_threads(
+            num_threads
+        )
+
+        tf.config.threading.set_intra_op_parallelism_threads(
+            num_threads
+        )
+
+        tf.config.set_soft_device_placement(True)
+
+        ################################################################################################################
+
+    except:
+
+        pass
 
 ########################################################################################################################
 
