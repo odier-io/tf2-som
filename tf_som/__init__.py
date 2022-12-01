@@ -511,7 +511,8 @@ class SOM(object):
                 fits.Column(name = 'quantization_errors', format = 'D', array = self._quantization_errors),
                 fits.Column(name = 'topographic_errors', format = 'D', array = self._topographic_errors),
             ] + [
-                fits.Column(name = name, format = 'D', array = data) for name, data in extra.items()
+                fits.Column(name = name, format = 'D', array = data.astype(np.float64)
+                for name, data in extra.items()
             ]))
 
             hdu0.header['lrnrate'] = self._learning_rate
