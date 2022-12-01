@@ -481,7 +481,7 @@ class SOM(object):
     ####################################################################################################################
 
     # noinspection PyTypeChecker
-    def save(self, filename: str, file_format: str = 'fits') -> None:
+    def save(self, filename: str, file_format: str = 'fits', extra: typing.Dict[str, np.ndarray] = {}) -> None:
 
         """Saves the trained neural network to a file.
 
@@ -491,6 +491,8 @@ class SOM(object):
             Filename.
         file_format : str
             File format (supported formats: (fits, hdf5), default: fits).
+        extra : dict
+            Dictionary of extra (name, array) entries.
         """
 
         ################################################################################################################
@@ -508,6 +510,8 @@ class SOM(object):
             hdu2 = fits.BinTableHDU.from_columns(fits.ColDefs([
                 fits.Column(name = 'quantization_errors', format = 'D', array = self._quantization_errors),
                 fits.Column(name = 'topographic_errors', format = 'D', array = self._topographic_errors),
+            ] + [
+                fits.Column(name = name, format = 'D', array = data) for name, data in extra.items()
             ]))
 
             hdu0.header['lrnrate'] = self._learning_rate
@@ -533,6 +537,10 @@ class SOM(object):
                 file.create_dataset('weights', data = self.get_centroids())
                 file.create_dataset('quantization_errors', data = self._quantization_errors)
                 file.create_dataset('topographic_errors', data = self._topographic_errors)
+
+                for name, data in extra.items():
+
+                    file.create_dataset(name, data = data)
 
         ################################################################################################################
 
