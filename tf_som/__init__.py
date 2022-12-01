@@ -510,16 +510,13 @@ class SOM(object):
             hdu2 = fits.BinTableHDU.from_columns(fits.ColDefs([
                 fits.Column(name = 'quantization_errors', format = 'D', array = self._quantization_errors),
                 fits.Column(name = 'topographic_errors', format = 'D', array = self._topographic_errors),
-            ] + [
-                fits.Column(name = name, format = 'D', array = data.astype(np.float64)
-                for name, data in extra.items()
             ]))
 
             hdu0.header['lrnrate'] = self._learning_rate
             hdu0.header['sigma'] = self._sigma
             hdu2.header['epochs'] = self._epochs
 
-            fits.HDUList([hdu0, hdu1, hdu2]).writeto(filename, overwrite = True)
+            fits.HDUList([hdu0, hdu1, hdu2] + [fits.ImageHDU(name = name, data = data) for name, data in extra.items()]).writeto(filename, overwrite = True)
 
         ################################################################################################################
         # HDF5 FORMAT                                                                                                  #
