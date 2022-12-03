@@ -481,7 +481,7 @@ class SOM(object):
     ####################################################################################################################
 
     # noinspection PyTypeChecker
-    def save(self, filename: str, file_format: str = 'fits', extra: typing.Dict[str, np.ndarray] = {}) -> None:
+    def save(self, filename: str, file_format: str = 'fits', extra: typing.Dict[str, np.ndarray] = None) -> None:
 
         """Saves the trained neural network to a file.
 
@@ -494,6 +494,10 @@ class SOM(object):
         extra : dict
             Dictionary of extra (name, array) entries.
         """
+
+        if extra is None:
+
+            extra = {}
 
         ################################################################################################################
         # FITS FORMAT                                                                                                  #
