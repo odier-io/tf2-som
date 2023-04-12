@@ -141,7 +141,7 @@ def setup_tensorflow_for_cpus(num_threads: int = None) -&gt; None:
     Arguments
     ---------
     num_threads : int
-        Number of threads (default: multiprocessing.cpu_count())
+        Number of threads or **None** to let the system choose (default: **None**).
     &#34;&#34;&#34;
 
     ####################################################################################################################
@@ -187,7 +187,7 @@ def normalize(df, dtype: type = np.float32) -&gt; None:
     df : pd.DataFrame
         Pandas data frame.
     dtype : type
-        Neural network data type (default: np.float32).
+        Neural network data type (default: **np.float32**).
     &#34;&#34;&#34;
 
     result = df.copy()
@@ -249,9 +249,9 @@ class SOM(object):
         dim : int
             Dimensionality of the input data.
         seed : int
-            Seed of the random generators (default: None).
+            Seed of the random generators (default: **None**).
         dtype : type
-            Neural network data type (default: np.float32).
+            Neural network data type (default: **np.float32**).
         learning_rate : float
             Starting value of the learning rate (default: 0.3).
         sigma : float
@@ -471,7 +471,7 @@ class SOM(object):
     ####################################################################################################################
 
     @staticmethod
-    def dataset_to_generator_builder(dataset):
+    def _dataset_to_generator_builder(dataset):
 
         return dataset if callable(dataset) else lambda: [dataset]
 
@@ -479,24 +479,24 @@ class SOM(object):
 
     def train(self, dataset: typing.Union[np.ndarray, typing.Callable], chunk_size: int = None, reset_weights: bool = True, show_progress_bar: bool = True) -&gt; None:
 
-        &#34;&#34;&#34;Trains the neural network. A batch formulation of updating weights is used: $$ \\mathrm{bmu}(x)=\\underset{i}{\\mathrm{arg\\,min}}\\lVert x-w_i\\rVert $$ $$ n_j=\\sum_{x\\in\\mathcal{D}}\\left\\{\\begin{array}{ll}1&amp;\\mathrm{bmu}(x)=j\\\\0&amp;\\mathrm{otherwise}\\end{array}\\right. $$ $$ \\Theta_{ji}(e)=\\alpha(e)\\cdot\\exp\\left(-\\frac{\\lVert j-i\\rVert}{2\\sigma^2(e)}\\right) $$ $$ \\boxed{w_{i\\,\\mathrm{new}}=\\frac{\\sum_{j=1}^{n}n_j\\Theta_{ji}(e)x_j}{\\sum_{j=1}^{n}n_j\\Theta_{ji}(e)}} $$ where, at epoch \\( e \\), \\( \\alpha(e)=\\alpha_0\\mathrm{decay\\,function}(e) \\) is the learning rate and \\( \\sigma(e)=\\sigma_0\\mathrm{decay\\,function}(e) \\) is the neighborhood radius.
+        &#34;&#34;&#34;Trains the neural network. A batch formulation of updating weights is implemented: $$ \\mathrm{bmu}(x)=\\underset{i}{\\mathrm{arg\\,min}}\\lVert x-w_i\\rVert $$ $$ n_j=\\sum_{x\\in\\mathcal{D}}\\left\\{\\begin{array}{ll}1&amp;\\mathrm{bmu}(x)=j\\\\0&amp;\\mathrm{otherwise}\\end{array}\\right. $$ $$ \\Theta_{ji}(e)=\\alpha(e)\\cdot\\exp\\left(-\\frac{\\lVert j-i\\rVert}{2\\sigma^2(e)}\\right) $$ $$ \\boxed{w_{i\\,\\mathrm{new}}=\\frac{\\sum_{j=1}^{n}n_j\\Theta_{ji}(e)x_j}{\\sum_{j=1}^{n}n_j\\Theta_{ji}(e)}} $$ where, at epoch \\( e \\), \\( \\alpha(e)=\\alpha_0\\mathrm{decay\\,function}(e) \\) is the learning rate and \\( \\sigma(e)=\\sigma_0\\mathrm{decay\\,function}(e) \\) is the neighborhood radius.
 
         Parameters
         ----------
         dataset : typing.Union[np.ndarray, typing.Callable]
             Training dataset or generator provider.
         chunk_size : int
-            Chunk size or None to disable batch (default: None).
+            Chunk size or **None** to disable batch (default: **None**).
         reset_weights : bool
-            Specifying whether the weights have to be reset (default: True).
+            Specifying whether the weights have to be reset (default: **True**).
         show_progress_bar : bool
-            Specifying whether a progress bar have to be shown (default: True).
+            Specifying whether a progress bar have to be shown (default: **True**).
 
         .. NOTE::
             A generator provider is a method with no parameter returning a dataset generator (**yield** generator).
 
         .. NOTE::
-            Setting the **reset_weights** variable to **False** allows to perform progressive training of a preexisting model from large or evolutive datasets.
+            Setting the **reset_weights** variable to **False** allows to update a pre-trained model (= progressive training).
         &#34;&#34;&#34;
 
         ################################################################################################################
@@ -513,7 +513,7 @@ class SOM(object):
 
         ################################################################################################################
 
-        generator_builder = SOM.dataset_to_generator_builder(dataset)
+        generator_builder = SOM._dataset_to_generator_builder(dataset)
 
         ################################################################################################################
 
@@ -775,7 +775,7 @@ class SOM(object):
 
     ####################################################################################################################
 
-    def winners(self, input_vectors: np.ndarray, chunk_size: int = None, locations: bool = False, progress_bar: bool = False) -&gt; np.ndarray:
+    def winners(self, input_vectors: np.ndarray, chunk_size: int = None, locations: bool = False, show_progress_bar: bool = False) -&gt; np.ndarray:
 
         &#34;&#34;&#34;Returns a vector of best matching unit indices or locations for the given input.
 
@@ -784,11 +784,11 @@ class SOM(object):
         input_vectors : np.ndarray
             Input dataset.
         chunk_size : int
-            Chunk size or None to disable batch.
+            Chunk size or **None** to disable batch.
         locations : bool
             Get winner locations instead of indices.
-        progress_bar : bool
-            Specifying whether a progress bar have to be shown (default: True).
+        show_progress_bar : bool
+            Specifying whether a progress bar have to be shown (default: **True**).
         &#34;&#34;&#34;
 
         ################################################################################################################
@@ -809,7 +809,7 @@ class SOM(object):
 
             result = np.empty((input_vectors.shape[0], 2), dtype = np.int64)
 
-            for chunk in tqdm.tqdm(tf.data.Dataset.from_tensor_slices(tf.constant(input_vectors, dtype = self._dtype)).batch(chunk_size), disable = not progress_bar):
+            for chunk in tqdm.tqdm(tf.data.Dataset.from_tensor_slices(tf.constant(input_vectors, dtype = self._dtype)).batch(chunk_size), disable = not show_progress_bar):
 
                 result[(i + 0) * chunk_size: (i + 1) * chunk_size] = tf.gather(self._topography, self.__find_bmus(weights, chunk, 1)[0])
 
@@ -819,7 +819,7 @@ class SOM(object):
 
             result = np.empty((input_vectors.shape[0], ), dtype = np.int64)
 
-            for chunk in tqdm.tqdm(tf.data.Dataset.from_tensor_slices(tf.constant(input_vectors, dtype = self._dtype)).batch(chunk_size), disable = not progress_bar):
+            for chunk in tqdm.tqdm(tf.data.Dataset.from_tensor_slices(tf.constant(input_vectors, dtype = self._dtype)).batch(chunk_size), disable = not show_progress_bar):
 
                 result[(i + 0) * chunk_size: (i + 1) * chunk_size] = self.__find_bmus(weights, chunk, 1)[0]
 
@@ -831,7 +831,7 @@ class SOM(object):
 
     ####################################################################################################################
 
-    def activation_map(self, dataset: typing.Union[np.ndarray, typing.Callable], chunk_size: int = None, progress_bar: bool = False) -&gt; np.ndarray:
+    def activation_map(self, dataset: typing.Union[np.ndarray, typing.Callable], chunk_size: int = None, show_progress_bar: bool = False) -&gt; np.ndarray:
 
         &#34;&#34;&#34;Returns a matrix containing the number of times the neuron (i, j) have been winner for the given input.
 
@@ -840,19 +840,19 @@ class SOM(object):
         dataset : typing.Union[np.ndarray, typing.Callable]
             Training dataset or generator provider.
         chunk_size : int
-            Chunk size or None to disable batch (default: None).
-        progress_bar : bool
-            Specifying whether a progress bar have to be shown (default: False).
+            Chunk size or **None** to disable batch (default: **None**).
+        show_progress_bar : bool
+            Specifying whether a progress bar have to be shown (default: **False**).
 
         .. NOTE::
-            Setting the **reset_weights** variable to **False** allows to perform progressive training of a preexisting model from large or evolutive datasets.
+            A generator provider is a method with no parameter returning a dataset generator (**yield** generator).
         &#34;&#34;&#34;
 
         ################################################################################################################
 
         weights = tf.constant(self._weights, dtype = self._dtype)
 
-        generator_builder = SOM.dataset_to_generator_builder(dataset)
+        generator_builder = SOM._dataset_to_generator_builder(dataset)
 
         result = np.zeros(shape = (self._m * self._n), dtype = np.int64)
 
@@ -868,7 +868,7 @@ class SOM(object):
 
             ############################################################################################################
 
-            for chunk in tqdm.tqdm(tf.data.Dataset.from_tensor_slices(tf.constant(input_vectors_np, dtype = self._dtype)).batch(chunk_size), disable = not progress_bar):
+            for chunk in tqdm.tqdm(tf.data.Dataset.from_tensor_slices(tf.constant(input_vectors_np, dtype = self._dtype)).batch(chunk_size), disable = not show_progress_bar):
 
                 for bmu_index in self.__find_bmus(weights, chunk, n = 1)[0]:
 
@@ -896,7 +896,7 @@ class SOM(object):
 <h2 id="arguments">Arguments</h2>
 <dl>
 <dt><strong><code>num_threads</code></strong> :&ensp;<code>int</code></dt>
-<dd>Number of threads (default: multiprocessing.cpu_count())</dd>
+<dd>Number of threads or <strong>None</strong> to let the system choose (default: <strong>None</strong>).</dd>
 </dl></div>
 <details class="source">
 <summary>
@@ -909,7 +909,7 @@ class SOM(object):
     Arguments
     ---------
     num_threads : int
-        Number of threads (default: multiprocessing.cpu_count())
+        Number of threads or **None** to let the system choose (default: **None**).
     &#34;&#34;&#34;
 
     ####################################################################################################################
@@ -955,7 +955,7 @@ class SOM(object):
 <dt><strong><code>df</code></strong> :&ensp;<code>pd.DataFrame</code></dt>
 <dd>Pandas data frame.</dd>
 <dt><strong><code>dtype</code></strong> :&ensp;<code>type</code></dt>
-<dd>Neural network data type (default: np.float32).</dd>
+<dd>Neural network data type (default: <strong>np.float32</strong>).</dd>
 </dl></div>
 <details class="source">
 <summary>
@@ -970,7 +970,7 @@ class SOM(object):
     df : pd.DataFrame
         Pandas data frame.
     dtype : type
-        Neural network data type (default: np.float32).
+        Neural network data type (default: **np.float32**).
     &#34;&#34;&#34;
 
     result = df.copy()
@@ -1043,9 +1043,9 @@ number of samples in the dataset to analyze.</p>
 <dt><strong><code>dim</code></strong> :&ensp;<code>int</code></dt>
 <dd>Dimensionality of the input data.</dd>
 <dt><strong><code>seed</code></strong> :&ensp;<code>int</code></dt>
-<dd>Seed of the random generators (default: None).</dd>
+<dd>Seed of the random generators (default: <strong>None</strong>).</dd>
 <dt><strong><code>dtype</code></strong> :&ensp;<code>type</code></dt>
-<dd>Neural network data type (default: np.float32).</dd>
+<dd>Neural network data type (default: <strong>np.float32</strong>).</dd>
 <dt><strong><code>learning_rate</code></strong> :&ensp;<code>float</code></dt>
 <dd>Starting value of the learning rate (default: 0.3).</dd>
 <dt><strong><code>sigma</code></strong> :&ensp;<code>float</code></dt>
@@ -1085,9 +1085,9 @@ number of samples in the dataset to analyze.</p>
         dim : int
             Dimensionality of the input data.
         seed : int
-            Seed of the random generators (default: None).
+            Seed of the random generators (default: **None**).
         dtype : type
-            Neural network data type (default: np.float32).
+            Neural network data type (default: **np.float32**).
         learning_rate : float
             Starting value of the learning rate (default: 0.3).
         sigma : float
@@ -1307,7 +1307,7 @@ number of samples in the dataset to analyze.</p>
     ####################################################################################################################
 
     @staticmethod
-    def dataset_to_generator_builder(dataset):
+    def _dataset_to_generator_builder(dataset):
 
         return dataset if callable(dataset) else lambda: [dataset]
 
@@ -1315,24 +1315,24 @@ number of samples in the dataset to analyze.</p>
 
     def train(self, dataset: typing.Union[np.ndarray, typing.Callable], chunk_size: int = None, reset_weights: bool = True, show_progress_bar: bool = True) -&gt; None:
 
-        &#34;&#34;&#34;Trains the neural network. A batch formulation of updating weights is used: $$ \\mathrm{bmu}(x)=\\underset{i}{\\mathrm{arg\\,min}}\\lVert x-w_i\\rVert $$ $$ n_j=\\sum_{x\\in\\mathcal{D}}\\left\\{\\begin{array}{ll}1&amp;\\mathrm{bmu}(x)=j\\\\0&amp;\\mathrm{otherwise}\\end{array}\\right. $$ $$ \\Theta_{ji}(e)=\\alpha(e)\\cdot\\exp\\left(-\\frac{\\lVert j-i\\rVert}{2\\sigma^2(e)}\\right) $$ $$ \\boxed{w_{i\\,\\mathrm{new}}=\\frac{\\sum_{j=1}^{n}n_j\\Theta_{ji}(e)x_j}{\\sum_{j=1}^{n}n_j\\Theta_{ji}(e)}} $$ where, at epoch \\( e \\), \\( \\alpha(e)=\\alpha_0\\mathrm{decay\\,function}(e) \\) is the learning rate and \\( \\sigma(e)=\\sigma_0\\mathrm{decay\\,function}(e) \\) is the neighborhood radius.
+        &#34;&#34;&#34;Trains the neural network. A batch formulation of updating weights is implemented: $$ \\mathrm{bmu}(x)=\\underset{i}{\\mathrm{arg\\,min}}\\lVert x-w_i\\rVert $$ $$ n_j=\\sum_{x\\in\\mathcal{D}}\\left\\{\\begin{array}{ll}1&amp;\\mathrm{bmu}(x)=j\\\\0&amp;\\mathrm{otherwise}\\end{array}\\right. $$ $$ \\Theta_{ji}(e)=\\alpha(e)\\cdot\\exp\\left(-\\frac{\\lVert j-i\\rVert}{2\\sigma^2(e)}\\right) $$ $$ \\boxed{w_{i\\,\\mathrm{new}}=\\frac{\\sum_{j=1}^{n}n_j\\Theta_{ji}(e)x_j}{\\sum_{j=1}^{n}n_j\\Theta_{ji}(e)}} $$ where, at epoch \\( e \\), \\( \\alpha(e)=\\alpha_0\\mathrm{decay\\,function}(e) \\) is the learning rate and \\( \\sigma(e)=\\sigma_0\\mathrm{decay\\,function}(e) \\) is the neighborhood radius.
 
         Parameters
         ----------
         dataset : typing.Union[np.ndarray, typing.Callable]
             Training dataset or generator provider.
         chunk_size : int
-            Chunk size or None to disable batch (default: None).
+            Chunk size or **None** to disable batch (default: **None**).
         reset_weights : bool
-            Specifying whether the weights have to be reset (default: True).
+            Specifying whether the weights have to be reset (default: **True**).
         show_progress_bar : bool
-            Specifying whether a progress bar have to be shown (default: True).
+            Specifying whether a progress bar have to be shown (default: **True**).
 
         .. NOTE::
             A generator provider is a method with no parameter returning a dataset generator (**yield** generator).
 
         .. NOTE::
-            Setting the **reset_weights** variable to **False** allows to perform progressive training of a preexisting model from large or evolutive datasets.
+            Setting the **reset_weights** variable to **False** allows to update a pre-trained model (= progressive training).
         &#34;&#34;&#34;
 
         ################################################################################################################
@@ -1349,7 +1349,7 @@ number of samples in the dataset to analyze.</p>
 
         ################################################################################################################
 
-        generator_builder = SOM.dataset_to_generator_builder(dataset)
+        generator_builder = SOM._dataset_to_generator_builder(dataset)
 
         ################################################################################################################
 
@@ -1611,7 +1611,7 @@ number of samples in the dataset to analyze.</p>
 
     ####################################################################################################################
 
-    def winners(self, input_vectors: np.ndarray, chunk_size: int = None, locations: bool = False, progress_bar: bool = False) -&gt; np.ndarray:
+    def winners(self, input_vectors: np.ndarray, chunk_size: int = None, locations: bool = False, show_progress_bar: bool = False) -&gt; np.ndarray:
 
         &#34;&#34;&#34;Returns a vector of best matching unit indices or locations for the given input.
 
@@ -1620,11 +1620,11 @@ number of samples in the dataset to analyze.</p>
         input_vectors : np.ndarray
             Input dataset.
         chunk_size : int
-            Chunk size or None to disable batch.
+            Chunk size or **None** to disable batch.
         locations : bool
             Get winner locations instead of indices.
-        progress_bar : bool
-            Specifying whether a progress bar have to be shown (default: True).
+        show_progress_bar : bool
+            Specifying whether a progress bar have to be shown (default: **True**).
         &#34;&#34;&#34;
 
         ################################################################################################################
@@ -1645,7 +1645,7 @@ number of samples in the dataset to analyze.</p>
 
             result = np.empty((input_vectors.shape[0], 2), dtype = np.int64)
 
-            for chunk in tqdm.tqdm(tf.data.Dataset.from_tensor_slices(tf.constant(input_vectors, dtype = self._dtype)).batch(chunk_size), disable = not progress_bar):
+            for chunk in tqdm.tqdm(tf.data.Dataset.from_tensor_slices(tf.constant(input_vectors, dtype = self._dtype)).batch(chunk_size), disable = not show_progress_bar):
 
                 result[(i + 0) * chunk_size: (i + 1) * chunk_size] = tf.gather(self._topography, self.__find_bmus(weights, chunk, 1)[0])
 
@@ -1655,7 +1655,7 @@ number of samples in the dataset to analyze.</p>
 
             result = np.empty((input_vectors.shape[0], ), dtype = np.int64)
 
-            for chunk in tqdm.tqdm(tf.data.Dataset.from_tensor_slices(tf.constant(input_vectors, dtype = self._dtype)).batch(chunk_size), disable = not progress_bar):
+            for chunk in tqdm.tqdm(tf.data.Dataset.from_tensor_slices(tf.constant(input_vectors, dtype = self._dtype)).batch(chunk_size), disable = not show_progress_bar):
 
                 result[(i + 0) * chunk_size: (i + 1) * chunk_size] = self.__find_bmus(weights, chunk, 1)[0]
 
@@ -1667,7 +1667,7 @@ number of samples in the dataset to analyze.</p>
 
     ####################################################################################################################
 
-    def activation_map(self, dataset: typing.Union[np.ndarray, typing.Callable], chunk_size: int = None, progress_bar: bool = False) -&gt; np.ndarray:
+    def activation_map(self, dataset: typing.Union[np.ndarray, typing.Callable], chunk_size: int = None, show_progress_bar: bool = False) -&gt; np.ndarray:
 
         &#34;&#34;&#34;Returns a matrix containing the number of times the neuron (i, j) have been winner for the given input.
 
@@ -1676,19 +1676,19 @@ number of samples in the dataset to analyze.</p>
         dataset : typing.Union[np.ndarray, typing.Callable]
             Training dataset or generator provider.
         chunk_size : int
-            Chunk size or None to disable batch (default: None).
-        progress_bar : bool
-            Specifying whether a progress bar have to be shown (default: False).
+            Chunk size or **None** to disable batch (default: **None**).
+        show_progress_bar : bool
+            Specifying whether a progress bar have to be shown (default: **False**).
 
         .. NOTE::
-            Setting the **reset_weights** variable to **False** allows to perform progressive training of a preexisting model from large or evolutive datasets.
+            A generator provider is a method with no parameter returning a dataset generator (**yield** generator).
         &#34;&#34;&#34;
 
         ################################################################################################################
 
         weights = tf.constant(self._weights, dtype = self._dtype)
 
-        generator_builder = SOM.dataset_to_generator_builder(dataset)
+        generator_builder = SOM._dataset_to_generator_builder(dataset)
 
         result = np.zeros(shape = (self._m * self._n), dtype = np.int64)
 
@@ -1704,7 +1704,7 @@ number of samples in the dataset to analyze.</p>
 
             ############################################################################################################
 
-            for chunk in tqdm.tqdm(tf.data.Dataset.from_tensor_slices(tf.constant(input_vectors_np, dtype = self._dtype)).batch(chunk_size), disable = not progress_bar):
+            for chunk in tqdm.tqdm(tf.data.Dataset.from_tensor_slices(tf.constant(input_vectors_np, dtype = self._dtype)).batch(chunk_size), disable = not show_progress_bar):
 
                 for bmu_index in self.__find_bmus(weights, chunk, n = 1)[0]:
 
@@ -1714,41 +1714,23 @@ number of samples in the dataset to analyze.</p>
 
         return result.reshape(self._m, self._n)</code></pre>
 </details>
-<h3>Static methods</h3>
-<dl>
-<dt id="tf_som.SOM.dataset_to_generator_builder"><code class="name flex">
-<span>def <span class="ident">dataset_to_generator_builder</span></span>(<span>dataset)</span>
-</code></dt>
-<dd>
-<div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@staticmethod
-def dataset_to_generator_builder(dataset):
-
-    return dataset if callable(dataset) else lambda: [dataset]</code></pre>
-</details>
-</dd>
-</dl>
 <h3>Methods</h3>
 <dl>
 <dt id="tf_som.SOM.train"><code class="name flex">
 <span>def <span class="ident">train</span></span>(<span>self, dataset: Union[numpy.ndarray, Callable], chunk_size: int = None, reset_weights: bool = True, show_progress_bar: bool = True) ‑> None</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Trains the neural network. A batch formulation of updating weights is used: <span><span class="MathJax_Preview"> \mathrm{bmu}(x)=\underset{i}{\mathrm{arg\,min}}\lVert x-w_i\rVert </span><script type="math/tex; mode=display"> \mathrm{bmu}(x)=\underset{i}{\mathrm{arg\,min}}\lVert x-w_i\rVert </script></span> <span><span class="MathJax_Preview"> n_j=\sum_{x\in\mathcal{D}}\left\{\begin{array}{ll}1&amp;\mathrm{bmu}(x)=j\\0&amp;\mathrm{otherwise}\end{array}\right. </span><script type="math/tex; mode=display"> n_j=\sum_{x\in\mathcal{D}}\left\{\begin{array}{ll}1&\mathrm{bmu}(x)=j\\0&\mathrm{otherwise}\end{array}\right. </script></span> <span><span class="MathJax_Preview"> \Theta_{ji}(e)=\alpha(e)\cdot\exp\left(-\frac{\lVert j-i\rVert}{2\sigma^2(e)}\right) </span><script type="math/tex; mode=display"> \Theta_{ji}(e)=\alpha(e)\cdot\exp\left(-\frac{\lVert j-i\rVert}{2\sigma^2(e)}\right) </script></span> <span><span class="MathJax_Preview"> \boxed{w_{i\,\mathrm{new}}=\frac{\sum_{j=1}^{n}n_j\Theta_{ji}(e)x_j}{\sum_{j=1}^{n}n_j\Theta_{ji}(e)}} </span><script type="math/tex; mode=display"> \boxed{w_{i\,\mathrm{new}}=\frac{\sum_{j=1}^{n}n_j\Theta_{ji}(e)x_j}{\sum_{j=1}^{n}n_j\Theta_{ji}(e)}} </script></span> where, at epoch <span><span class="MathJax_Preview"> e </span><script type="math/tex"> e </script></span>, <span><span class="MathJax_Preview"> \alpha(e)=\alpha_0\mathrm{decay\,function}(e) </span><script type="math/tex"> \alpha(e)=\alpha_0\mathrm{decay\,function}(e) </script></span> is the learning rate and <span><span class="MathJax_Preview"> \sigma(e)=\sigma_0\mathrm{decay\,function}(e) </span><script type="math/tex"> \sigma(e)=\sigma_0\mathrm{decay\,function}(e) </script></span> is the neighborhood radius.</p>
+<div class="desc"><p>Trains the neural network. A batch formulation of updating weights is implemented: <span><span class="MathJax_Preview"> \mathrm{bmu}(x)=\underset{i}{\mathrm{arg\,min}}\lVert x-w_i\rVert </span><script type="math/tex; mode=display"> \mathrm{bmu}(x)=\underset{i}{\mathrm{arg\,min}}\lVert x-w_i\rVert </script></span> <span><span class="MathJax_Preview"> n_j=\sum_{x\in\mathcal{D}}\left\{\begin{array}{ll}1&amp;\mathrm{bmu}(x)=j\\0&amp;\mathrm{otherwise}\end{array}\right. </span><script type="math/tex; mode=display"> n_j=\sum_{x\in\mathcal{D}}\left\{\begin{array}{ll}1&\mathrm{bmu}(x)=j\\0&\mathrm{otherwise}\end{array}\right. </script></span> <span><span class="MathJax_Preview"> \Theta_{ji}(e)=\alpha(e)\cdot\exp\left(-\frac{\lVert j-i\rVert}{2\sigma^2(e)}\right) </span><script type="math/tex; mode=display"> \Theta_{ji}(e)=\alpha(e)\cdot\exp\left(-\frac{\lVert j-i\rVert}{2\sigma^2(e)}\right) </script></span> <span><span class="MathJax_Preview"> \boxed{w_{i\,\mathrm{new}}=\frac{\sum_{j=1}^{n}n_j\Theta_{ji}(e)x_j}{\sum_{j=1}^{n}n_j\Theta_{ji}(e)}} </span><script type="math/tex; mode=display"> \boxed{w_{i\,\mathrm{new}}=\frac{\sum_{j=1}^{n}n_j\Theta_{ji}(e)x_j}{\sum_{j=1}^{n}n_j\Theta_{ji}(e)}} </script></span> where, at epoch <span><span class="MathJax_Preview"> e </span><script type="math/tex"> e </script></span>, <span><span class="MathJax_Preview"> \alpha(e)=\alpha_0\mathrm{decay\,function}(e) </span><script type="math/tex"> \alpha(e)=\alpha_0\mathrm{decay\,function}(e) </script></span> is the learning rate and <span><span class="MathJax_Preview"> \sigma(e)=\sigma_0\mathrm{decay\,function}(e) </span><script type="math/tex"> \sigma(e)=\sigma_0\mathrm{decay\,function}(e) </script></span> is the neighborhood radius.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt><strong><code>dataset</code></strong> :&ensp;<code>typing.Union[np.ndarray, typing.Callable]</code></dt>
 <dd>Training dataset or generator provider.</dd>
 <dt><strong><code>chunk_size</code></strong> :&ensp;<code>int</code></dt>
-<dd>Chunk size or None to disable batch (default: None).</dd>
+<dd>Chunk size or <strong>None</strong> to disable batch (default: <strong>None</strong>).</dd>
 <dt><strong><code>reset_weights</code></strong> :&ensp;<code>bool</code></dt>
-<dd>Specifying whether the weights have to be reset (default: True).</dd>
+<dd>Specifying whether the weights have to be reset (default: <strong>True</strong>).</dd>
 <dt><strong><code>show_progress_bar</code></strong> :&ensp;<code>bool</code></dt>
-<dd>Specifying whether a progress bar have to be shown (default: True).</dd>
+<dd>Specifying whether a progress bar have to be shown (default: <strong>True</strong>).</dd>
 </dl>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -1756,7 +1738,7 @@ def dataset_to_generator_builder(dataset):
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Setting the <strong>reset_weights</strong> variable to <strong>False</strong> allows to perform progressive training of a preexisting model from large or evolutive datasets.</p>
+<p>Setting the <strong>reset_weights</strong> variable to <strong>False</strong> allows to update a pre-trained model (= progressive training).</p>
 </div></div>
 <details class="source">
 <summary>
@@ -1764,24 +1746,24 @@ def dataset_to_generator_builder(dataset):
 </summary>
 <pre><code class="python">def train(self, dataset: typing.Union[np.ndarray, typing.Callable], chunk_size: int = None, reset_weights: bool = True, show_progress_bar: bool = True) -&gt; None:
 
-    &#34;&#34;&#34;Trains the neural network. A batch formulation of updating weights is used: $$ \\mathrm{bmu}(x)=\\underset{i}{\\mathrm{arg\\,min}}\\lVert x-w_i\\rVert $$ $$ n_j=\\sum_{x\\in\\mathcal{D}}\\left\\{\\begin{array}{ll}1&amp;\\mathrm{bmu}(x)=j\\\\0&amp;\\mathrm{otherwise}\\end{array}\\right. $$ $$ \\Theta_{ji}(e)=\\alpha(e)\\cdot\\exp\\left(-\\frac{\\lVert j-i\\rVert}{2\\sigma^2(e)}\\right) $$ $$ \\boxed{w_{i\\,\\mathrm{new}}=\\frac{\\sum_{j=1}^{n}n_j\\Theta_{ji}(e)x_j}{\\sum_{j=1}^{n}n_j\\Theta_{ji}(e)}} $$ where, at epoch \\( e \\), \\( \\alpha(e)=\\alpha_0\\mathrm{decay\\,function}(e) \\) is the learning rate and \\( \\sigma(e)=\\sigma_0\\mathrm{decay\\,function}(e) \\) is the neighborhood radius.
+    &#34;&#34;&#34;Trains the neural network. A batch formulation of updating weights is implemented: $$ \\mathrm{bmu}(x)=\\underset{i}{\\mathrm{arg\\,min}}\\lVert x-w_i\\rVert $$ $$ n_j=\\sum_{x\\in\\mathcal{D}}\\left\\{\\begin{array}{ll}1&amp;\\mathrm{bmu}(x)=j\\\\0&amp;\\mathrm{otherwise}\\end{array}\\right. $$ $$ \\Theta_{ji}(e)=\\alpha(e)\\cdot\\exp\\left(-\\frac{\\lVert j-i\\rVert}{2\\sigma^2(e)}\\right) $$ $$ \\boxed{w_{i\\,\\mathrm{new}}=\\frac{\\sum_{j=1}^{n}n_j\\Theta_{ji}(e)x_j}{\\sum_{j=1}^{n}n_j\\Theta_{ji}(e)}} $$ where, at epoch \\( e \\), \\( \\alpha(e)=\\alpha_0\\mathrm{decay\\,function}(e) \\) is the learning rate and \\( \\sigma(e)=\\sigma_0\\mathrm{decay\\,function}(e) \\) is the neighborhood radius.
 
     Parameters
     ----------
     dataset : typing.Union[np.ndarray, typing.Callable]
         Training dataset or generator provider.
     chunk_size : int
-        Chunk size or None to disable batch (default: None).
+        Chunk size or **None** to disable batch (default: **None**).
     reset_weights : bool
-        Specifying whether the weights have to be reset (default: True).
+        Specifying whether the weights have to be reset (default: **True**).
     show_progress_bar : bool
-        Specifying whether a progress bar have to be shown (default: True).
+        Specifying whether a progress bar have to be shown (default: **True**).
 
     .. NOTE::
         A generator provider is a method with no parameter returning a dataset generator (**yield** generator).
 
     .. NOTE::
-        Setting the **reset_weights** variable to **False** allows to perform progressive training of a preexisting model from large or evolutive datasets.
+        Setting the **reset_weights** variable to **False** allows to update a pre-trained model (= progressive training).
     &#34;&#34;&#34;
 
     ################################################################################################################
@@ -1798,7 +1780,7 @@ def dataset_to_generator_builder(dataset):
 
     ################################################################################################################
 
-    generator_builder = SOM.dataset_to_generator_builder(dataset)
+    generator_builder = SOM._dataset_to_generator_builder(dataset)
 
     ################################################################################################################
 
@@ -2131,7 +2113,7 @@ def dataset_to_generator_builder(dataset):
 </details>
 </dd>
 <dt id="tf_som.SOM.winners"><code class="name flex">
-<span>def <span class="ident">winners</span></span>(<span>self, input_vectors: numpy.ndarray, chunk_size: int = None, locations: bool = False, progress_bar: bool = False) ‑> numpy.ndarray</span>
+<span>def <span class="ident">winners</span></span>(<span>self, input_vectors: numpy.ndarray, chunk_size: int = None, locations: bool = False, show_progress_bar: bool = False) ‑> numpy.ndarray</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Returns a vector of best matching unit indices or locations for the given input.</p>
@@ -2140,17 +2122,17 @@ def dataset_to_generator_builder(dataset):
 <dt><strong><code>input_vectors</code></strong> :&ensp;<code>np.ndarray</code></dt>
 <dd>Input dataset.</dd>
 <dt><strong><code>chunk_size</code></strong> :&ensp;<code>int</code></dt>
-<dd>Chunk size or None to disable batch.</dd>
+<dd>Chunk size or <strong>None</strong> to disable batch.</dd>
 <dt><strong><code>locations</code></strong> :&ensp;<code>bool</code></dt>
 <dd>Get winner locations instead of indices.</dd>
-<dt><strong><code>progress_bar</code></strong> :&ensp;<code>bool</code></dt>
-<dd>Specifying whether a progress bar have to be shown (default: True).</dd>
+<dt><strong><code>show_progress_bar</code></strong> :&ensp;<code>bool</code></dt>
+<dd>Specifying whether a progress bar have to be shown (default: <strong>True</strong>).</dd>
 </dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def winners(self, input_vectors: np.ndarray, chunk_size: int = None, locations: bool = False, progress_bar: bool = False) -&gt; np.ndarray:
+<pre><code class="python">def winners(self, input_vectors: np.ndarray, chunk_size: int = None, locations: bool = False, show_progress_bar: bool = False) -&gt; np.ndarray:
 
     &#34;&#34;&#34;Returns a vector of best matching unit indices or locations for the given input.
 
@@ -2159,11 +2141,11 @@ def dataset_to_generator_builder(dataset):
     input_vectors : np.ndarray
         Input dataset.
     chunk_size : int
-        Chunk size or None to disable batch.
+        Chunk size or **None** to disable batch.
     locations : bool
         Get winner locations instead of indices.
-    progress_bar : bool
-        Specifying whether a progress bar have to be shown (default: True).
+    show_progress_bar : bool
+        Specifying whether a progress bar have to be shown (default: **True**).
     &#34;&#34;&#34;
 
     ################################################################################################################
@@ -2184,7 +2166,7 @@ def dataset_to_generator_builder(dataset):
 
         result = np.empty((input_vectors.shape[0], 2), dtype = np.int64)
 
-        for chunk in tqdm.tqdm(tf.data.Dataset.from_tensor_slices(tf.constant(input_vectors, dtype = self._dtype)).batch(chunk_size), disable = not progress_bar):
+        for chunk in tqdm.tqdm(tf.data.Dataset.from_tensor_slices(tf.constant(input_vectors, dtype = self._dtype)).batch(chunk_size), disable = not show_progress_bar):
 
             result[(i + 0) * chunk_size: (i + 1) * chunk_size] = tf.gather(self._topography, self.__find_bmus(weights, chunk, 1)[0])
 
@@ -2194,7 +2176,7 @@ def dataset_to_generator_builder(dataset):
 
         result = np.empty((input_vectors.shape[0], ), dtype = np.int64)
 
-        for chunk in tqdm.tqdm(tf.data.Dataset.from_tensor_slices(tf.constant(input_vectors, dtype = self._dtype)).batch(chunk_size), disable = not progress_bar):
+        for chunk in tqdm.tqdm(tf.data.Dataset.from_tensor_slices(tf.constant(input_vectors, dtype = self._dtype)).batch(chunk_size), disable = not show_progress_bar):
 
             result[(i + 0) * chunk_size: (i + 1) * chunk_size] = self.__find_bmus(weights, chunk, 1)[0]
 
@@ -2206,7 +2188,7 @@ def dataset_to_generator_builder(dataset):
 </details>
 </dd>
 <dt id="tf_som.SOM.activation_map"><code class="name flex">
-<span>def <span class="ident">activation_map</span></span>(<span>self, dataset: Union[numpy.ndarray, Callable], chunk_size: int = None, progress_bar: bool = False) ‑> numpy.ndarray</span>
+<span>def <span class="ident">activation_map</span></span>(<span>self, dataset: Union[numpy.ndarray, Callable], chunk_size: int = None, show_progress_bar: bool = False) ‑> numpy.ndarray</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Returns a matrix containing the number of times the neuron (i, j) have been winner for the given input.</p>
@@ -2215,19 +2197,19 @@ def dataset_to_generator_builder(dataset):
 <dt><strong><code>dataset</code></strong> :&ensp;<code>typing.Union[np.ndarray, typing.Callable]</code></dt>
 <dd>Training dataset or generator provider.</dd>
 <dt><strong><code>chunk_size</code></strong> :&ensp;<code>int</code></dt>
-<dd>Chunk size or None to disable batch (default: None).</dd>
-<dt><strong><code>progress_bar</code></strong> :&ensp;<code>bool</code></dt>
-<dd>Specifying whether a progress bar have to be shown (default: False).</dd>
+<dd>Chunk size or <strong>None</strong> to disable batch (default: <strong>None</strong>).</dd>
+<dt><strong><code>show_progress_bar</code></strong> :&ensp;<code>bool</code></dt>
+<dd>Specifying whether a progress bar have to be shown (default: <strong>False</strong>).</dd>
 </dl>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Setting the <strong>reset_weights</strong> variable to <strong>False</strong> allows to perform progressive training of a preexisting model from large or evolutive datasets.</p>
+<p>A generator provider is a method with no parameter returning a dataset generator (<strong>yield</strong> generator).</p>
 </div></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def activation_map(self, dataset: typing.Union[np.ndarray, typing.Callable], chunk_size: int = None, progress_bar: bool = False) -&gt; np.ndarray:
+<pre><code class="python">def activation_map(self, dataset: typing.Union[np.ndarray, typing.Callable], chunk_size: int = None, show_progress_bar: bool = False) -&gt; np.ndarray:
 
     &#34;&#34;&#34;Returns a matrix containing the number of times the neuron (i, j) have been winner for the given input.
 
@@ -2236,19 +2218,19 @@ def dataset_to_generator_builder(dataset):
     dataset : typing.Union[np.ndarray, typing.Callable]
         Training dataset or generator provider.
     chunk_size : int
-        Chunk size or None to disable batch (default: None).
-    progress_bar : bool
-        Specifying whether a progress bar have to be shown (default: False).
+        Chunk size or **None** to disable batch (default: **None**).
+    show_progress_bar : bool
+        Specifying whether a progress bar have to be shown (default: **False**).
 
     .. NOTE::
-        Setting the **reset_weights** variable to **False** allows to perform progressive training of a preexisting model from large or evolutive datasets.
+        A generator provider is a method with no parameter returning a dataset generator (**yield** generator).
     &#34;&#34;&#34;
 
     ################################################################################################################
 
     weights = tf.constant(self._weights, dtype = self._dtype)
 
-    generator_builder = SOM.dataset_to_generator_builder(dataset)
+    generator_builder = SOM._dataset_to_generator_builder(dataset)
 
     result = np.zeros(shape = (self._m * self._n), dtype = np.int64)
 
@@ -2264,7 +2246,7 @@ def dataset_to_generator_builder(dataset):
 
         ############################################################################################################
 
-        for chunk in tqdm.tqdm(tf.data.Dataset.from_tensor_slices(tf.constant(input_vectors_np, dtype = self._dtype)).batch(chunk_size), disable = not progress_bar):
+        for chunk in tqdm.tqdm(tf.data.Dataset.from_tensor_slices(tf.constant(input_vectors_np, dtype = self._dtype)).batch(chunk_size), disable = not show_progress_bar):
 
             for bmu_index in self.__find_bmus(weights, chunk, n = 1)[0]:
 
@@ -2312,7 +2294,6 @@ def dataset_to_generator_builder(dataset):
 <li>
 <h4><code><a title="tf_som.SOM" href="#tf_som.SOM">SOM</a></code></h4>
 <ul class="">
-<li><code><a title="tf_som.SOM.dataset_to_generator_builder" href="#tf_som.SOM.dataset_to_generator_builder">dataset_to_generator_builder</a></code></li>
 <li><code><a title="tf_som.SOM.train" href="#tf_som.SOM.train">train</a></code></li>
 <li><code><a title="tf_som.SOM.save" href="#tf_som.SOM.save">save</a></code></li>
 <li><code><a title="tf_som.SOM.load" href="#tf_som.SOM.load">load</a></code></li>
