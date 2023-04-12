@@ -413,9 +413,9 @@ class SOM(object):
     ####################################################################################################################
 
     @staticmethod
-    def _dataset_to_generator_builder(dataset):
+    def _dataset_to_generator(dataset):
 
-        return dataset if callable(dataset) else lambda: [dataset]
+        return dataset if callable(dataset) else lambda: (dataset, )
 
     ####################################################################################################################
 
@@ -426,7 +426,7 @@ class SOM(object):
         Parameters
         ----------
         dataset : typing.Union[np.ndarray, typing.Callable]
-            Training dataset or generator provider.
+            Training dataset array or generator.
         chunk_size : int
             Chunk size or **None** to disable batch (default: **None**).
         reset_weights : bool
@@ -435,7 +435,7 @@ class SOM(object):
             Specifying whether a progress bar have to be shown (default: **True**).
 
         .. NOTE::
-            A generator provider is a method with no parameter returning a dataset generator (**yield** generator).
+            A dataset generator is a **yield** generator returning numpy arrays.
 
         .. NOTE::
             Setting the **reset_weights** variable to **False** allows to update a pre-trained model (= progressive training).
@@ -455,13 +455,13 @@ class SOM(object):
 
         ################################################################################################################
 
-        generator_builder = SOM._dataset_to_generator_builder(dataset)
+        dataset_generator = SOM._dataset_to_generator(dataset)
 
         ################################################################################################################
 
         for epoch in tqdm.tqdm(range(self._epochs), disable = not show_progress_bar):
 
-            for dataset_part_number, input_vectors_np in enumerate(generator_builder()):
+            for dataset_part_number, input_arrays_np in enumerate(dataset_generator()):
 
                 ########################################################################################################
                 # DEFAULT CHUNK SIZE                                                                                   #
@@ -469,7 +469,7 @@ class SOM(object):
 
                 if chunk_size is None:
 
-                    chunk_size = input_vectors_np.shape[0]
+                    chunk_size = input_arrays_np.shape[0]
 
                 ########################################################################################################
                 # INITIALIZE WEIGHTS                                                                                   #
@@ -482,13 +482,13 @@ class SOM(object):
                         init_weights = np.empty(shape = (self._m * self._n, self._dim), dtype = self._dtype)
 
                         l1 = init_weights.shape[0]
-                        l2 = input_vectors_np.shape[0]
+                        l2 = input_arrays_np.shape[0]
 
                         for i in range(l1):
 
                             j = np.random.randint(l2)
 
-                            init_weights[i] = input_vectors_np[j]
+                            init_weights[i] = input_arrays_np[j]
 
                         weights = tf.Variable(init_weights, dtype = self._dtype)
 
@@ -500,7 +500,7 @@ class SOM(object):
                 # TRAIN THE SELF ORGANIZING MAP                                                                        #
                 ########################################################################################################
 
-                for chunk in tf.data.Dataset.from_tensor_slices(tf.constant(input_vectors_np, dtype = self._dtype)).batch(chunk_size):
+                for chunk in tf.data.Dataset.from_tensor_slices(tf.constant(input_arrays_np, dtype = self._dtype)).batch(chunk_size):
 
                     self._train(weights, chunk, epoch)
 
@@ -780,37 +780,37 @@ class SOM(object):
         Parameters
         ----------
         dataset : typing.Union[np.ndarray, typing.Callable]
-            Training dataset or generator provider.
+            Dataset array or generator.
         chunk_size : int
             Chunk size or **None** to disable batch (default: **None**).
         show_progress_bar : bool
             Specifying whether a progress bar have to be shown (default: **False**).
 
         .. NOTE::
-            A generator provider is a method with no parameter returning a dataset generator (**yield** generator).
+            A dataset generator is a **yield** generator returning numpy arrays.
         """
 
         ################################################################################################################
 
-        weights = tf.constant(self._weights, dtype = self._dtype)
+        dataset_generator = SOM._dataset_to_generator(dataset)
 
-        generator_builder = SOM._dataset_to_generator_builder(dataset)
+        weights = tf.constant(self._weights, dtype = self._dtype)
 
         result = np.zeros(shape = (self._m * self._n), dtype = np.int64)
 
         ################################################################################################################
 
-        for dataset_part, input_vectors_np in enumerate(generator_builder()):
+        for dataset_part, input_arrays_np in enumerate(dataset_generator()):
 
             ############################################################################################################
 
             if chunk_size is None:
 
-                chunk_size = input_vectors_np.shape[0]
+                chunk_size = input_arrays_np.shape[0]
 
             ############################################################################################################
 
-            for chunk in tqdm.tqdm(tf.data.Dataset.from_tensor_slices(tf.constant(input_vectors_np, dtype = self._dtype)).batch(chunk_size), disable = not show_progress_bar):
+            for chunk in tqdm.tqdm(tf.data.Dataset.from_tensor_slices(tf.constant(input_arrays_np, dtype = self._dtype)).batch(chunk_size), disable = not show_progress_bar):
 
                 for bmu_index in self.__find_bmus(weights, chunk, n = 1)[0]:
 
