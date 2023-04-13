@@ -178,7 +178,7 @@ def setup_tensorflow_for_cpus(num_threads: int = None) -&gt; None:
 
 ########################################################################################################################
 
-def normalize(df, dtype: type = np.float32) -&gt; None:
+def normalize(df: typing.Any, dtype: type = np.float32) -&gt; typing.Any:
 
     &#34;&#34;&#34;Normalizes a Pandas data frame.
 
@@ -210,6 +210,8 @@ def _asymptotic_decay(epoch: int, epochs: int) -&gt; float:
 ########################################################################################################################
 
 class BMUs(object):
+
+    __pdoc__ = False
 
     &#34;&#34;&#34;Best Matching Units&#34;&#34;&#34;
 
@@ -368,14 +370,6 @@ class SOM(object):
     ####################################################################################################################
 
     def _train(self, weights: tf.Variable, input_vectors: tf.Tensor, epoch: int) -&gt; None:
-
-        ################################################################################################################
-        # SHUFFLE INPUT VECTORS                                                                                        #
-        ################################################################################################################
-
-        shuffled_indices = tf.random.shuffle(tf.range(start = 0, limit = tf.shape(input_vectors)[0], dtype = tf.int64))
-
-        input_vectors = tf.gather(input_vectors, shuffled_indices)
 
         ################################################################################################################
         # BEST MATCHING UNITS                                                                                          #
@@ -537,18 +531,18 @@ class SOM(object):
 
                     if reset_weights:
 
-                        init_weights = np.empty(shape = (self._m * self._n, self._dim), dtype = self._dtype)
+                        rand_weights_np = np.empty(shape = (self._m * self._n, self._dim), dtype = self._dtype)
 
-                        l1 = init_weights.shape[0]
+                        l1 = rand_weights_np.shape[0]
                         l2 = dataset_array_np.shape[0]
 
                         for i in range(l1):
 
                             j = np.random.randint(l2)
 
-                            init_weights[i] = dataset_array_np[j]
+                            rand_weights_np[i] = dataset_array_np[j]
 
-                        weights = tf.Variable(init_weights, dtype = self._dtype)
+                        weights = tf.Variable(rand_weights_np, dtype = self._dtype)
 
                     else:
 
@@ -558,7 +552,9 @@ class SOM(object):
                 # TRAIN THE SELF ORGANIZING MAP                                                                        #
                 ########################################################################################################
 
-                for chunk in tf.data.Dataset.from_tensor_slices(tf.constant(dataset_array_np, dtype = self._dtype)).batch(chunk_size):
+                dataset = tf.data.Dataset.from_tensor_slices(tf.constant(dataset_array_np, dtype = self._dtype))
+
+                for chunk in dataset.shuffle(dataset_array_np.shape[0]).batch(chunk_size):
 
                     self._train(weights, chunk, epoch)
 
@@ -604,7 +600,7 @@ class SOM(object):
                 fits.Column(name = &#39;topographic_errors&#39;, format = &#39;D&#39;, array = self._topographic_errors),
             ]))
 
-            hdu0.header[&#39;lrnrate&#39;] = self._learning_rate
+            hdu0.header[&#39;lrate&#39;] = self._learning_rate
             hdu0.header[&#39;sigma&#39;] = self._sigma
             hdu2.header[&#39;epochs&#39;] = self._epochs
 
@@ -620,7 +616,7 @@ class SOM(object):
 
             with h5py.File(filename, &#39;w&#39;) as file:
 
-                file.attrs[&#39;lrnrate&#39;] = self._learning_rate
+                file.attrs[&#39;lrate&#39;] = self._learning_rate
                 file.attrs[&#39;sigma&#39;] = self._sigma
                 file.attrs[&#39;epochs&#39;] = self._epochs
 
@@ -664,7 +660,7 @@ class SOM(object):
 
                 self._m, self._n, self._dim = hdus[1].data.shape
 
-                self._learning_rate = hdus[0].header[&#39;lrnrate&#39;]
+                self._learning_rate = hdus[0].header[&#39;lrate&#39;]
                 self._sigma = hdus[0].header[&#39;sigma&#39;]
                 self._epochs = hdus[2].header[&#39;epochs&#39;]
 
@@ -684,7 +680,7 @@ class SOM(object):
 
                 self._m, self._n, self._dim = file[&#39;weights&#39;].shape
 
-                self._learning_rate = file.attrs[&#39;lrnrate&#39;]
+                self._learning_rate = file.attrs[&#39;lrate&#39;]
                 self._sigma = file.attrs[&#39;sigma&#39;]
                 self._epochs = file.attrs[&#39;epochs&#39;]
 
@@ -946,7 +942,7 @@ class SOM(object):
 </details>
 </dd>
 <dt id="tf_som.normalize"><code class="name flex">
-<span>def <span class="ident">normalize</span></span>(<span>df, dtype: type = numpy.float32) ‑> None</span>
+<span>def <span class="ident">normalize</span></span>(<span>df: Any, dtype: type = numpy.float32) ‑> Any</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Normalizes a Pandas data frame.</p>
@@ -961,7 +957,7 @@ class SOM(object):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def normalize(df, dtype: type = np.float32) -&gt; None:
+<pre><code class="python">def normalize(df: typing.Any, dtype: type = np.float32) -&gt; typing.Any:
 
     &#34;&#34;&#34;Normalizes a Pandas data frame.
 
@@ -995,12 +991,14 @@ class SOM(object):
 <span>(</span><span>indices: numpy.ndarray, locations: numpy.ndarray)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Best Matching Units</p></div>
+<div class="desc"></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class BMUs(object):
+
+    __pdoc__ = False
 
     &#34;&#34;&#34;Best Matching Units&#34;&#34;&#34;
 
@@ -1206,14 +1204,6 @@ number of samples in the dataset to analyze.</p>
     def _train(self, weights: tf.Variable, input_vectors: tf.Tensor, epoch: int) -&gt; None:
 
         ################################################################################################################
-        # SHUFFLE INPUT VECTORS                                                                                        #
-        ################################################################################################################
-
-        shuffled_indices = tf.random.shuffle(tf.range(start = 0, limit = tf.shape(input_vectors)[0], dtype = tf.int64))
-
-        input_vectors = tf.gather(input_vectors, shuffled_indices)
-
-        ################################################################################################################
         # BEST MATCHING UNITS                                                                                          #
         ################################################################################################################
 
@@ -1373,18 +1363,18 @@ number of samples in the dataset to analyze.</p>
 
                     if reset_weights:
 
-                        init_weights = np.empty(shape = (self._m * self._n, self._dim), dtype = self._dtype)
+                        rand_weights_np = np.empty(shape = (self._m * self._n, self._dim), dtype = self._dtype)
 
-                        l1 = init_weights.shape[0]
+                        l1 = rand_weights_np.shape[0]
                         l2 = dataset_array_np.shape[0]
 
                         for i in range(l1):
 
                             j = np.random.randint(l2)
 
-                            init_weights[i] = dataset_array_np[j]
+                            rand_weights_np[i] = dataset_array_np[j]
 
-                        weights = tf.Variable(init_weights, dtype = self._dtype)
+                        weights = tf.Variable(rand_weights_np, dtype = self._dtype)
 
                     else:
 
@@ -1394,7 +1384,9 @@ number of samples in the dataset to analyze.</p>
                 # TRAIN THE SELF ORGANIZING MAP                                                                        #
                 ########################################################################################################
 
-                for chunk in tf.data.Dataset.from_tensor_slices(tf.constant(dataset_array_np, dtype = self._dtype)).batch(chunk_size):
+                dataset = tf.data.Dataset.from_tensor_slices(tf.constant(dataset_array_np, dtype = self._dtype))
+
+                for chunk in dataset.shuffle(dataset_array_np.shape[0]).batch(chunk_size):
 
                     self._train(weights, chunk, epoch)
 
@@ -1440,7 +1432,7 @@ number of samples in the dataset to analyze.</p>
                 fits.Column(name = &#39;topographic_errors&#39;, format = &#39;D&#39;, array = self._topographic_errors),
             ]))
 
-            hdu0.header[&#39;lrnrate&#39;] = self._learning_rate
+            hdu0.header[&#39;lrate&#39;] = self._learning_rate
             hdu0.header[&#39;sigma&#39;] = self._sigma
             hdu2.header[&#39;epochs&#39;] = self._epochs
 
@@ -1456,7 +1448,7 @@ number of samples in the dataset to analyze.</p>
 
             with h5py.File(filename, &#39;w&#39;) as file:
 
-                file.attrs[&#39;lrnrate&#39;] = self._learning_rate
+                file.attrs[&#39;lrate&#39;] = self._learning_rate
                 file.attrs[&#39;sigma&#39;] = self._sigma
                 file.attrs[&#39;epochs&#39;] = self._epochs
 
@@ -1500,7 +1492,7 @@ number of samples in the dataset to analyze.</p>
 
                 self._m, self._n, self._dim = hdus[1].data.shape
 
-                self._learning_rate = hdus[0].header[&#39;lrnrate&#39;]
+                self._learning_rate = hdus[0].header[&#39;lrate&#39;]
                 self._sigma = hdus[0].header[&#39;sigma&#39;]
                 self._epochs = hdus[2].header[&#39;epochs&#39;]
 
@@ -1520,7 +1512,7 @@ number of samples in the dataset to analyze.</p>
 
                 self._m, self._n, self._dim = file[&#39;weights&#39;].shape
 
-                self._learning_rate = file.attrs[&#39;lrnrate&#39;]
+                self._learning_rate = file.attrs[&#39;lrate&#39;]
                 self._sigma = file.attrs[&#39;sigma&#39;]
                 self._epochs = file.attrs[&#39;epochs&#39;]
 
@@ -1804,18 +1796,18 @@ number of samples in the dataset to analyze.</p>
 
                 if reset_weights:
 
-                    init_weights = np.empty(shape = (self._m * self._n, self._dim), dtype = self._dtype)
+                    rand_weights_np = np.empty(shape = (self._m * self._n, self._dim), dtype = self._dtype)
 
-                    l1 = init_weights.shape[0]
+                    l1 = rand_weights_np.shape[0]
                     l2 = dataset_array_np.shape[0]
 
                     for i in range(l1):
 
                         j = np.random.randint(l2)
 
-                        init_weights[i] = dataset_array_np[j]
+                        rand_weights_np[i] = dataset_array_np[j]
 
-                    weights = tf.Variable(init_weights, dtype = self._dtype)
+                    weights = tf.Variable(rand_weights_np, dtype = self._dtype)
 
                 else:
 
@@ -1825,7 +1817,9 @@ number of samples in the dataset to analyze.</p>
             # TRAIN THE SELF ORGANIZING MAP                                                                        #
             ########################################################################################################
 
-            for chunk in tf.data.Dataset.from_tensor_slices(tf.constant(dataset_array_np, dtype = self._dtype)).batch(chunk_size):
+            dataset = tf.data.Dataset.from_tensor_slices(tf.constant(dataset_array_np, dtype = self._dtype))
+
+            for chunk in dataset.shuffle(dataset_array_np.shape[0]).batch(chunk_size):
 
                 self._train(weights, chunk, epoch)
 
@@ -1887,7 +1881,7 @@ number of samples in the dataset to analyze.</p>
             fits.Column(name = &#39;topographic_errors&#39;, format = &#39;D&#39;, array = self._topographic_errors),
         ]))
 
-        hdu0.header[&#39;lrnrate&#39;] = self._learning_rate
+        hdu0.header[&#39;lrate&#39;] = self._learning_rate
         hdu0.header[&#39;sigma&#39;] = self._sigma
         hdu2.header[&#39;epochs&#39;] = self._epochs
 
@@ -1903,7 +1897,7 @@ number of samples in the dataset to analyze.</p>
 
         with h5py.File(filename, &#39;w&#39;) as file:
 
-            file.attrs[&#39;lrnrate&#39;] = self._learning_rate
+            file.attrs[&#39;lrate&#39;] = self._learning_rate
             file.attrs[&#39;sigma&#39;] = self._sigma
             file.attrs[&#39;epochs&#39;] = self._epochs
 
@@ -1962,7 +1956,7 @@ number of samples in the dataset to analyze.</p>
 
             self._m, self._n, self._dim = hdus[1].data.shape
 
-            self._learning_rate = hdus[0].header[&#39;lrnrate&#39;]
+            self._learning_rate = hdus[0].header[&#39;lrate&#39;]
             self._sigma = hdus[0].header[&#39;sigma&#39;]
             self._epochs = hdus[2].header[&#39;epochs&#39;]
 
@@ -1982,7 +1976,7 @@ number of samples in the dataset to analyze.</p>
 
             self._m, self._n, self._dim = file[&#39;weights&#39;].shape
 
-            self._learning_rate = file.attrs[&#39;lrnrate&#39;]
+            self._learning_rate = file.attrs[&#39;lrate&#39;]
             self._sigma = file.attrs[&#39;sigma&#39;]
             self._epochs = file.attrs[&#39;epochs&#39;]
 

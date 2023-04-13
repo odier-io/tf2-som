@@ -120,7 +120,7 @@ def setup_tensorflow_for_cpus(num_threads: int = None) -> None:
 
 ########################################################################################################################
 
-def normalize(df, dtype: type = np.float32) -> None:
+def normalize(df: typing.Any, dtype: type = np.float32) -> typing.Any:
 
     """Normalizes a Pandas data frame.
 
@@ -152,6 +152,8 @@ def _asymptotic_decay(epoch: int, epochs: int) -> float:
 ########################################################################################################################
 
 class BMUs(object):
+
+    __pdoc__ = False
 
     """Best Matching Units"""
 
@@ -310,14 +312,6 @@ class SOM(object):
     ####################################################################################################################
 
     def _train(self, weights: tf.Variable, input_vectors: tf.Tensor, epoch: int) -> None:
-
-        ################################################################################################################
-        # SHUFFLE INPUT VECTORS                                                                                        #
-        ################################################################################################################
-
-        shuffled_indices = tf.random.shuffle(tf.range(start = 0, limit = tf.shape(input_vectors)[0], dtype = tf.int64))
-
-        input_vectors = tf.gather(input_vectors, shuffled_indices)
 
         ################################################################################################################
         # BEST MATCHING UNITS                                                                                          #
@@ -479,18 +473,18 @@ class SOM(object):
 
                     if reset_weights:
 
-                        init_weights = np.empty(shape = (self._m * self._n, self._dim), dtype = self._dtype)
+                        rand_weights_np = np.empty(shape = (self._m * self._n, self._dim), dtype = self._dtype)
 
-                        l1 = init_weights.shape[0]
+                        l1 = rand_weights_np.shape[0]
                         l2 = dataset_array_np.shape[0]
 
                         for i in range(l1):
 
                             j = np.random.randint(l2)
 
-                            init_weights[i] = dataset_array_np[j]
+                            rand_weights_np[i] = dataset_array_np[j]
 
-                        weights = tf.Variable(init_weights, dtype = self._dtype)
+                        weights = tf.Variable(rand_weights_np, dtype = self._dtype)
 
                     else:
 
@@ -500,7 +494,9 @@ class SOM(object):
                 # TRAIN THE SELF ORGANIZING MAP                                                                        #
                 ########################################################################################################
 
-                for chunk in tf.data.Dataset.from_tensor_slices(tf.constant(dataset_array_np, dtype = self._dtype)).batch(chunk_size):
+                dataset = tf.data.Dataset.from_tensor_slices(tf.constant(dataset_array_np, dtype = self._dtype))
+
+                for chunk in dataset.shuffle(dataset_array_np.shape[0]).batch(chunk_size):
 
                     self._train(weights, chunk, epoch)
 
@@ -546,7 +542,7 @@ class SOM(object):
                 fits.Column(name = 'topographic_errors', format = 'D', array = self._topographic_errors),
             ]))
 
-            hdu0.header['lrnrate'] = self._learning_rate
+            hdu0.header['lrate'] = self._learning_rate
             hdu0.header['sigma'] = self._sigma
             hdu2.header['epochs'] = self._epochs
 
@@ -562,7 +558,7 @@ class SOM(object):
 
             with h5py.File(filename, 'w') as file:
 
-                file.attrs['lrnrate'] = self._learning_rate
+                file.attrs['lrate'] = self._learning_rate
                 file.attrs['sigma'] = self._sigma
                 file.attrs['epochs'] = self._epochs
 
@@ -606,7 +602,7 @@ class SOM(object):
 
                 self._m, self._n, self._dim = hdus[1].data.shape
 
-                self._learning_rate = hdus[0].header['lrnrate']
+                self._learning_rate = hdus[0].header['lrate']
                 self._sigma = hdus[0].header['sigma']
                 self._epochs = hdus[2].header['epochs']
 
@@ -626,7 +622,7 @@ class SOM(object):
 
                 self._m, self._n, self._dim = file['weights'].shape
 
-                self._learning_rate = file.attrs['lrnrate']
+                self._learning_rate = file.attrs['lrate']
                 self._sigma = file.attrs['sigma']
                 self._epochs = file.attrs['epochs']
 
