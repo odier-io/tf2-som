@@ -122,7 +122,7 @@ def setup_tensorflow_for_cpus(num_threads: int = None) -> None:
 
 def normalize(df: typing.Any, dtype: type = np.float32) -> typing.Any:
 
-    """Normalizes a Pandas data frame.
+    """Returns the normalized Pandas data frame.
 
     Arguments
     ---------
