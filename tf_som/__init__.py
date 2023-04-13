@@ -129,7 +129,7 @@ def normalize(df: typing.Any, dtype: type = np.float32) -> typing.Any:
     df : pandas.DataFrame
         Pandas data frame.
     dtype : type
-        Neural network data type (default: **np.float32**).
+        Neural network data type (default: **numpy.float32**).
     """
 
     result = df.copy()
