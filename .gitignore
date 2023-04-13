@@ -4,9 +4,9 @@
 __pycache__
 
 dist
+venv
 build
 *.egg-info
 
 *.h5
 *.fits
-
