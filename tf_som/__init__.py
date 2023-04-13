@@ -722,11 +722,11 @@ class SOM(object):
         dataset_array : numpy.ndarray
             Dataset array.
         chunk_size : int
-            Chunk size or **None** to disable batch.
+            Chunk size or **None** to disable batch (default: **None**).
         locations : bool
-            Get winner locations instead of indices.
+            Get winner locations instead of indices (default: **False**).
         show_progress_bar : bool
-            Specifying whether a progress bar have to be shown (default: **True**).
+            Specifying whether a progress bar have to be shown (default: **False**).
         """
 
         ################################################################################################################
