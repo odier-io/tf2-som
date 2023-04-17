@@ -1,0 +1,1909 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1"><meta name="generator" content="pdoc 0.10.0"><title>tf_som API documentation</title><meta name="description" content="[![][License img]][License]
+&lt;span style=&#34;margin-right: 0.5rem;&#34;&gt;&lt;/span&gt;
+[![][MainRepo img]][MainRepo]
+&lt;span style=&#34;margin-right: 0.5rem;&#34;&gt;&lt;/span&gt;
+…"><link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin><link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin><link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin><style>:root{--highlight-color:#fe9}.flex{display:flex!important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar>:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .5em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:700}h2[id^=header-]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:0 0}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}#index,.toc ul{list-style-type:none;margin:0;padding:0}#index code{background:0 0}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:700}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes+dl>dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:700;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name>span:first-child{white-space:nowrap}.name.class>span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:700}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.git-link-div,.source summary{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary>*{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:700}.admonition.important,.admonition.info,.admonition.note{background:#aef}.admonition.hint,.admonition.tip,.admonition.todo,.admonition.versionadded{background:#dfd}.admonition.deprecated,.admonition.versionchanged,.admonition.warning{background:#fd4}.admonition.caution,.admonition.danger,.admonition.error{background:#ffb6c1}</style><style media="screen and (min-width:700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}#index ul,.toc ul ul{padding-left:1.5em}.toc>ul>li{margin-top:.5em}}</style><style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:0 0!important;color:#000!important;box-shadow:none!important;text-shadow:none!important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="#"]:after,a[href^="javascript:"]:after{content:""}blockquote,pre{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}img,tr{page-break-inside:avoid}img{max-width:100%!important}@page{margin:.5cm}h2,h3,p{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style><script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS_CHTML" integrity="sha256-kZafAc6mZvK3W3v1pHOcUix30OHQN6pU/NO2oFkqZVw=" crossorigin></script><script defer="defer" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script><script>window.addEventListener("DOMContentLoaded",(()=>hljs.initHighlighting()))</script></head><body><main><article id="content"><section id="section-intro"><p><a href="http://www.cecill.info/licences/Licence_CeCILL-C_V1-en.txt"><img alt="" src="https://img.shields.io/badge/license-CeCILL--C-blue.svg"></a><span style="margin-right:.5rem"></span> <a href="https://gitlab.in2p3.fr/jodier/tf2_som"><img alt="" src="https://img.shields.io/badge/Main%20Repo-gitlab.in2p3.fr-success"></a><span style="margin-right:.5rem"></span> <a href="https://github.com/odier-xyz/tf2_som"><img alt="" src="https://img.shields.io/badge/Alt%20Repo-github.com-success"></a></p><p><a href="http://lpsc.in2p3.fr/" target="_blank"><img src="https://ami.web.cern.ch/images/logo_lpsc.png" alt="LPSC" height="72"></a><span style="margin-right:3rem"></span> <a href="http://www.in2p3.fr/" target="_blank"><img src="https://ami.web.cern.ch/images/logo_in2p3.png" alt="IN2P3" height="72"></a><span style="margin-right:3rem"></span> <a href="http://www.univ-grenoble-alpes.fr/" target="_blank" style="margin-right:0"><img src="https://ami.web.cern.ch/images/logo_uga.png" alt="UGA" height="72"></a></p><h2 id="package-tf2-som">Package <strong>tf2-som</strong></h2><p><strong>tf2-som</strong> is a fast Tensorflow 2 implementation of the Self Organizing Maps (SOM).</p><p><img src="som.png" alt="som" height="250"></p><h3 id="installing-tf2-som">Installing <strong>tf2-som</strong></h3><pre><code class="language-sh">pip3 install tf2-som
+</code></pre><h3 id="importing-tf2-som">Importing <strong>tf2-som</strong></h3><pre><code class="language-python">import tf_som
+</code></pre><h3 id="demo">Demo</h3><p><a href="https://github.com/odier-io/tf2-som/blob/master/demo/demo.ipynb">🔗 Click there</a></p><h3 id="authors">Authors</h3><ul><li><a href="https://annuaire.in2p3.fr/4121-4467/jerome-odier">Jérôme ODIER</a> (<a href="https://lpsc.in2p3.fr/">CNRS/LPSC</a>)</li><li><a href="https://annuaire.in2p3.fr/7591-10426/nora-achbak">Nora ACHBAK</a> (<a href="https://lpsc.in2p3.fr/">CNRS/LPSC</a>)</li></ul><details class="source"><summary><span>Expand source code</span></summary><pre><code class="python"># -*- coding: utf-8 -*-
+########################################################################################################################
+# TF_SOM
+#
+# Copyright © 2022 CNRS/LPSC
+#
+# Author: Jérôme ODIER (jerome.odier@lpsc.in2p3.fr)
+#         Nora ACHBAK (nora.achbak@lpsc.in2p3.fr)
+#
+# Repositories: https://gitlab.in2p3.fr/jodier/tf2_som/
+#               https://github.com/odier-xyz/tf2_som/
+#
+# This software is a computer program whose purpose is to provide an
+# implementation of the Self Organizing Maps (SOM).
+#
+# This software is governed by the CeCILL-C license under French law and
+# abiding by the rules of distribution of free software. You can use,
+# modify and/or redistribute the software under the terms of the CeCILL-C
+# license as circulated by CEA, CNRS and INRIA at the following URL
+# &#34;http://www.cecill.info&#34;.
+#
+# The fact that you are presently reading this means that you have had
+# knowledge of the CeCILL-C license and that you accept its terms.
+########################################################################################################################
+
+&#34;&#34;&#34;.. include:: ../docs/header.md
+
+## Package **tf2-som**
+
+**tf2-som** is a fast Tensorflow 2 implementation of the Self Organizing Maps (SOM).
+
+&lt;img src=&#34;som.png&#34; alt=&#34;som&#34; height=&#34;250&#34; /&gt;
+
+### Installing **tf2-som**
+```sh
+pip3 install tf2-som
+```
+
+### Importing **tf2-som**
+```python
+import tf_som
+```
+
+### Demo
+[🔗 Click there](https://github.com/odier-io/tf2-som/blob/master/demo/demo.ipynb)
+
+### Authors
+- [Jérôme ODIER](https://annuaire.in2p3.fr/4121-4467/jerome-odier) ([CNRS/LPSC](https://lpsc.in2p3.fr/))
+- [Nora ACHBAK](https://annuaire.in2p3.fr/7591-10426/nora-achbak) ([CNRS/LPSC](https://lpsc.in2p3.fr/))
+&#34;&#34;&#34;
+
+########################################################################################################################
+
+import os
+import json
+import tqdm
+import typing
+
+########################################################################################################################
+
+import numpy as np
+
+import tensorflow as tf
+
+########################################################################################################################
+
+with open(os.path.join(os.path.dirname(os.path.realpath(__file__)), &#39;metadata.json&#39;), &#39;r&#39;) as f:
+
+    metadata = json.load(f)
+
+    __credits__ = metadata[&#39;credits&#39;]
+
+    __version__ = metadata[&#39;version&#39;]
+
+    __author__ = &#39;, &#39;.join([&#39;{} ({})&#39;.format(x[0], x[1]) for x in zip(metadata[&#39;author_names&#39;], metadata[&#39;author_emails&#39;])])
+
+########################################################################################################################
+
+def setup_tensorflow_for_cpus(num_threads: int = None) -&gt; None:
+
+    &#34;&#34;&#34;Setups Tensorflow 2 for CPU parallelization.
+
+    Arguments
+    ---------
+    num_threads : int
+        Number of threads or **None** to let the system choose (default: **None**).
+    &#34;&#34;&#34;
+
+    ####################################################################################################################
+
+    # noinspection PyBroadException
+
+    try:
+
+        ################################################################################################################
+
+        if num_threads is None:
+
+            import multiprocessing
+
+            num_threads = multiprocessing.cpu_count()
+
+        ################################################################################################################
+
+        tf.config.threading.set_inter_op_parallelism_threads(
+            num_threads
+        )
+
+        tf.config.threading.set_intra_op_parallelism_threads(
+            num_threads
+        )
+
+        tf.config.set_soft_device_placement(True)
+
+        ################################################################################################################
+
+    except:
+
+        pass
+
+########################################################################################################################
+
+def normalize(df: typing.Any, dtype: type = np.float32) -&gt; typing.Any:
+
+    &#34;&#34;&#34;Returns the normalized Pandas data frame.
+
+    Arguments
+    ---------
+    df : pandas.DataFrame
+        Pandas data frame.
+    dtype : type
+        Neural network data type (default: **numpy.float32**).
+    &#34;&#34;&#34;
+
+    result = df.copy()
+
+    for i in df.columns:
+
+        max_value = df[i].max()
+        min_value = df[i].min()
+
+        result[i] = (df[i] - min_value) / (max_value - min_value)
+
+    return result.astype(dtype)
+
+########################################################################################################################
+
+def _asymptotic_decay(epoch: int, epochs: int) -&gt; float:
+
+    return 1.0 / (1.0 + 2.0 * epoch / epochs)
+
+########################################################################################################################
+
+class BMUs(object):
+
+    __pdoc__ = False
+
+    &#34;&#34;&#34;Best Matching Units&#34;&#34;&#34;
+
+    def __init__(self, indices: np.ndarray, locations: np.ndarray):
+
+        #: Array of indices
+        self.indices: np.ndarray = indices
+
+        #: Array of locations
+        self.locations: np.ndarray = locations
+
+########################################################################################################################
+
+class SOM(object):
+
+    &#34;&#34;&#34;Tensorflow 2 implementation of the Self Organizing Maps (SOM).&#34;&#34;&#34;
+
+    ####################################################################################################################
+
+    def __init__(self,
+                 m: int, n: int, dim: int,
+                 seed: float = None, dtype: type = np.float32,
+                 learning_rate: float = None, sigma: float = None, epochs: int = 100, decay_function = _asymptotic_decay):
+
+        &#34;&#34;&#34;Initializes a Self Organizing Maps.
+
+        A rule of thumb to set the size of the grid for a dimensionality reduction
+        task is that it should contain \\( 5\\sqrt{N} \\) neurons where N is the
+        number of samples in the dataset to analyze.
+
+        Arguments
+        ---------
+        m : int
+            Number of neuron rows.
+        n : int
+            Number of neuron columns.
+        dim : int
+            Dimensionality of the input data.
+        seed : int
+            Seed of the random generators (default: **None**).
+        dtype : type
+            Neural network data type (default: **np.float32**).
+        learning_rate : float
+            Starting value of the learning rate (default: 0.3).
+        sigma : float
+            Starting value of the neighborhood radius (default: \\( \\mathrm{max}(m,n)/2 \\)).
+        epochs : int
+            Number of epochs to train for (default: 100).
+        decay_function : function
+            Function that reduces learning_rate and sigma at each iteration (default: \\( 1/\\left(1+2\\frac{epoch}{epochs}\\right) \\)).
+        &#34;&#34;&#34;
+
+        ################################################################################################################
+
+        self._m = m
+        self._n = n
+        self._dim = dim
+        self._seed = seed
+        self._dtype = dtype
+        self._decay_function = decay_function
+
+        ################################################################################################################
+
+        self._rebuild_topography()
+
+        ################################################################################################################
+
+        self._learning_rate = 0.3 if learning_rate is None else dtype(learning_rate)
+        self._sigma = max(m, n) / 2.0 if sigma is None else dtype(sigma)
+
+        ################################################################################################################
+
+        self._epochs = abs(int(epochs))
+
+        ################################################################################################################
+
+        self._two = tf.constant(2.00e+00, dtype = dtype)
+
+        self._epsilon = tf.constant(1.00e-20, dtype = dtype)
+
+        self._sqrt_two = tf.constant(1.42e+00, dtype = dtype)
+
+        ################################################################################################################
+
+        self._weights = np.empty(shape = (self._m * self._n, self._dim), dtype = self._dtype)
+
+        self._quantization_errors = np.empty(shape = (self._epochs, ), dtype = self._dtype)
+        self._topographic_errors = np.empty(shape = (self._epochs, ), dtype = self._dtype)
+
+    ####################################################################################################################
+
+    def _rebuild_topography(self):
+
+        self._topography = tf.constant(np.array(list(self._neuron_locations(self._m, self._n))))
+
+    ####################################################################################################################
+
+    @staticmethod
+    def _neuron_locations(m: int, n: int) -&gt; typing.Iterator[typing.List[int]]:
+
+        for i in range(m):
+
+            for j in range(n):
+
+                yield [i, j]
+
+    ####################################################################################################################
+
+    @staticmethod
+    def _argsort_n(x: tf.Tensor, n: int) -&gt; tf.Tensor:
+
+        if n &gt; 1:
+            return tf.nn.top_k(tf.negative(x), k = n).indices
+        else:
+            return tf.expand_dims(tf.argmin(x, axis = 1), axis = 1)
+
+    ####################################################################################################################
+
+    @staticmethod
+    def __find_bmus(weights: typing.Union[tf.Variable, tf.Tensor], input_vectors: tf.Tensor, n: int = 1) -&gt; tf.Tensor:
+
+        ################################################################################################################
+        # COMPUTE DISTANCE SQUARES                                                                                     #
+        ################################################################################################################
+
+        distance_squares = tf.reduce_sum(
+            tf.square(
+                tf.subtract(
+                    tf.expand_dims(input_vectors, axis = 1),
+                    tf.expand_dims(weights, axis = 0)
+                )
+            ),
+            axis = 2
+        )
+
+        ################################################################################################################
+        # COMPUTE INDICES                                                                                              #
+        ################################################################################################################
+
+        return tf.transpose(SOM._argsort_n(distance_squares, n))
+
+    ####################################################################################################################
+
+    def _find_bmus(self, weights: typing.Union[tf.Variable, tf.Tensor], input_vectors: tf.Tensor, n: int = 1) -&gt; typing.List[BMUs]:
+
+        result = []
+
+        for bmu_indices in self.__find_bmus(weights, input_vectors, n):
+
+            bmu_locations = tf.gather(self._topography, bmu_indices)
+
+            result.append(BMUs(bmu_indices, bmu_locations))
+
+        return result
+
+    ####################################################################################################################
+
+    def _train(self, weights: tf.Variable, input_vectors: tf.Tensor, epoch: int) -&gt; None:
+
+        ################################################################################################################
+        # BEST MATCHING UNITS                                                                                          #
+        ################################################################################################################
+
+        bmus = self._find_bmus(weights, input_vectors, n = 2)
+
+        ################################################################################################################
+        # LEARNING OPERATOR                                                                                            #
+        ################################################################################################################
+
+        decay_function = self._decay_function(epoch, self._epochs)
+
+        current_learning_rate = tf.cast(self._learning_rate * decay_function, dtype = self._dtype)
+        current_radius        = tf.cast(self._sigma         * decay_function, dtype = self._dtype)
+
+        ################################################################################################################
+
+        bmu_distance_squares = tf.reduce_sum(
+            tf.square(
+                tf.subtract(
+                    tf.expand_dims(self._topography, axis = 0),
+                    tf.expand_dims(bmus[0].locations, axis = 1)
+                )
+            ),
+            axis = 2
+        )
+
+        ################################################################################################################
+
+        neighbourhood_func = tf.exp(tf.divide(
+            tf.negative(tf.cast(bmu_distance_squares, self._dtype)),
+            tf.multiply(self._two, tf.square(current_radius))
+        ))
+
+        ################################################################################################################
+
+        learning_rate_op = tf.multiply(neighbourhood_func, current_learning_rate)
+
+        ################################################################################################################
+        # WEIGHT(EPOCH + 1)                                                                                            #
+        ################################################################################################################
+
+        numerator = tf.reduce_sum(
+            tf.multiply(
+                tf.expand_dims(learning_rate_op, axis = -1),
+                tf.expand_dims(input_vectors, axis = +1)
+            ),
+            axis = 0
+        )
+
+        denominator = tf.expand_dims(tf.reduce_sum(learning_rate_op, axis = 0), axis = -1) + self._epsilon
+
+        ################################################################################################################
+
+        weights.assign(tf.divide(numerator, denominator))
+
+        ################################################################################################################
+        # QUANTIZATION ERROR                                                                                           #
+        ################################################################################################################
+
+        self._quantization_errors[epoch] = tf.reduce_mean(
+            tf.norm(
+                tf.subtract(
+                    input_vectors,
+                    tf.gather(weights, bmus[0].indices)
+                ),
+                axis = 1
+            ),
+            axis = 0
+        )
+
+        ################################################################################################################
+        # TOPOGRAPHIC ERROR                                                                                            #
+        ################################################################################################################
+
+        t = tf.greater(
+            tf.norm(
+                tf.subtract(
+                    tf.cast(bmus[1].locations, dtype = self._dtype),
+                    tf.cast(bmus[0].locations, dtype = self._dtype)
+                ),
+                axis = 1
+            ),
+            self._sqrt_two
+        )
+
+        self._topographic_errors[epoch] = tf.divide(
+            tf.reduce_sum(tf.cast(t, dtype = self._dtype)),
+            tf.cast(tf.shape(input_vectors)[0], dtype = self._dtype)
+        )
+
+    ####################################################################################################################
+
+    @staticmethod
+    def _dataset_to_generator(dataset):
+
+        return dataset if callable(dataset) else lambda: (dataset, )
+
+    ####################################################################################################################
+
+    def train(self, dataset: typing.Union[np.ndarray, typing.Callable], chunk_size: int = None, reset_weights: bool = True, show_progress_bar: bool = True) -&gt; None:
+
+        &#34;&#34;&#34;Trains the neural network. A batch formulation of updating weights is implemented: $$ \\mathrm{bmu}(x)=\\underset{i}{\\mathrm{arg\\,min}}\\lVert x-w_i\\rVert $$ $$ n_j=\\sum_{x\\in\\mathcal{D}}\\left\\{\\begin{array}{ll}1&amp;\\mathrm{bmu}(x)=j\\\\0&amp;\\mathrm{otherwise}\\end{array}\\right. $$ $$ \\Theta_{ji}(e)=\\alpha(e)\\cdot\\exp\\left(-\\frac{\\lVert j-i\\rVert}{2\\sigma^2(e)}\\right) $$ $$ \\boxed{w_{i\\,\\mathrm{new}}=\\frac{\\sum_{j=1}^{n}n_j\\Theta_{ji}(e)x_j}{\\sum_{j=1}^{n}n_j\\Theta_{ji}(e)}} $$ where, at epoch \\( e \\), \\( \\alpha(e)=\\alpha_0\\mathrm{decay\\,function}(e) \\) is the learning rate and \\( \\sigma(e)=\\sigma_0\\mathrm{decay\\,function}(e) \\) is the neighborhood radius.
+
+        Parameters
+        ----------
+        dataset : typing.Union[numpy.ndarray, typing.Callable]
+            Training dataset array or generator.
+        chunk_size : int
+            Chunk size or **None** to disable batch (default: **None**).
+        reset_weights : bool
+            Specifying whether the weights have to be reset (default: **True**).
+        show_progress_bar : bool
+            Specifying whether a progress bar have to be shown (default: **True**).
+
+        .. NOTE::
+            A dataset generator is a **yield** generator returning numpy arrays.
+
+        .. NOTE::
+            Setting the **reset_weights** variable to **False** allows to update a pre-trained model (= progressive training).
+        &#34;&#34;&#34;
+
+        ################################################################################################################
+
+        weights = None
+
+        ################################################################################################################
+
+        if reset_weights and self._seed is not None:
+
+            np.random.seed(self._seed + 0x000000000000)
+
+            tf.random.set_seed(self._seed + 0x000000000000)
+
+        ################################################################################################################
+
+        dataset_generator = SOM._dataset_to_generator(dataset)
+
+        ################################################################################################################
+
+        for epoch in tqdm.tqdm(range(self._epochs), disable = not show_progress_bar):
+
+            for dataset_part_number, dataset_array_np in enumerate(dataset_generator()):
+
+                ########################################################################################################
+                # DEFAULT CHUNK SIZE                                                                                   #
+                ########################################################################################################
+
+                if chunk_size is None:
+
+                    chunk_size = dataset_array_np.shape[0]
+
+                ########################################################################################################
+                # INITIALIZE WEIGHTS                                                                                   #
+                ########################################################################################################
+
+                if epoch == 0 and dataset_part_number == 0:
+
+                    if reset_weights:
+
+                        rand_weights_np = np.empty(shape = (self._m * self._n, self._dim), dtype = self._dtype)
+
+                        l1 = rand_weights_np.shape[0]
+                        l2 = dataset_array_np.shape[0]
+
+                        for i in range(l1):
+
+                            j = np.random.randint(l2)
+
+                            rand_weights_np[i] = dataset_array_np[j]
+
+                        weights = tf.Variable(rand_weights_np, dtype = self._dtype)
+
+                    else:
+
+                        weights = tf.Variable(self._weights, dtype = self._dtype)
+
+                ########################################################################################################
+                # TRAIN THE SELF ORGANIZING MAP                                                                        #
+                ########################################################################################################
+
+                dataset = tf.data.Dataset.from_tensor_slices(tf.constant(dataset_array_np, dtype = self._dtype))
+
+                for chunk in dataset.shuffle(dataset_array_np.shape[0]).batch(chunk_size):
+
+                    self._train(weights, chunk, epoch)
+
+        ################################################################################################################
+
+        self._weights = weights.numpy()
+
+    ####################################################################################################################
+
+    # noinspection PyTypeChecker
+    def save(self, filename: str, file_format: str = &#39;fits&#39;, extra: typing.Dict[str, np.ndarray] = None) -&gt; None:
+
+        &#34;&#34;&#34;Saves the trained neural network to a file.
+
+        Parameters
+        ----------
+        filename : str
+            Filename.
+        file_format : str
+            File format (supported formats: (fits, hdf5), default: fits).
+        extra : dict
+            Dictionary of extra (name, array) entries.
+        &#34;&#34;&#34;
+
+        if extra is None:
+
+            extra = {}
+
+        ################################################################################################################
+        # FITS FORMAT                                                                                                  #
+        ################################################################################################################
+
+        if file_format == &#39;fits&#39;:
+
+            from astropy.io import fits
+
+            hdu0 = fits.PrimaryHDU()
+
+            hdu1 = fits.ImageHDU(data = self.get_centroids())
+
+            hdu2 = fits.BinTableHDU.from_columns(fits.ColDefs([
+                fits.Column(name = &#39;quantization_errors&#39;, format = &#39;D&#39;, array = self._quantization_errors),
+                fits.Column(name = &#39;topographic_errors&#39;, format = &#39;D&#39;, array = self._topographic_errors),
+            ]))
+
+            hdu0.header[&#39;lrate&#39;] = self._learning_rate
+            hdu0.header[&#39;sigma&#39;] = self._sigma
+            hdu2.header[&#39;epochs&#39;] = self._epochs
+
+            fits.HDUList([hdu0, hdu1, hdu2] + [fits.ImageHDU(name = name, data = data) for name, data in extra.items()]).writeto(filename, overwrite = True)
+
+        ################################################################################################################
+        # HDF5 FORMAT                                                                                                  #
+        ################################################################################################################
+
+        elif file_format == &#39;hdf5&#39;:
+
+            import h5py
+
+            with h5py.File(filename, &#39;w&#39;) as file:
+
+                file.attrs[&#39;lrate&#39;] = self._learning_rate
+                file.attrs[&#39;sigma&#39;] = self._sigma
+                file.attrs[&#39;epochs&#39;] = self._epochs
+
+                file.create_dataset(&#39;weights&#39;, data = self.get_centroids())
+                file.create_dataset(&#39;quantization_errors&#39;, data = self._quantization_errors)
+                file.create_dataset(&#39;topographic_errors&#39;, data = self._topographic_errors)
+
+                for name, data in extra.items():
+
+                    file.create_dataset(name, data = data)
+
+        ################################################################################################################
+
+        else:
+
+            raise ValueError(&#39;invalid format `{}` (fits, hdf5)&#39;.format(file_format))
+
+    ####################################################################################################################
+
+    def load(self, filename: str, file_format: str = &#39;fits&#39;) -&gt; None:
+
+        &#34;&#34;&#34;Loads the trained neural network from a file.
+
+        Parameters
+        ----------
+        filename : str
+            Filename.
+        file_format : str
+            File format (supported formats: (fits, hdf5), default: fits).
+        &#34;&#34;&#34;
+
+        ################################################################################################################
+        # FITS FORMAT                                                                                                  #
+        ################################################################################################################
+
+        if file_format == &#39;fits&#39;:
+
+            from astropy.io import fits
+
+            with fits.open(filename) as hdus:
+
+                self._m, self._n, self._dim = hdus[1].data.shape
+
+                self._learning_rate = hdus[0].header[&#39;lrate&#39;]
+                self._sigma = hdus[0].header[&#39;sigma&#39;]
+                self._epochs = hdus[2].header[&#39;epochs&#39;]
+
+                self._weights = hdus[1].data.reshape((self._m * self._n, self._dim)).astype(self._dtype)
+                self._quantization_errors = hdus[2].data[&#39;quantization_errors&#39;].astype(self._dtype)
+                self._topographic_errors = hdus[2].data[&#39;topographic_errors&#39;].astype(self._dtype)
+
+        ################################################################################################################
+        # HDF5 FORMAT                                                                                                  #
+        ################################################################################################################
+
+        elif file_format == &#39;hdf5&#39;:
+
+            import h5py
+
+            with h5py.File(filename, &#39;r&#39;) as file:
+
+                self._m, self._n, self._dim = file[&#39;weights&#39;].shape
+
+                self._learning_rate = file.attrs[&#39;lrate&#39;]
+                self._sigma = file.attrs[&#39;sigma&#39;]
+                self._epochs = file.attrs[&#39;epochs&#39;]
+
+                self._weights = np.array(file[&#39;weights&#39;]).reshape((self._m * self._n, self._dim)).astype(self._dtype)
+                self._quantization_errors = np.array(file[&#39;quantization_errors&#39;]).astype(self._dtype)
+                self._topographic_errors = np.array(file[&#39;topographic_errors&#39;]).astype(self._dtype)
+
+        ################################################################################################################
+
+        else:
+
+            raise ValueError(&#39;invalid format `{}` (fits, hdf5)&#39;.format(file_format))
+
+        ################################################################################################################
+
+        self._rebuild_topography()
+
+    ####################################################################################################################
+
+    def distance_map(self) -&gt; np.ndarray:
+
+        &#34;&#34;&#34;Returns the distance map of the neural network weights.&#34;&#34;&#34;
+
+        ################################################################################################################
+
+        centroids = self.get_centroids()
+
+        ################################################################################################################
+
+        result = np.full(shape = (centroids.shape[0], centroids.shape[1], 8), fill_value = np.nan, dtype = self._dtype)
+
+        ii = 2 * [[0, -1, -1, -1, 0, +1, +1, +1]]
+        jj = 2 * [[-1, -1, 0, +1, +1, +1, 0, -1]]
+
+        for x in range(centroids.shape[0]):
+
+            for y in range(centroids.shape[1]):
+
+                w_2 = centroids[x, y]
+
+                e = y % 2 == 0
+
+                for k, (i, j) in enumerate(zip(ii[e], jj[e])):
+
+                    if 0 &lt;= x + i &lt; centroids.shape[0]\
+                       and                            \
+                       0 &lt;= y + j &lt; centroids.shape[1]:
+
+                        diff_w_2_w_1 = w_2 - centroids[x + i, y + j]
+
+                        result[x, y, k] = np.sqrt(np.dot(diff_w_2_w_1, diff_w_2_w_1.T))
+
+        result = np.nansum(result, axis = 2)
+
+        return result / result.max()
+
+    ####################################################################################################################
+
+    def get_weights(self) -&gt; np.ndarray:
+
+        &#34;&#34;&#34;Returns the neural network weights (shape = [m * n, dim]).&#34;&#34;&#34;
+
+        return self._weights.reshape((self._m * self._n, self._dim))
+
+    ####################################################################################################################
+
+    def get_centroids(self) -&gt; np.ndarray:
+
+        &#34;&#34;&#34;Returns of the neural network weights (shape = [m, n, dim]).&#34;&#34;&#34;
+
+        return self._weights.reshape((self._m, self._n, self._dim))
+
+    ####################################################################################################################
+
+    def get_quantization_errors(self) -&gt; np.ndarray:
+
+        &#34;&#34;&#34;Returns the quantization errors (one value per epoch). $$ c_1=\\mathrm{1^\\mathrm{st}\\,bmu}=\\underset{i}{\\mathrm{arg\\,min}_1}\\lVert x-w_i\\rVert $$ $$ \\boxed{e_Q=\\frac{1}{\\mathcal{D}}\\sum_{x\\in\\mathcal{D}}\\lVert x-w_{c_1}\\rVert^2} $$&#34;&#34;&#34;
+
+        return self._quantization_errors
+
+    ####################################################################################################################
+
+    def get_topographic_errors(self) -&gt; np.ndarray:
+
+        &#34;&#34;&#34;Returns the topographic errors (one value per epoch). $$ c_n=\\mathrm{n^\\mathrm{th}\\,bmu}=\\underset{i}{\\mathrm{arg\\,min}_n}\\lVert x-w_i\\rVert $$ $$ t(x)=\\left\\{\\begin{array}{ll}1&amp;\\lVert c_1-c_2\\rVert&gt;\\sqrt{2}\\\\0&amp;\\mathrm{otherwise}\\end{array}\\right. $$ $$ \\boxed{e_t=\\frac{1}{\\mathcal{D}}\\sum_{x\\in\\mathcal{D}}t(x)} $$&#34;&#34;&#34;
+
+        return self._topographic_errors
+
+    ####################################################################################################################
+
+    def winners(self, dataset_array: np.ndarray, chunk_size: int = None, locations: bool = False, show_progress_bar: bool = False) -&gt; np.ndarray:
+
+        &#34;&#34;&#34;Returns a vector of best matching unit indices or locations for the given input.
+
+        Parameters
+        ----------
+        dataset_array : numpy.ndarray
+            Dataset array.
+        chunk_size : int
+            Chunk size or **None** to disable batch (default: **None**).
+        locations : bool
+            Get winner locations instead of indices (default: **False**).
+        show_progress_bar : bool
+            Specifying whether a progress bar have to be shown (default: **False**).
+        &#34;&#34;&#34;
+
+        ################################################################################################################
+
+        if chunk_size is None:
+
+            chunk_size = dataset_array.shape[0]
+
+        ################################################################################################################
+
+        weights = tf.constant(self._weights, dtype = self._dtype)
+
+        ################################################################################################################
+
+        i = 0
+
+        if locations:
+
+            result = np.empty((dataset_array.shape[0], 2), dtype = np.int64)
+
+            for chunk in tqdm.tqdm(tf.data.Dataset.from_tensor_slices(tf.constant(dataset_array, dtype = self._dtype)).batch(chunk_size), disable = not show_progress_bar):
+
+                result[(i + 0) * chunk_size: (i + 1) * chunk_size] = tf.gather(self._topography, self.__find_bmus(weights, chunk, 1)[0])
+
+                i += 1
+
+        else:
+
+            result = np.empty((dataset_array.shape[0], ), dtype = np.int64)
+
+            for chunk in tqdm.tqdm(tf.data.Dataset.from_tensor_slices(tf.constant(dataset_array, dtype = self._dtype)).batch(chunk_size), disable = not show_progress_bar):
+
+                result[(i + 0) * chunk_size: (i + 1) * chunk_size] = self.__find_bmus(weights, chunk, 1)[0]
+
+                i += 1
+
+        ################################################################################################################
+
+        return result
+
+    ####################################################################################################################
+
+    def activation_map(self, dataset: typing.Union[np.ndarray, typing.Callable], chunk_size: int = None, show_progress_bar: bool = False) -&gt; np.ndarray:
+
+        &#34;&#34;&#34;Returns a matrix containing the number of times the neuron (i, j) have been winner for the given input.
+
+        Parameters
+        ----------
+        dataset : typing.Union[numpy.ndarray, typing.Callable]
+            Dataset array or generator.
+        chunk_size : int
+            Chunk size or **None** to disable batch (default: **None**).
+        show_progress_bar : bool
+            Specifying whether a progress bar have to be shown (default: **False**).
+
+        .. NOTE::
+            A dataset generator is a **yield** generator returning numpy arrays.
+        &#34;&#34;&#34;
+
+        ################################################################################################################
+
+        dataset_generator = SOM._dataset_to_generator(dataset)
+
+        weights = tf.constant(self._weights, dtype = self._dtype)
+
+        result = np.zeros(shape = (self._m * self._n), dtype = np.int64)
+
+        ################################################################################################################
+
+        for dataset_part, dataset_array_np in enumerate(dataset_generator()):
+
+            ############################################################################################################
+
+            if chunk_size is None:
+
+                chunk_size = dataset_array_np.shape[0]
+
+            ############################################################################################################
+
+            for chunk in tqdm.tqdm(tf.data.Dataset.from_tensor_slices(tf.constant(dataset_array_np, dtype = self._dtype)).batch(chunk_size), disable = not show_progress_bar):
+
+                for bmu_index in self.__find_bmus(weights, chunk, n = 1)[0]:
+
+                    result[bmu_index] += 1
+
+        ################################################################################################################
+
+        return result.reshape(self._m, self._n)
+
+########################################################################################################################</code></pre></details></section><section></section><section></section><section><h2 class="section-title" id="header-functions">Functions</h2><dl><dt id="tf_som.setup_tensorflow_for_cpus"><code class="name flex"><span>def <span class="ident">setup_tensorflow_for_cpus</span></span>(<span>num_threads: int = None) ‑> None</span></code></dt><dd><div class="desc"><p>Setups Tensorflow 2 for CPU parallelization.</p><h2 id="arguments">Arguments</h2><dl><dt><strong><code>num_threads</code></strong> :&ensp;<code>int</code></dt><dd>Number of threads or <strong>None</strong> to let the system choose (default: <strong>None</strong>).</dd></dl></div><details class="source"><summary><span>Expand source code</span></summary><pre><code class="python">def setup_tensorflow_for_cpus(num_threads: int = None) -&gt; None:
+
+    &#34;&#34;&#34;Setups Tensorflow 2 for CPU parallelization.
+
+    Arguments
+    ---------
+    num_threads : int
+        Number of threads or **None** to let the system choose (default: **None**).
+    &#34;&#34;&#34;
+
+    ####################################################################################################################
+
+    # noinspection PyBroadException
+
+    try:
+
+        ################################################################################################################
+
+        if num_threads is None:
+
+            import multiprocessing
+
+            num_threads = multiprocessing.cpu_count()
+
+        ################################################################################################################
+
+        tf.config.threading.set_inter_op_parallelism_threads(
+            num_threads
+        )
+
+        tf.config.threading.set_intra_op_parallelism_threads(
+            num_threads
+        )
+
+        tf.config.set_soft_device_placement(True)
+
+        ################################################################################################################
+
+    except:
+
+        pass</code></pre></details></dd><dt id="tf_som.normalize"><code class="name flex"><span>def <span class="ident">normalize</span></span>(<span>df: Any, dtype: type = numpy.float32) ‑> Any</span></code></dt><dd><div class="desc"><p>Returns the normalized Pandas data frame.</p><h2 id="arguments">Arguments</h2><dl><dt><strong><code>df</code></strong> :&ensp;<code>pandas.DataFrame</code></dt><dd>Pandas data frame.</dd><dt><strong><code>dtype</code></strong> :&ensp;<code>type</code></dt><dd>Neural network data type (default: <strong>numpy.float32</strong>).</dd></dl></div><details class="source"><summary><span>Expand source code</span></summary><pre><code class="python">def normalize(df: typing.Any, dtype: type = np.float32) -&gt; typing.Any:
+
+    &#34;&#34;&#34;Returns the normalized Pandas data frame.
+
+    Arguments
+    ---------
+    df : pandas.DataFrame
+        Pandas data frame.
+    dtype : type
+        Neural network data type (default: **numpy.float32**).
+    &#34;&#34;&#34;
+
+    result = df.copy()
+
+    for i in df.columns:
+
+        max_value = df[i].max()
+        min_value = df[i].min()
+
+        result[i] = (df[i] - min_value) / (max_value - min_value)
+
+    return result.astype(dtype)</code></pre></details></dd></dl></section><section><h2 class="section-title" id="header-classes">Classes</h2><dl><dt id="tf_som.BMUs"><code class="flex name class"><span>class <span class="ident">BMUs</span></span> <span>(</span><span>indices: numpy.ndarray, locations: numpy.ndarray)</span></code></dt><dd><div class="desc"></div><details class="source"><summary><span>Expand source code</span></summary><pre><code class="python">class BMUs(object):
+
+    __pdoc__ = False
+
+    &#34;&#34;&#34;Best Matching Units&#34;&#34;&#34;
+
+    def __init__(self, indices: np.ndarray, locations: np.ndarray):
+
+        #: Array of indices
+        self.indices: np.ndarray = indices
+
+        #: Array of locations
+        self.locations: np.ndarray = locations</code></pre></details><h3>Instance variables</h3><dl><dt id="tf_som.BMUs.indices"><code class="name">var <span class="ident">indices</span></code></dt><dd><div class="desc"><p>Array of indices</p></div></dd><dt id="tf_som.BMUs.locations"><code class="name">var <span class="ident">locations</span></code></dt><dd><div class="desc"><p>Array of locations</p></div></dd></dl></dd><dt id="tf_som.SOM"><code class="flex name class"><span>class <span class="ident">SOM</span></span> <span>(</span><span>m: int, n: int, dim: int, seed: float = None, dtype: type = numpy.float32, learning_rate: float = None, sigma: float = None, epochs: int = 100, decay_function=&lt;function _asymptotic_decay&gt;)</span></code></dt><dd><div class="desc"><p>Tensorflow 2 implementation of the Self Organizing Maps (SOM).</p><p>Initializes a Self Organizing Maps.</p><p>A rule of thumb to set the size of the grid for a dimensionality reduction task is that it should contain <span><span class="MathJax_Preview">5\sqrt{N}</span><script type="math/tex">5\sqrt{N}</script></span>neurons where N is the number of samples in the dataset to analyze.</p><h2 id="arguments">Arguments</h2><dl><dt><strong><code>m</code></strong> :&ensp;<code>int</code></dt><dd>Number of neuron rows.</dd><dt><strong><code>n</code></strong> :&ensp;<code>int</code></dt><dd>Number of neuron columns.</dd><dt><strong><code>dim</code></strong> :&ensp;<code>int</code></dt><dd>Dimensionality of the input data.</dd><dt><strong><code>seed</code></strong> :&ensp;<code>int</code></dt><dd>Seed of the random generators (default: <strong>None</strong>).</dd><dt><strong><code>dtype</code></strong> :&ensp;<code>type</code></dt><dd>Neural network data type (default: <strong>np.float32</strong>).</dd><dt><strong><code>learning_rate</code></strong> :&ensp;<code>float</code></dt><dd>Starting value of the learning rate (default: 0.3).</dd><dt><strong><code>sigma</code></strong> :&ensp;<code>float</code></dt><dd>Starting value of the neighborhood radius (default: <span><span class="MathJax_Preview">\mathrm{max}(m,n)/2</span><script type="math/tex">\mathrm{max}(m,n)/2</script></span>).</dd><dt><strong><code>epochs</code></strong> :&ensp;<code>int</code></dt><dd>Number of epochs to train for (default: 100).</dd><dt><strong><code>decay_function</code></strong> :&ensp;<code>function</code></dt><dd>Function that reduces learning_rate and sigma at each iteration (default: <span><span class="MathJax_Preview">1/\left(1+2\frac{epoch}{epochs}\right)</span><script type="math/tex">1/\left(1+2\frac{epoch}{epochs}\right)</script></span>).</dd></dl></div><details class="source"><summary><span>Expand source code</span></summary><pre><code class="python">class SOM(object):
+
+    &#34;&#34;&#34;Tensorflow 2 implementation of the Self Organizing Maps (SOM).&#34;&#34;&#34;
+
+    ####################################################################################################################
+
+    def __init__(self,
+                 m: int, n: int, dim: int,
+                 seed: float = None, dtype: type = np.float32,
+                 learning_rate: float = None, sigma: float = None, epochs: int = 100, decay_function = _asymptotic_decay):
+
+        &#34;&#34;&#34;Initializes a Self Organizing Maps.
+
+        A rule of thumb to set the size of the grid for a dimensionality reduction
+        task is that it should contain \\( 5\\sqrt{N} \\) neurons where N is the
+        number of samples in the dataset to analyze.
+
+        Arguments
+        ---------
+        m : int
+            Number of neuron rows.
+        n : int
+            Number of neuron columns.
+        dim : int
+            Dimensionality of the input data.
+        seed : int
+            Seed of the random generators (default: **None**).
+        dtype : type
+            Neural network data type (default: **np.float32**).
+        learning_rate : float
+            Starting value of the learning rate (default: 0.3).
+        sigma : float
+            Starting value of the neighborhood radius (default: \\( \\mathrm{max}(m,n)/2 \\)).
+        epochs : int
+            Number of epochs to train for (default: 100).
+        decay_function : function
+            Function that reduces learning_rate and sigma at each iteration (default: \\( 1/\\left(1+2\\frac{epoch}{epochs}\\right) \\)).
+        &#34;&#34;&#34;
+
+        ################################################################################################################
+
+        self._m = m
+        self._n = n
+        self._dim = dim
+        self._seed = seed
+        self._dtype = dtype
+        self._decay_function = decay_function
+
+        ################################################################################################################
+
+        self._rebuild_topography()
+
+        ################################################################################################################
+
+        self._learning_rate = 0.3 if learning_rate is None else dtype(learning_rate)
+        self._sigma = max(m, n) / 2.0 if sigma is None else dtype(sigma)
+
+        ################################################################################################################
+
+        self._epochs = abs(int(epochs))
+
+        ################################################################################################################
+
+        self._two = tf.constant(2.00e+00, dtype = dtype)
+
+        self._epsilon = tf.constant(1.00e-20, dtype = dtype)
+
+        self._sqrt_two = tf.constant(1.42e+00, dtype = dtype)
+
+        ################################################################################################################
+
+        self._weights = np.empty(shape = (self._m * self._n, self._dim), dtype = self._dtype)
+
+        self._quantization_errors = np.empty(shape = (self._epochs, ), dtype = self._dtype)
+        self._topographic_errors = np.empty(shape = (self._epochs, ), dtype = self._dtype)
+
+    ####################################################################################################################
+
+    def _rebuild_topography(self):
+
+        self._topography = tf.constant(np.array(list(self._neuron_locations(self._m, self._n))))
+
+    ####################################################################################################################
+
+    @staticmethod
+    def _neuron_locations(m: int, n: int) -&gt; typing.Iterator[typing.List[int]]:
+
+        for i in range(m):
+
+            for j in range(n):
+
+                yield [i, j]
+
+    ####################################################################################################################
+
+    @staticmethod
+    def _argsort_n(x: tf.Tensor, n: int) -&gt; tf.Tensor:
+
+        if n &gt; 1:
+            return tf.nn.top_k(tf.negative(x), k = n).indices
+        else:
+            return tf.expand_dims(tf.argmin(x, axis = 1), axis = 1)
+
+    ####################################################################################################################
+
+    @staticmethod
+    def __find_bmus(weights: typing.Union[tf.Variable, tf.Tensor], input_vectors: tf.Tensor, n: int = 1) -&gt; tf.Tensor:
+
+        ################################################################################################################
+        # COMPUTE DISTANCE SQUARES                                                                                     #
+        ################################################################################################################
+
+        distance_squares = tf.reduce_sum(
+            tf.square(
+                tf.subtract(
+                    tf.expand_dims(input_vectors, axis = 1),
+                    tf.expand_dims(weights, axis = 0)
+                )
+            ),
+            axis = 2
+        )
+
+        ################################################################################################################
+        # COMPUTE INDICES                                                                                              #
+        ################################################################################################################
+
+        return tf.transpose(SOM._argsort_n(distance_squares, n))
+
+    ####################################################################################################################
+
+    def _find_bmus(self, weights: typing.Union[tf.Variable, tf.Tensor], input_vectors: tf.Tensor, n: int = 1) -&gt; typing.List[BMUs]:
+
+        result = []
+
+        for bmu_indices in self.__find_bmus(weights, input_vectors, n):
+
+            bmu_locations = tf.gather(self._topography, bmu_indices)
+
+            result.append(BMUs(bmu_indices, bmu_locations))
+
+        return result
+
+    ####################################################################################################################
+
+    def _train(self, weights: tf.Variable, input_vectors: tf.Tensor, epoch: int) -&gt; None:
+
+        ################################################################################################################
+        # BEST MATCHING UNITS                                                                                          #
+        ################################################################################################################
+
+        bmus = self._find_bmus(weights, input_vectors, n = 2)
+
+        ################################################################################################################
+        # LEARNING OPERATOR                                                                                            #
+        ################################################################################################################
+
+        decay_function = self._decay_function(epoch, self._epochs)
+
+        current_learning_rate = tf.cast(self._learning_rate * decay_function, dtype = self._dtype)
+        current_radius        = tf.cast(self._sigma         * decay_function, dtype = self._dtype)
+
+        ################################################################################################################
+
+        bmu_distance_squares = tf.reduce_sum(
+            tf.square(
+                tf.subtract(
+                    tf.expand_dims(self._topography, axis = 0),
+                    tf.expand_dims(bmus[0].locations, axis = 1)
+                )
+            ),
+            axis = 2
+        )
+
+        ################################################################################################################
+
+        neighbourhood_func = tf.exp(tf.divide(
+            tf.negative(tf.cast(bmu_distance_squares, self._dtype)),
+            tf.multiply(self._two, tf.square(current_radius))
+        ))
+
+        ################################################################################################################
+
+        learning_rate_op = tf.multiply(neighbourhood_func, current_learning_rate)
+
+        ################################################################################################################
+        # WEIGHT(EPOCH + 1)                                                                                            #
+        ################################################################################################################
+
+        numerator = tf.reduce_sum(
+            tf.multiply(
+                tf.expand_dims(learning_rate_op, axis = -1),
+                tf.expand_dims(input_vectors, axis = +1)
+            ),
+            axis = 0
+        )
+
+        denominator = tf.expand_dims(tf.reduce_sum(learning_rate_op, axis = 0), axis = -1) + self._epsilon
+
+        ################################################################################################################
+
+        weights.assign(tf.divide(numerator, denominator))
+
+        ################################################################################################################
+        # QUANTIZATION ERROR                                                                                           #
+        ################################################################################################################
+
+        self._quantization_errors[epoch] = tf.reduce_mean(
+            tf.norm(
+                tf.subtract(
+                    input_vectors,
+                    tf.gather(weights, bmus[0].indices)
+                ),
+                axis = 1
+            ),
+            axis = 0
+        )
+
+        ################################################################################################################
+        # TOPOGRAPHIC ERROR                                                                                            #
+        ################################################################################################################
+
+        t = tf.greater(
+            tf.norm(
+                tf.subtract(
+                    tf.cast(bmus[1].locations, dtype = self._dtype),
+                    tf.cast(bmus[0].locations, dtype = self._dtype)
+                ),
+                axis = 1
+            ),
+            self._sqrt_two
+        )
+
+        self._topographic_errors[epoch] = tf.divide(
+            tf.reduce_sum(tf.cast(t, dtype = self._dtype)),
+            tf.cast(tf.shape(input_vectors)[0], dtype = self._dtype)
+        )
+
+    ####################################################################################################################
+
+    @staticmethod
+    def _dataset_to_generator(dataset):
+
+        return dataset if callable(dataset) else lambda: (dataset, )
+
+    ####################################################################################################################
+
+    def train(self, dataset: typing.Union[np.ndarray, typing.Callable], chunk_size: int = None, reset_weights: bool = True, show_progress_bar: bool = True) -&gt; None:
+
+        &#34;&#34;&#34;Trains the neural network. A batch formulation of updating weights is implemented: $$ \\mathrm{bmu}(x)=\\underset{i}{\\mathrm{arg\\,min}}\\lVert x-w_i\\rVert $$ $$ n_j=\\sum_{x\\in\\mathcal{D}}\\left\\{\\begin{array}{ll}1&amp;\\mathrm{bmu}(x)=j\\\\0&amp;\\mathrm{otherwise}\\end{array}\\right. $$ $$ \\Theta_{ji}(e)=\\alpha(e)\\cdot\\exp\\left(-\\frac{\\lVert j-i\\rVert}{2\\sigma^2(e)}\\right) $$ $$ \\boxed{w_{i\\,\\mathrm{new}}=\\frac{\\sum_{j=1}^{n}n_j\\Theta_{ji}(e)x_j}{\\sum_{j=1}^{n}n_j\\Theta_{ji}(e)}} $$ where, at epoch \\( e \\), \\( \\alpha(e)=\\alpha_0\\mathrm{decay\\,function}(e) \\) is the learning rate and \\( \\sigma(e)=\\sigma_0\\mathrm{decay\\,function}(e) \\) is the neighborhood radius.
+
+        Parameters
+        ----------
+        dataset : typing.Union[numpy.ndarray, typing.Callable]
+            Training dataset array or generator.
+        chunk_size : int
+            Chunk size or **None** to disable batch (default: **None**).
+        reset_weights : bool
+            Specifying whether the weights have to be reset (default: **True**).
+        show_progress_bar : bool
+            Specifying whether a progress bar have to be shown (default: **True**).
+
+        .. NOTE::
+            A dataset generator is a **yield** generator returning numpy arrays.
+
+        .. NOTE::
+            Setting the **reset_weights** variable to **False** allows to update a pre-trained model (= progressive training).
+        &#34;&#34;&#34;
+
+        ################################################################################################################
+
+        weights = None
+
+        ################################################################################################################
+
+        if reset_weights and self._seed is not None:
+
+            np.random.seed(self._seed + 0x000000000000)
+
+            tf.random.set_seed(self._seed + 0x000000000000)
+
+        ################################################################################################################
+
+        dataset_generator = SOM._dataset_to_generator(dataset)
+
+        ################################################################################################################
+
+        for epoch in tqdm.tqdm(range(self._epochs), disable = not show_progress_bar):
+
+            for dataset_part_number, dataset_array_np in enumerate(dataset_generator()):
+
+                ########################################################################################################
+                # DEFAULT CHUNK SIZE                                                                                   #
+                ########################################################################################################
+
+                if chunk_size is None:
+
+                    chunk_size = dataset_array_np.shape[0]
+
+                ########################################################################################################
+                # INITIALIZE WEIGHTS                                                                                   #
+                ########################################################################################################
+
+                if epoch == 0 and dataset_part_number == 0:
+
+                    if reset_weights:
+
+                        rand_weights_np = np.empty(shape = (self._m * self._n, self._dim), dtype = self._dtype)
+
+                        l1 = rand_weights_np.shape[0]
+                        l2 = dataset_array_np.shape[0]
+
+                        for i in range(l1):
+
+                            j = np.random.randint(l2)
+
+                            rand_weights_np[i] = dataset_array_np[j]
+
+                        weights = tf.Variable(rand_weights_np, dtype = self._dtype)
+
+                    else:
+
+                        weights = tf.Variable(self._weights, dtype = self._dtype)
+
+                ########################################################################################################
+                # TRAIN THE SELF ORGANIZING MAP                                                                        #
+                ########################################################################################################
+
+                dataset = tf.data.Dataset.from_tensor_slices(tf.constant(dataset_array_np, dtype = self._dtype))
+
+                for chunk in dataset.shuffle(dataset_array_np.shape[0]).batch(chunk_size):
+
+                    self._train(weights, chunk, epoch)
+
+        ################################################################################################################
+
+        self._weights = weights.numpy()
+
+    ####################################################################################################################
+
+    # noinspection PyTypeChecker
+    def save(self, filename: str, file_format: str = &#39;fits&#39;, extra: typing.Dict[str, np.ndarray] = None) -&gt; None:
+
+        &#34;&#34;&#34;Saves the trained neural network to a file.
+
+        Parameters
+        ----------
+        filename : str
+            Filename.
+        file_format : str
+            File format (supported formats: (fits, hdf5), default: fits).
+        extra : dict
+            Dictionary of extra (name, array) entries.
+        &#34;&#34;&#34;
+
+        if extra is None:
+
+            extra = {}
+
+        ################################################################################################################
+        # FITS FORMAT                                                                                                  #
+        ################################################################################################################
+
+        if file_format == &#39;fits&#39;:
+
+            from astropy.io import fits
+
+            hdu0 = fits.PrimaryHDU()
+
+            hdu1 = fits.ImageHDU(data = self.get_centroids())
+
+            hdu2 = fits.BinTableHDU.from_columns(fits.ColDefs([
+                fits.Column(name = &#39;quantization_errors&#39;, format = &#39;D&#39;, array = self._quantization_errors),
+                fits.Column(name = &#39;topographic_errors&#39;, format = &#39;D&#39;, array = self._topographic_errors),
+            ]))
+
+            hdu0.header[&#39;lrate&#39;] = self._learning_rate
+            hdu0.header[&#39;sigma&#39;] = self._sigma
+            hdu2.header[&#39;epochs&#39;] = self._epochs
+
+            fits.HDUList([hdu0, hdu1, hdu2] + [fits.ImageHDU(name = name, data = data) for name, data in extra.items()]).writeto(filename, overwrite = True)
+
+        ################################################################################################################
+        # HDF5 FORMAT                                                                                                  #
+        ################################################################################################################
+
+        elif file_format == &#39;hdf5&#39;:
+
+            import h5py
+
+            with h5py.File(filename, &#39;w&#39;) as file:
+
+                file.attrs[&#39;lrate&#39;] = self._learning_rate
+                file.attrs[&#39;sigma&#39;] = self._sigma
+                file.attrs[&#39;epochs&#39;] = self._epochs
+
+                file.create_dataset(&#39;weights&#39;, data = self.get_centroids())
+                file.create_dataset(&#39;quantization_errors&#39;, data = self._quantization_errors)
+                file.create_dataset(&#39;topographic_errors&#39;, data = self._topographic_errors)
+
+                for name, data in extra.items():
+
+                    file.create_dataset(name, data = data)
+
+        ################################################################################################################
+
+        else:
+
+            raise ValueError(&#39;invalid format `{}` (fits, hdf5)&#39;.format(file_format))
+
+    ####################################################################################################################
+
+    def load(self, filename: str, file_format: str = &#39;fits&#39;) -&gt; None:
+
+        &#34;&#34;&#34;Loads the trained neural network from a file.
+
+        Parameters
+        ----------
+        filename : str
+            Filename.
+        file_format : str
+            File format (supported formats: (fits, hdf5), default: fits).
+        &#34;&#34;&#34;
+
+        ################################################################################################################
+        # FITS FORMAT                                                                                                  #
+        ################################################################################################################
+
+        if file_format == &#39;fits&#39;:
+
+            from astropy.io import fits
+
+            with fits.open(filename) as hdus:
+
+                self._m, self._n, self._dim = hdus[1].data.shape
+
+                self._learning_rate = hdus[0].header[&#39;lrate&#39;]
+                self._sigma = hdus[0].header[&#39;sigma&#39;]
+                self._epochs = hdus[2].header[&#39;epochs&#39;]
+
+                self._weights = hdus[1].data.reshape((self._m * self._n, self._dim)).astype(self._dtype)
+                self._quantization_errors = hdus[2].data[&#39;quantization_errors&#39;].astype(self._dtype)
+                self._topographic_errors = hdus[2].data[&#39;topographic_errors&#39;].astype(self._dtype)
+
+        ################################################################################################################
+        # HDF5 FORMAT                                                                                                  #
+        ################################################################################################################
+
+        elif file_format == &#39;hdf5&#39;:
+
+            import h5py
+
+            with h5py.File(filename, &#39;r&#39;) as file:
+
+                self._m, self._n, self._dim = file[&#39;weights&#39;].shape
+
+                self._learning_rate = file.attrs[&#39;lrate&#39;]
+                self._sigma = file.attrs[&#39;sigma&#39;]
+                self._epochs = file.attrs[&#39;epochs&#39;]
+
+                self._weights = np.array(file[&#39;weights&#39;]).reshape((self._m * self._n, self._dim)).astype(self._dtype)
+                self._quantization_errors = np.array(file[&#39;quantization_errors&#39;]).astype(self._dtype)
+                self._topographic_errors = np.array(file[&#39;topographic_errors&#39;]).astype(self._dtype)
+
+        ################################################################################################################
+
+        else:
+
+            raise ValueError(&#39;invalid format `{}` (fits, hdf5)&#39;.format(file_format))
+
+        ################################################################################################################
+
+        self._rebuild_topography()
+
+    ####################################################################################################################
+
+    def distance_map(self) -&gt; np.ndarray:
+
+        &#34;&#34;&#34;Returns the distance map of the neural network weights.&#34;&#34;&#34;
+
+        ################################################################################################################
+
+        centroids = self.get_centroids()
+
+        ################################################################################################################
+
+        result = np.full(shape = (centroids.shape[0], centroids.shape[1], 8), fill_value = np.nan, dtype = self._dtype)
+
+        ii = 2 * [[0, -1, -1, -1, 0, +1, +1, +1]]
+        jj = 2 * [[-1, -1, 0, +1, +1, +1, 0, -1]]
+
+        for x in range(centroids.shape[0]):
+
+            for y in range(centroids.shape[1]):
+
+                w_2 = centroids[x, y]
+
+                e = y % 2 == 0
+
+                for k, (i, j) in enumerate(zip(ii[e], jj[e])):
+
+                    if 0 &lt;= x + i &lt; centroids.shape[0]\
+                       and                            \
+                       0 &lt;= y + j &lt; centroids.shape[1]:
+
+                        diff_w_2_w_1 = w_2 - centroids[x + i, y + j]
+
+                        result[x, y, k] = np.sqrt(np.dot(diff_w_2_w_1, diff_w_2_w_1.T))
+
+        result = np.nansum(result, axis = 2)
+
+        return result / result.max()
+
+    ####################################################################################################################
+
+    def get_weights(self) -&gt; np.ndarray:
+
+        &#34;&#34;&#34;Returns the neural network weights (shape = [m * n, dim]).&#34;&#34;&#34;
+
+        return self._weights.reshape((self._m * self._n, self._dim))
+
+    ####################################################################################################################
+
+    def get_centroids(self) -&gt; np.ndarray:
+
+        &#34;&#34;&#34;Returns of the neural network weights (shape = [m, n, dim]).&#34;&#34;&#34;
+
+        return self._weights.reshape((self._m, self._n, self._dim))
+
+    ####################################################################################################################
+
+    def get_quantization_errors(self) -&gt; np.ndarray:
+
+        &#34;&#34;&#34;Returns the quantization errors (one value per epoch). $$ c_1=\\mathrm{1^\\mathrm{st}\\,bmu}=\\underset{i}{\\mathrm{arg\\,min}_1}\\lVert x-w_i\\rVert $$ $$ \\boxed{e_Q=\\frac{1}{\\mathcal{D}}\\sum_{x\\in\\mathcal{D}}\\lVert x-w_{c_1}\\rVert^2} $$&#34;&#34;&#34;
+
+        return self._quantization_errors
+
+    ####################################################################################################################
+
+    def get_topographic_errors(self) -&gt; np.ndarray:
+
+        &#34;&#34;&#34;Returns the topographic errors (one value per epoch). $$ c_n=\\mathrm{n^\\mathrm{th}\\,bmu}=\\underset{i}{\\mathrm{arg\\,min}_n}\\lVert x-w_i\\rVert $$ $$ t(x)=\\left\\{\\begin{array}{ll}1&amp;\\lVert c_1-c_2\\rVert&gt;\\sqrt{2}\\\\0&amp;\\mathrm{otherwise}\\end{array}\\right. $$ $$ \\boxed{e_t=\\frac{1}{\\mathcal{D}}\\sum_{x\\in\\mathcal{D}}t(x)} $$&#34;&#34;&#34;
+
+        return self._topographic_errors
+
+    ####################################################################################################################
+
+    def winners(self, dataset_array: np.ndarray, chunk_size: int = None, locations: bool = False, show_progress_bar: bool = False) -&gt; np.ndarray:
+
+        &#34;&#34;&#34;Returns a vector of best matching unit indices or locations for the given input.
+
+        Parameters
+        ----------
+        dataset_array : numpy.ndarray
+            Dataset array.
+        chunk_size : int
+            Chunk size or **None** to disable batch (default: **None**).
+        locations : bool
+            Get winner locations instead of indices (default: **False**).
+        show_progress_bar : bool
+            Specifying whether a progress bar have to be shown (default: **False**).
+        &#34;&#34;&#34;
+
+        ################################################################################################################
+
+        if chunk_size is None:
+
+            chunk_size = dataset_array.shape[0]
+
+        ################################################################################################################
+
+        weights = tf.constant(self._weights, dtype = self._dtype)
+
+        ################################################################################################################
+
+        i = 0
+
+        if locations:
+
+            result = np.empty((dataset_array.shape[0], 2), dtype = np.int64)
+
+            for chunk in tqdm.tqdm(tf.data.Dataset.from_tensor_slices(tf.constant(dataset_array, dtype = self._dtype)).batch(chunk_size), disable = not show_progress_bar):
+
+                result[(i + 0) * chunk_size: (i + 1) * chunk_size] = tf.gather(self._topography, self.__find_bmus(weights, chunk, 1)[0])
+
+                i += 1
+
+        else:
+
+            result = np.empty((dataset_array.shape[0], ), dtype = np.int64)
+
+            for chunk in tqdm.tqdm(tf.data.Dataset.from_tensor_slices(tf.constant(dataset_array, dtype = self._dtype)).batch(chunk_size), disable = not show_progress_bar):
+
+                result[(i + 0) * chunk_size: (i + 1) * chunk_size] = self.__find_bmus(weights, chunk, 1)[0]
+
+                i += 1
+
+        ################################################################################################################
+
+        return result
+
+    ####################################################################################################################
+
+    def activation_map(self, dataset: typing.Union[np.ndarray, typing.Callable], chunk_size: int = None, show_progress_bar: bool = False) -&gt; np.ndarray:
+
+        &#34;&#34;&#34;Returns a matrix containing the number of times the neuron (i, j) have been winner for the given input.
+
+        Parameters
+        ----------
+        dataset : typing.Union[numpy.ndarray, typing.Callable]
+            Dataset array or generator.
+        chunk_size : int
+            Chunk size or **None** to disable batch (default: **None**).
+        show_progress_bar : bool
+            Specifying whether a progress bar have to be shown (default: **False**).
+
+        .. NOTE::
+            A dataset generator is a **yield** generator returning numpy arrays.
+        &#34;&#34;&#34;
+
+        ################################################################################################################
+
+        dataset_generator = SOM._dataset_to_generator(dataset)
+
+        weights = tf.constant(self._weights, dtype = self._dtype)
+
+        result = np.zeros(shape = (self._m * self._n), dtype = np.int64)
+
+        ################################################################################################################
+
+        for dataset_part, dataset_array_np in enumerate(dataset_generator()):
+
+            ############################################################################################################
+
+            if chunk_size is None:
+
+                chunk_size = dataset_array_np.shape[0]
+
+            ############################################################################################################
+
+            for chunk in tqdm.tqdm(tf.data.Dataset.from_tensor_slices(tf.constant(dataset_array_np, dtype = self._dtype)).batch(chunk_size), disable = not show_progress_bar):
+
+                for bmu_index in self.__find_bmus(weights, chunk, n = 1)[0]:
+
+                    result[bmu_index] += 1
+
+        ################################################################################################################
+
+        return result.reshape(self._m, self._n)</code></pre></details><h3>Methods</h3><dl><dt id="tf_som.SOM.train"><code class="name flex"><span>def <span class="ident">train</span></span>(<span>self, dataset: Union[numpy.ndarray, Callable], chunk_size: int = None, reset_weights: bool = True, show_progress_bar: bool = True) ‑> None</span></code></dt><dd><div class="desc"><p>Trains the neural network. A batch formulation of updating weights is implemented: <span><span class="MathJax_Preview">\mathrm{bmu}(x)=\underset{i}{\mathrm{arg\,min}}\lVert x-w_i\rVert</span><script type="math/tex;mode=display">\mathrm{bmu}(x)=\underset{i}{\mathrm{arg\,min}}\lVert x-w_i\rVert</script></span><span><span class="MathJax_Preview">n_j=\sum_{x\in\mathcal{D}}\left\{\begin{array}{ll}1&amp;\mathrm{bmu}(x)=j\\0&amp;\mathrm{otherwise}\end{array}\right.</span><script type="math/tex;mode=display">n_j=\sum_{x\in\mathcal{D}}\left\{\begin{array}{ll}1&\mathrm{bmu}(x)=j\\0&\mathrm{otherwise}\end{array}\right.</script></span><span><span class="MathJax_Preview">\Theta_{ji}(e)=\alpha(e)\cdot\exp\left(-\frac{\lVert j-i\rVert}{2\sigma^2(e)}\right)</span><script type="math/tex;mode=display">\Theta_{ji}(e)=\alpha(e)\cdot\exp\left(-\frac{\lVert j-i\rVert}{2\sigma^2(e)}\right)</script></span><span><span class="MathJax_Preview">\boxed{w_{i\,\mathrm{new}}=\frac{\sum_{j=1}^{n}n_j\Theta_{ji}(e)x_j}{\sum_{j=1}^{n}n_j\Theta_{ji}(e)}}</span><script type="math/tex;mode=display">\boxed{w_{i\,\mathrm{new}}=\frac{\sum_{j=1}^{n}n_j\Theta_{ji}(e)x_j}{\sum_{j=1}^{n}n_j\Theta_{ji}(e)}}</script></span>where, at epoch <span><span class="MathJax_Preview">e</span><script type="math/tex">e</script></span>, <span><span class="MathJax_Preview">\alpha(e)=\alpha_0\mathrm{decay\,function}(e)</span><script type="math/tex">\alpha(e)=\alpha_0\mathrm{decay\,function}(e)</script></span>is the learning rate and <span><span class="MathJax_Preview">\sigma(e)=\sigma_0\mathrm{decay\,function}(e)</span><script type="math/tex">\sigma(e)=\sigma_0\mathrm{decay\,function}(e)</script></span>is the neighborhood radius.</p><h2 id="parameters">Parameters</h2><dl><dt><strong><code>dataset</code></strong> :&ensp;<code>typing.Union[numpy.ndarray, typing.Callable]</code></dt><dd>Training dataset array or generator.</dd><dt><strong><code>chunk_size</code></strong> :&ensp;<code>int</code></dt><dd>Chunk size or <strong>None</strong> to disable batch (default: <strong>None</strong>).</dd><dt><strong><code>reset_weights</code></strong> :&ensp;<code>bool</code></dt><dd>Specifying whether the weights have to be reset (default: <strong>True</strong>).</dd><dt><strong><code>show_progress_bar</code></strong> :&ensp;<code>bool</code></dt><dd>Specifying whether a progress bar have to be shown (default: <strong>True</strong>).</dd></dl><div class="admonition note"><p class="admonition-title">Note</p><p>A dataset generator is a <strong>yield</strong> generator returning numpy arrays.</p></div><div class="admonition note"><p class="admonition-title">Note</p><p>Setting the <strong>reset_weights</strong> variable to <strong>False</strong> allows to update a pre-trained model (= progressive training).</p></div></div><details class="source"><summary><span>Expand source code</span></summary><pre><code class="python">def train(self, dataset: typing.Union[np.ndarray, typing.Callable], chunk_size: int = None, reset_weights: bool = True, show_progress_bar: bool = True) -&gt; None:
+
+    &#34;&#34;&#34;Trains the neural network. A batch formulation of updating weights is implemented: $$ \\mathrm{bmu}(x)=\\underset{i}{\\mathrm{arg\\,min}}\\lVert x-w_i\\rVert $$ $$ n_j=\\sum_{x\\in\\mathcal{D}}\\left\\{\\begin{array}{ll}1&amp;\\mathrm{bmu}(x)=j\\\\0&amp;\\mathrm{otherwise}\\end{array}\\right. $$ $$ \\Theta_{ji}(e)=\\alpha(e)\\cdot\\exp\\left(-\\frac{\\lVert j-i\\rVert}{2\\sigma^2(e)}\\right) $$ $$ \\boxed{w_{i\\,\\mathrm{new}}=\\frac{\\sum_{j=1}^{n}n_j\\Theta_{ji}(e)x_j}{\\sum_{j=1}^{n}n_j\\Theta_{ji}(e)}} $$ where, at epoch \\( e \\), \\( \\alpha(e)=\\alpha_0\\mathrm{decay\\,function}(e) \\) is the learning rate and \\( \\sigma(e)=\\sigma_0\\mathrm{decay\\,function}(e) \\) is the neighborhood radius.
+
+    Parameters
+    ----------
+    dataset : typing.Union[numpy.ndarray, typing.Callable]
+        Training dataset array or generator.
+    chunk_size : int
+        Chunk size or **None** to disable batch (default: **None**).
+    reset_weights : bool
+        Specifying whether the weights have to be reset (default: **True**).
+    show_progress_bar : bool
+        Specifying whether a progress bar have to be shown (default: **True**).
+
+    .. NOTE::
+        A dataset generator is a **yield** generator returning numpy arrays.
+
+    .. NOTE::
+        Setting the **reset_weights** variable to **False** allows to update a pre-trained model (= progressive training).
+    &#34;&#34;&#34;
+
+    ################################################################################################################
+
+    weights = None
+
+    ################################################################################################################
+
+    if reset_weights and self._seed is not None:
+
+        np.random.seed(self._seed + 0x000000000000)
+
+        tf.random.set_seed(self._seed + 0x000000000000)
+
+    ################################################################################################################
+
+    dataset_generator = SOM._dataset_to_generator(dataset)
+
+    ################################################################################################################
+
+    for epoch in tqdm.tqdm(range(self._epochs), disable = not show_progress_bar):
+
+        for dataset_part_number, dataset_array_np in enumerate(dataset_generator()):
+
+            ########################################################################################################
+            # DEFAULT CHUNK SIZE                                                                                   #
+            ########################################################################################################
+
+            if chunk_size is None:
+
+                chunk_size = dataset_array_np.shape[0]
+
+            ########################################################################################################
+            # INITIALIZE WEIGHTS                                                                                   #
+            ########################################################################################################
+
+            if epoch == 0 and dataset_part_number == 0:
+
+                if reset_weights:
+
+                    rand_weights_np = np.empty(shape = (self._m * self._n, self._dim), dtype = self._dtype)
+
+                    l1 = rand_weights_np.shape[0]
+                    l2 = dataset_array_np.shape[0]
+
+                    for i in range(l1):
+
+                        j = np.random.randint(l2)
+
+                        rand_weights_np[i] = dataset_array_np[j]
+
+                    weights = tf.Variable(rand_weights_np, dtype = self._dtype)
+
+                else:
+
+                    weights = tf.Variable(self._weights, dtype = self._dtype)
+
+            ########################################################################################################
+            # TRAIN THE SELF ORGANIZING MAP                                                                        #
+            ########################################################################################################
+
+            dataset = tf.data.Dataset.from_tensor_slices(tf.constant(dataset_array_np, dtype = self._dtype))
+
+            for chunk in dataset.shuffle(dataset_array_np.shape[0]).batch(chunk_size):
+
+                self._train(weights, chunk, epoch)
+
+    ################################################################################################################
+
+    self._weights = weights.numpy()</code></pre></details></dd><dt id="tf_som.SOM.save"><code class="name flex"><span>def <span class="ident">save</span></span>(<span>self, filename: str, file_format: str = 'fits', extra: Dict[str, numpy.ndarray] = None) ‑> None</span></code></dt><dd><div class="desc"><p>Saves the trained neural network to a file.</p><h2 id="parameters">Parameters</h2><dl><dt><strong><code>filename</code></strong> :&ensp;<code>str</code></dt><dd>Filename.</dd><dt><strong><code>file_format</code></strong> :&ensp;<code>str</code></dt><dd>File format (supported formats: (fits, hdf5), default: fits).</dd><dt><strong><code>extra</code></strong> :&ensp;<code>dict</code></dt><dd>Dictionary of extra (name, array) entries.</dd></dl></div><details class="source"><summary><span>Expand source code</span></summary><pre><code class="python">def save(self, filename: str, file_format: str = &#39;fits&#39;, extra: typing.Dict[str, np.ndarray] = None) -&gt; None:
+
+    &#34;&#34;&#34;Saves the trained neural network to a file.
+
+    Parameters
+    ----------
+    filename : str
+        Filename.
+    file_format : str
+        File format (supported formats: (fits, hdf5), default: fits).
+    extra : dict
+        Dictionary of extra (name, array) entries.
+    &#34;&#34;&#34;
+
+    if extra is None:
+
+        extra = {}
+
+    ################################################################################################################
+    # FITS FORMAT                                                                                                  #
+    ################################################################################################################
+
+    if file_format == &#39;fits&#39;:
+
+        from astropy.io import fits
+
+        hdu0 = fits.PrimaryHDU()
+
+        hdu1 = fits.ImageHDU(data = self.get_centroids())
+
+        hdu2 = fits.BinTableHDU.from_columns(fits.ColDefs([
+            fits.Column(name = &#39;quantization_errors&#39;, format = &#39;D&#39;, array = self._quantization_errors),
+            fits.Column(name = &#39;topographic_errors&#39;, format = &#39;D&#39;, array = self._topographic_errors),
+        ]))
+
+        hdu0.header[&#39;lrate&#39;] = self._learning_rate
+        hdu0.header[&#39;sigma&#39;] = self._sigma
+        hdu2.header[&#39;epochs&#39;] = self._epochs
+
+        fits.HDUList([hdu0, hdu1, hdu2] + [fits.ImageHDU(name = name, data = data) for name, data in extra.items()]).writeto(filename, overwrite = True)
+
+    ################################################################################################################
+    # HDF5 FORMAT                                                                                                  #
+    ################################################################################################################
+
+    elif file_format == &#39;hdf5&#39;:
+
+        import h5py
+
+        with h5py.File(filename, &#39;w&#39;) as file:
+
+            file.attrs[&#39;lrate&#39;] = self._learning_rate
+            file.attrs[&#39;sigma&#39;] = self._sigma
+            file.attrs[&#39;epochs&#39;] = self._epochs
+
+            file.create_dataset(&#39;weights&#39;, data = self.get_centroids())
+            file.create_dataset(&#39;quantization_errors&#39;, data = self._quantization_errors)
+            file.create_dataset(&#39;topographic_errors&#39;, data = self._topographic_errors)
+
+            for name, data in extra.items():
+
+                file.create_dataset(name, data = data)
+
+    ################################################################################################################
+
+    else:
+
+        raise ValueError(&#39;invalid format `{}` (fits, hdf5)&#39;.format(file_format))</code></pre></details></dd><dt id="tf_som.SOM.load"><code class="name flex"><span>def <span class="ident">load</span></span>(<span>self, filename: str, file_format: str = 'fits') ‑> None</span></code></dt><dd><div class="desc"><p>Loads the trained neural network from a file.</p><h2 id="parameters">Parameters</h2><dl><dt><strong><code>filename</code></strong> :&ensp;<code>str</code></dt><dd>Filename.</dd><dt><strong><code>file_format</code></strong> :&ensp;<code>str</code></dt><dd>File format (supported formats: (fits, hdf5), default: fits).</dd></dl></div><details class="source"><summary><span>Expand source code</span></summary><pre><code class="python">def load(self, filename: str, file_format: str = &#39;fits&#39;) -&gt; None:
+
+    &#34;&#34;&#34;Loads the trained neural network from a file.
+
+    Parameters
+    ----------
+    filename : str
+        Filename.
+    file_format : str
+        File format (supported formats: (fits, hdf5), default: fits).
+    &#34;&#34;&#34;
+
+    ################################################################################################################
+    # FITS FORMAT                                                                                                  #
+    ################################################################################################################
+
+    if file_format == &#39;fits&#39;:
+
+        from astropy.io import fits
+
+        with fits.open(filename) as hdus:
+
+            self._m, self._n, self._dim = hdus[1].data.shape
+
+            self._learning_rate = hdus[0].header[&#39;lrate&#39;]
+            self._sigma = hdus[0].header[&#39;sigma&#39;]
+            self._epochs = hdus[2].header[&#39;epochs&#39;]
+
+            self._weights = hdus[1].data.reshape((self._m * self._n, self._dim)).astype(self._dtype)
+            self._quantization_errors = hdus[2].data[&#39;quantization_errors&#39;].astype(self._dtype)
+            self._topographic_errors = hdus[2].data[&#39;topographic_errors&#39;].astype(self._dtype)
+
+    ################################################################################################################
+    # HDF5 FORMAT                                                                                                  #
+    ################################################################################################################
+
+    elif file_format == &#39;hdf5&#39;:
+
+        import h5py
+
+        with h5py.File(filename, &#39;r&#39;) as file:
+
+            self._m, self._n, self._dim = file[&#39;weights&#39;].shape
+
+            self._learning_rate = file.attrs[&#39;lrate&#39;]
+            self._sigma = file.attrs[&#39;sigma&#39;]
+            self._epochs = file.attrs[&#39;epochs&#39;]
+
+            self._weights = np.array(file[&#39;weights&#39;]).reshape((self._m * self._n, self._dim)).astype(self._dtype)
+            self._quantization_errors = np.array(file[&#39;quantization_errors&#39;]).astype(self._dtype)
+            self._topographic_errors = np.array(file[&#39;topographic_errors&#39;]).astype(self._dtype)
+
+    ################################################################################################################
+
+    else:
+
+        raise ValueError(&#39;invalid format `{}` (fits, hdf5)&#39;.format(file_format))
+
+    ################################################################################################################
+
+    self._rebuild_topography()</code></pre></details></dd><dt id="tf_som.SOM.distance_map"><code class="name flex"><span>def <span class="ident">distance_map</span></span>(<span>self) ‑> numpy.ndarray</span></code></dt><dd><div class="desc"><p>Returns the distance map of the neural network weights.</p></div><details class="source"><summary><span>Expand source code</span></summary><pre><code class="python">def distance_map(self) -&gt; np.ndarray:
+
+    &#34;&#34;&#34;Returns the distance map of the neural network weights.&#34;&#34;&#34;
+
+    ################################################################################################################
+
+    centroids = self.get_centroids()
+
+    ################################################################################################################
+
+    result = np.full(shape = (centroids.shape[0], centroids.shape[1], 8), fill_value = np.nan, dtype = self._dtype)
+
+    ii = 2 * [[0, -1, -1, -1, 0, +1, +1, +1]]
+    jj = 2 * [[-1, -1, 0, +1, +1, +1, 0, -1]]
+
+    for x in range(centroids.shape[0]):
+
+        for y in range(centroids.shape[1]):
+
+            w_2 = centroids[x, y]
+
+            e = y % 2 == 0
+
+            for k, (i, j) in enumerate(zip(ii[e], jj[e])):
+
+                if 0 &lt;= x + i &lt; centroids.shape[0]\
+                   and                            \
+                   0 &lt;= y + j &lt; centroids.shape[1]:
+
+                    diff_w_2_w_1 = w_2 - centroids[x + i, y + j]
+
+                    result[x, y, k] = np.sqrt(np.dot(diff_w_2_w_1, diff_w_2_w_1.T))
+
+    result = np.nansum(result, axis = 2)
+
+    return result / result.max()</code></pre></details></dd><dt id="tf_som.SOM.get_weights"><code class="name flex"><span>def <span class="ident">get_weights</span></span>(<span>self) ‑> numpy.ndarray</span></code></dt><dd><div class="desc"><p>Returns the neural network weights (shape = [m * n, dim]).</p></div><details class="source"><summary><span>Expand source code</span></summary><pre><code class="python">def get_weights(self) -&gt; np.ndarray:
+
+    &#34;&#34;&#34;Returns the neural network weights (shape = [m * n, dim]).&#34;&#34;&#34;
+
+    return self._weights.reshape((self._m * self._n, self._dim))</code></pre></details></dd><dt id="tf_som.SOM.get_centroids"><code class="name flex"><span>def <span class="ident">get_centroids</span></span>(<span>self) ‑> numpy.ndarray</span></code></dt><dd><div class="desc"><p>Returns of the neural network weights (shape = [m, n, dim]).</p></div><details class="source"><summary><span>Expand source code</span></summary><pre><code class="python">def get_centroids(self) -&gt; np.ndarray:
+
+    &#34;&#34;&#34;Returns of the neural network weights (shape = [m, n, dim]).&#34;&#34;&#34;
+
+    return self._weights.reshape((self._m, self._n, self._dim))</code></pre></details></dd><dt id="tf_som.SOM.get_quantization_errors"><code class="name flex"><span>def <span class="ident">get_quantization_errors</span></span>(<span>self) ‑> numpy.ndarray</span></code></dt><dd><div class="desc"><p>Returns the quantization errors (one value per epoch). <span><span class="MathJax_Preview">c_1=\mathrm{1^\mathrm{st}\,bmu}=\underset{i}{\mathrm{arg\,min}_1}\lVert x-w_i\rVert</span><script type="math/tex;mode=display">c_1=\mathrm{1^\mathrm{st}\,bmu}=\underset{i}{\mathrm{arg\,min}_1}\lVert x-w_i\rVert</script></span><span><span class="MathJax_Preview">\boxed{e_Q=\frac{1}{\mathcal{D}}\sum_{x\in\mathcal{D}}\lVert x-w_{c_1}\rVert^2}</span><script type="math/tex;mode=display">\boxed{e_Q=\frac{1}{\mathcal{D}}\sum_{x\in\mathcal{D}}\lVert x-w_{c_1}\rVert^2}</script></span></p></div><details class="source"><summary><span>Expand source code</span></summary><pre><code class="python">def get_quantization_errors(self) -&gt; np.ndarray:
+
+    &#34;&#34;&#34;Returns the quantization errors (one value per epoch). $$ c_1=\\mathrm{1^\\mathrm{st}\\,bmu}=\\underset{i}{\\mathrm{arg\\,min}_1}\\lVert x-w_i\\rVert $$ $$ \\boxed{e_Q=\\frac{1}{\\mathcal{D}}\\sum_{x\\in\\mathcal{D}}\\lVert x-w_{c_1}\\rVert^2} $$&#34;&#34;&#34;
+
+    return self._quantization_errors</code></pre></details></dd><dt id="tf_som.SOM.get_topographic_errors"><code class="name flex"><span>def <span class="ident">get_topographic_errors</span></span>(<span>self) ‑> numpy.ndarray</span></code></dt><dd><div class="desc"><p>Returns the topographic errors (one value per epoch). <span><span class="MathJax_Preview">c_n=\mathrm{n^\mathrm{th}\,bmu}=\underset{i}{\mathrm{arg\,min}_n}\lVert x-w_i\rVert</span><script type="math/tex;mode=display">c_n=\mathrm{n^\mathrm{th}\,bmu}=\underset{i}{\mathrm{arg\,min}_n}\lVert x-w_i\rVert</script></span><span><span class="MathJax_Preview">t(x)=\left\{\begin{array}{ll}1&amp;\lVert c_1-c_2\rVert&gt;\sqrt{2}\\0&amp;\mathrm{otherwise}\end{array}\right.</span><script type="math/tex;mode=display">t(x)=\left\{\begin{array}{ll}1&\lVert c_1-c_2\rVert>\sqrt{2}\\0&\mathrm{otherwise}\end{array}\right.</script></span><span><span class="MathJax_Preview">\boxed{e_t=\frac{1}{\mathcal{D}}\sum_{x\in\mathcal{D}}t(x)}</span><script type="math/tex;mode=display">\boxed{e_t=\frac{1}{\mathcal{D}}\sum_{x\in\mathcal{D}}t(x)}</script></span></p></div><details class="source"><summary><span>Expand source code</span></summary><pre><code class="python">def get_topographic_errors(self) -&gt; np.ndarray:
+
+    &#34;&#34;&#34;Returns the topographic errors (one value per epoch). $$ c_n=\\mathrm{n^\\mathrm{th}\\,bmu}=\\underset{i}{\\mathrm{arg\\,min}_n}\\lVert x-w_i\\rVert $$ $$ t(x)=\\left\\{\\begin{array}{ll}1&amp;\\lVert c_1-c_2\\rVert&gt;\\sqrt{2}\\\\0&amp;\\mathrm{otherwise}\\end{array}\\right. $$ $$ \\boxed{e_t=\\frac{1}{\\mathcal{D}}\\sum_{x\\in\\mathcal{D}}t(x)} $$&#34;&#34;&#34;
+
+    return self._topographic_errors</code></pre></details></dd><dt id="tf_som.SOM.winners"><code class="name flex"><span>def <span class="ident">winners</span></span>(<span>self, dataset_array: numpy.ndarray, chunk_size: int = None, locations: bool = False, show_progress_bar: bool = False) ‑> numpy.ndarray</span></code></dt><dd><div class="desc"><p>Returns a vector of best matching unit indices or locations for the given input.</p><h2 id="parameters">Parameters</h2><dl><dt><strong><code>dataset_array</code></strong> :&ensp;<code>numpy.ndarray</code></dt><dd>Dataset array.</dd><dt><strong><code>chunk_size</code></strong> :&ensp;<code>int</code></dt><dd>Chunk size or <strong>None</strong> to disable batch (default: <strong>None</strong>).</dd><dt><strong><code>locations</code></strong> :&ensp;<code>bool</code></dt><dd>Get winner locations instead of indices (default: <strong>False</strong>).</dd><dt><strong><code>show_progress_bar</code></strong> :&ensp;<code>bool</code></dt><dd>Specifying whether a progress bar have to be shown (default: <strong>False</strong>).</dd></dl></div><details class="source"><summary><span>Expand source code</span></summary><pre><code class="python">def winners(self, dataset_array: np.ndarray, chunk_size: int = None, locations: bool = False, show_progress_bar: bool = False) -&gt; np.ndarray:
+
+    &#34;&#34;&#34;Returns a vector of best matching unit indices or locations for the given input.
+
+    Parameters
+    ----------
+    dataset_array : numpy.ndarray
+        Dataset array.
+    chunk_size : int
+        Chunk size or **None** to disable batch (default: **None**).
+    locations : bool
+        Get winner locations instead of indices (default: **False**).
+    show_progress_bar : bool
+        Specifying whether a progress bar have to be shown (default: **False**).
+    &#34;&#34;&#34;
+
+    ################################################################################################################
+
+    if chunk_size is None:
+
+        chunk_size = dataset_array.shape[0]
+
+    ################################################################################################################
+
+    weights = tf.constant(self._weights, dtype = self._dtype)
+
+    ################################################################################################################
+
+    i = 0
+
+    if locations:
+
+        result = np.empty((dataset_array.shape[0], 2), dtype = np.int64)
+
+        for chunk in tqdm.tqdm(tf.data.Dataset.from_tensor_slices(tf.constant(dataset_array, dtype = self._dtype)).batch(chunk_size), disable = not show_progress_bar):
+
+            result[(i + 0) * chunk_size: (i + 1) * chunk_size] = tf.gather(self._topography, self.__find_bmus(weights, chunk, 1)[0])
+
+            i += 1
+
+    else:
+
+        result = np.empty((dataset_array.shape[0], ), dtype = np.int64)
+
+        for chunk in tqdm.tqdm(tf.data.Dataset.from_tensor_slices(tf.constant(dataset_array, dtype = self._dtype)).batch(chunk_size), disable = not show_progress_bar):
+
+            result[(i + 0) * chunk_size: (i + 1) * chunk_size] = self.__find_bmus(weights, chunk, 1)[0]
+
+            i += 1
+
+    ################################################################################################################
+
+    return result</code></pre></details></dd><dt id="tf_som.SOM.activation_map"><code class="name flex"><span>def <span class="ident">activation_map</span></span>(<span>self, dataset: Union[numpy.ndarray, Callable], chunk_size: int = None, show_progress_bar: bool = False) ‑> numpy.ndarray</span></code></dt><dd><div class="desc"><p>Returns a matrix containing the number of times the neuron (i, j) have been winner for the given input.</p><h2 id="parameters">Parameters</h2><dl><dt><strong><code>dataset</code></strong> :&ensp;<code>typing.Union[numpy.ndarray, typing.Callable]</code></dt><dd>Dataset array or generator.</dd><dt><strong><code>chunk_size</code></strong> :&ensp;<code>int</code></dt><dd>Chunk size or <strong>None</strong> to disable batch (default: <strong>None</strong>).</dd><dt><strong><code>show_progress_bar</code></strong> :&ensp;<code>bool</code></dt><dd>Specifying whether a progress bar have to be shown (default: <strong>False</strong>).</dd></dl><div class="admonition note"><p class="admonition-title">Note</p><p>A dataset generator is a <strong>yield</strong> generator returning numpy arrays.</p></div></div><details class="source"><summary><span>Expand source code</span></summary><pre><code class="python">def activation_map(self, dataset: typing.Union[np.ndarray, typing.Callable], chunk_size: int = None, show_progress_bar: bool = False) -&gt; np.ndarray:
+
+    &#34;&#34;&#34;Returns a matrix containing the number of times the neuron (i, j) have been winner for the given input.
+
+    Parameters
+    ----------
+    dataset : typing.Union[numpy.ndarray, typing.Callable]
+        Dataset array or generator.
+    chunk_size : int
+        Chunk size or **None** to disable batch (default: **None**).
+    show_progress_bar : bool
+        Specifying whether a progress bar have to be shown (default: **False**).
+
+    .. NOTE::
+        A dataset generator is a **yield** generator returning numpy arrays.
+    &#34;&#34;&#34;
+
+    ################################################################################################################
+
+    dataset_generator = SOM._dataset_to_generator(dataset)
+
+    weights = tf.constant(self._weights, dtype = self._dtype)
+
+    result = np.zeros(shape = (self._m * self._n), dtype = np.int64)
+
+    ################################################################################################################
+
+    for dataset_part, dataset_array_np in enumerate(dataset_generator()):
+
+        ############################################################################################################
+
+        if chunk_size is None:
+
+            chunk_size = dataset_array_np.shape[0]
+
+        ############################################################################################################
+
+        for chunk in tqdm.tqdm(tf.data.Dataset.from_tensor_slices(tf.constant(dataset_array_np, dtype = self._dtype)).batch(chunk_size), disable = not show_progress_bar):
+
+            for bmu_index in self.__find_bmus(weights, chunk, n = 1)[0]:
+
+                result[bmu_index] += 1
+
+    ################################################################################################################
+
+    return result.reshape(self._m, self._n)</code></pre></details></dd></dl></dd></dl></section></article><nav id="sidebar"><h1>Index</h1><div class="toc"><ul><li><a href="#package-tf2-som">Package tf2-som</a><ul><li><a href="#installing-tf2-som">Installing tf2-som</a></li><li><a href="#importing-tf2-som">Importing tf2-som</a></li><li><a href="#demo">Demo</a></li><li><a href="#authors">Authors</a></li></ul></li></ul></div><ul id="index"><li><h3><a href="#header-functions">Functions</a></h3><ul class=""><li><code><a title="tf_som.setup_tensorflow_for_cpus" href="#tf_som.setup_tensorflow_for_cpus">setup_tensorflow_for_cpus</a></code></li><li><code><a title="tf_som.normalize" href="#tf_som.normalize">normalize</a></code></li></ul></li><li><h3><a href="#header-classes">Classes</a></h3><ul><li><h4><code><a title="tf_som.BMUs" href="#tf_som.BMUs">BMUs</a></code></h4><ul class=""><li><code><a title="tf_som.BMUs.indices" href="#tf_som.BMUs.indices">indices</a></code></li><li><code><a title="tf_som.BMUs.locations" href="#tf_som.BMUs.locations">locations</a></code></li></ul></li><li><h4><code><a title="tf_som.SOM" href="#tf_som.SOM">SOM</a></code></h4><ul class=""><li><code><a title="tf_som.SOM.train" href="#tf_som.SOM.train">train</a></code></li><li><code><a title="tf_som.SOM.save" href="#tf_som.SOM.save">save</a></code></li><li><code><a title="tf_som.SOM.load" href="#tf_som.SOM.load">load</a></code></li><li><code><a title="tf_som.SOM.distance_map" href="#tf_som.SOM.distance_map">distance_map</a></code></li><li><code><a title="tf_som.SOM.get_weights" href="#tf_som.SOM.get_weights">get_weights</a></code></li><li><code><a title="tf_som.SOM.get_centroids" href="#tf_som.SOM.get_centroids">get_centroids</a></code></li><li><code><a title="tf_som.SOM.get_quantization_errors" href="#tf_som.SOM.get_quantization_errors">get_quantization_errors</a></code></li><li><code><a title="tf_som.SOM.get_topographic_errors" href="#tf_som.SOM.get_topographic_errors">get_topographic_errors</a></code></li><li><code><a title="tf_som.SOM.winners" href="#tf_som.SOM.winners">winners</a></code></li><li><code><a title="tf_som.SOM.activation_map" href="#tf_som.SOM.activation_map">activation_map</a></code></li></ul></li></ul></li></ul></nav></main><footer id="footer"><p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p></footer></body></html>
