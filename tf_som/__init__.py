@@ -473,17 +473,30 @@ class SOM(object):
 
                     if reset_weights:
 
-                        rand_weights_np = np.empty(shape = (self._m * self._n, self._dim), dtype = self._dtype)
+                        ################################################################################################
+                        # INITIALIZE RANDOMLY                                                                          #
+                        ################################################################################################
 
-                        l1 = rand_weights_np.shape[0]
-                        l2 = dataset_array_np.shape[0]
+                        if dataset_array_np.shape[0] == 0:
 
-                        for i in range(l1):
+                            rand_weights_np = np.random.random(size = (self._m * self._n, self._dim)).astype(self._dtype)
 
-                            j = np.random.randint(l2)
+                        ################################################################################################
+                        # INITIALIZE FROM INPUT DATA                                                                   #
+                        ################################################################################################
 
-                            rand_weights_np[i] = dataset_array_np[j]
+                        else:
 
+                            rand_weights_np = np.empty(shape = (self._m * self._n, self._dim), dtype = self._dtype)
+
+                            for i in range(rand_weights_np.shape[0]):
+
+                                j = np.random.randint(dataset_array_np.shape[0])
+
+                                rand_weights_np[i] = dataset_array_np[j]
+
+                        ################################################################################################
+                        
                         weights = tf.Variable(rand_weights_np, dtype = self._dtype)
 
                     else:
@@ -494,11 +507,13 @@ class SOM(object):
                 # TRAIN THE SELF ORGANIZING MAP                                                                        #
                 ########################################################################################################
 
-                dataset = tf.data.Dataset.from_tensor_slices(tf.constant(dataset_array_np, dtype = self._dtype))
+                if dataset_array_np.shape[0] > 0:
 
-                for chunk in dataset.shuffle(dataset_array_np.shape[0]).batch(chunk_size):
+                    dataset = tf.data.Dataset.from_tensor_slices(tf.constant(dataset_array_np, dtype = self._dtype))
 
-                    self._train(weights, chunk, epoch)
+                    for chunk in dataset.shuffle(dataset_array_np.shape[0]).batch(chunk_size):
+
+                        self._train(weights, chunk, epoch)
 
         ################################################################################################################
 
